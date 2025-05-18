@@ -32,7 +32,7 @@ export default function FAQPage() {
               <div className="flex flex-col items-center justify-center p-6 bg-card border border-border/50 rounded-md">
                 <a href="#challenges" className="no-underline">
                   <h3 className="text-lg font-medium mb-2">Trading Challenges</h3>
-                  <p className="text-sm text-muted-foreground text-center">
+                  <p className="text-sm text-muted-foreground text-center truncate w-full">
                     Questions about our challenge programs and requirements
                   </p>
                 </a>
@@ -41,7 +41,7 @@ export default function FAQPage() {
               <div className="flex flex-col items-center justify-center p-6 bg-card border border-border/50 rounded-md">
                 <a href="#funding" className="no-underline">
                   <h3 className="text-lg font-medium mb-2">Funding & Payouts</h3>
-                  <p className="text-sm text-muted-foreground text-center">
+                  <p className="text-sm text-muted-foreground text-center truncate w-full">
                     Questions about our funding process and profit payouts
                   </p>
                 </a>
@@ -50,7 +50,7 @@ export default function FAQPage() {
               <div className="flex flex-col items-center justify-center p-6 bg-card border border-border/50 rounded-md">
                 <a href="#rules" className="no-underline">
                   <h3 className="text-lg font-medium mb-2">Trading Rules</h3>
-                  <p className="text-sm text-muted-foreground text-center">
+                  <p className="text-sm text-muted-foreground text-center truncate w-full">
                     Questions about trading rules and restrictions
                   </p>
                 </a>
