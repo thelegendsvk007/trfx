@@ -605,9 +605,9 @@ export default function TradingProductsPage() {
                     Access daily market analysis, technical insights, and fundamental news to inform your trading decisions across all asset classes.
                   </p>
                   <Button variant="outline" size="sm" className="w-full" asChild>
-                    <Link href="/education/market-analysis">
+                    <a href="/education/market-analysis">
                       Learn More
-                    </Link>
+                    </a>
                   </Button>
                 </CardContent>
               </Card>
@@ -624,9 +624,9 @@ export default function TradingProductsPage() {
                     Discover proven trading strategies for different market conditions, from day trading techniques to long-term position management.
                   </p>
                   <Button variant="outline" size="sm" className="w-full" asChild>
-                    <Link href="/education/strategies">
+                    <a href="/education/strategies">
                       Explore Strategies
-                    </Link>
+                    </a>
                   </Button>
                 </CardContent>
               </Card>
