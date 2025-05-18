@@ -11,6 +11,15 @@ import MetaTrader5Page from "@/pages/trading/metatrader5";
 import TeamPage from "@/pages/about/team";
 import LoginPage from "@/pages/login";
 import SignupPage from "@/pages/signup";
+import HowItWorksPage from "@/pages/how-it-works";
+import FAQPage from "@/pages/faq";
+import ChallengesPage from "@/pages/challenges";
+
+// Import challenge pages 
+import StandardChallengePage from "@/pages/challenges/standard";
+import AggressiveChallengePage from "@/pages/challenges/aggressive";
+import EvaluationProgramPage from "@/pages/challenges/evaluation";
+import ComparePlansPage from "@/pages/challenges/compare";
 
 // Placeholder component for pages we haven't created yet
 const PlaceholderPage = ({ title, description }: { title: string, description?: string }) => (
@@ -45,14 +54,10 @@ function Router() {
         <Route path="/challenges">
           <PlaceholderPage title="Trading Challenges" description="Prove your trading skills and get funded with our trading challenges." />
         </Route>
-        <Route path="/faq">
-          <PlaceholderPage title="Frequently Asked Questions" description="Find answers to common questions about TRFX and our trading challenges." />
-        </Route>
+        <Route path="/faq" component={FAQPage} />
         
         {/* How it works routes */}
-        <Route path="/how-it-works">
-          <PlaceholderPage title="How It Works" description="Learn about the TRFX trading challenge process and how to get funded." />
-        </Route>
+        <Route path="/how-it-works" component={HowItWorksPage} />
         <Route path="/how-it-works/challenge-process">
           <PlaceholderPage title="Challenge Process" description="Understand the steps to complete our trading challenge and get funded." />
         </Route>
@@ -80,18 +85,10 @@ function Router() {
         </Route>
         
         {/* Challenge routes */}
-        <Route path="/challenges/standard">
-          <PlaceholderPage title="Standard Challenge" description="Our balanced trading challenge designed for consistent traders." />
-        </Route>
-        <Route path="/challenges/aggressive">
-          <PlaceholderPage title="Aggressive Challenge" description="For traders looking to demonstrate high-performance trading skills." />
-        </Route>
-        <Route path="/challenges/evaluation">
-          <PlaceholderPage title="Evaluation Program" description="Our comprehensive program to evaluate your trading consistency." />
-        </Route>
-        <Route path="/challenges/compare">
-          <PlaceholderPage title="Compare Plans" description="Compare our different challenge plans side by side." />
-        </Route>
+        <Route path="/challenges/standard" component={StandardChallengePage} />
+        <Route path="/challenges/aggressive" component={AggressiveChallengePage} />
+        <Route path="/challenges/evaluation" component={EvaluationProgramPage} />
+        <Route path="/challenges/compare" component={ComparePlansPage} />
         
         {/* About routes */}
         <Route path="/about/company">
