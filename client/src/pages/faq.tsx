@@ -86,9 +86,11 @@ export default function FAQPage() {
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="item-1">
                   <AccordionTrigger>What is a trading challenge?</AccordionTrigger>
-                  <AccordionContent>
-                    <p className="mb-2">A trading challenge is an evaluation process designed to assess your trading skills and discipline. It allows you to demonstrate your ability to generate consistent profits while managing risk effectively.</p>
-                    <p>Upon successfully completing a challenge, you're given access to a funded trading account with our capital, enabling you to trade without risking your own money while earning a significant percentage of the profits you generate.</p>
+                  <AccordionContent className="break-words">
+                    <div className="prose prose-sm max-w-none text-muted-foreground">
+                      <p className="mb-2">A trading challenge is an evaluation process designed to assess your trading skills and discipline. It allows you to demonstrate your ability to generate consistent profits while managing risk effectively.</p>
+                      <p>Upon successfully completing a challenge, you're given access to a funded trading account with our capital, enabling you to trade without risking your own money while earning a significant percentage of the profits you generate.</p>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
                 
