@@ -195,6 +195,168 @@ export default function TradingProductsPage() {
         </div>
       </section>
       
+      {/* Other Commodities */}
+      <section className="py-16 bg-background border-t border-border/40">
+        <div className="container px-4">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-3xl font-bold text-center mb-12">Commodities Trading</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Available Commodities</CardTitle>
+                  <CardDescription>
+                    Trade a variety of commodities with competitive spreads
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center pb-2 border-b border-border/40">
+                      <span className="font-medium">XAGUSD (Silver)</span>
+                      <span>Spread from 0.4 points</span>
+                    </div>
+                    <div className="flex justify-between items-center pb-2 border-b border-border/40">
+                      <span className="font-medium">USOIL (WTI Oil)</span>
+                      <span>Spread from 0.3 points</span>
+                    </div>
+                    <div className="flex justify-between items-center pb-2 border-b border-border/40">
+                      <span className="font-medium">UKOIL (Brent Oil)</span>
+                      <span>Spread from 0.3 points</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="font-medium">NGAS (Natural Gas)</span>
+                      <span>Spread from 0.5 points</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardHeader>
+                  <CardTitle>Why Trade Commodities</CardTitle>
+                  <CardDescription>
+                    Benefits of trading commodities on TRFX
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="pb-2 border-b border-border/40">
+                      <h3 className="font-medium mb-1">Diversification</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Commodities often move independently of stock markets, providing diversification
+                      </p>
+                    </div>
+                    <div className="pb-2 border-b border-border/40">
+                      <h3 className="font-medium mb-1">Inflation Hedge</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Commodities like gold and silver can provide protection against inflation
+                      </p>
+                    </div>
+                    <div className="pb-2 border-b border-border/40">
+                      <h3 className="font-medium mb-1">Global Market Events</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Take advantage of price movements triggered by global events and supply-demand changes
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="font-medium mb-1">24-Hour Trading</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Access commodity markets around the clock for trading opportunities
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Trading Platforms */}
+      <section className="py-16 bg-muted/30 border-t border-border/40">
+        <div className="container px-4">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-3xl font-bold text-center mb-12">Trading Platforms</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card>
+                <CardHeader>
+                  <CardTitle>MetaTrader 5</CardTitle>
+                  <CardDescription>
+                    The world's most popular professional trading platform
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="pb-2 border-b border-border/40">
+                      <h3 className="font-medium mb-1">Advanced Charting</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Access 38 built-in technical indicators, 44 analytical objects, and multiple timeframes
+                      </p>
+                    </div>
+                    <div className="pb-2 border-b border-border/40">
+                      <h3 className="font-medium mb-1">Expert Advisors (EAs)</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Automate your trading with custom algorithms and trading robots
+                      </p>
+                    </div>
+                    <div className="pb-2 border-b border-border/40">
+                      <h3 className="font-medium mb-1">Market Depth</h3>
+                      <p className="text-sm text-muted-foreground">
+                        View real-time bids and asks for precise order placement
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="font-medium mb-1">Multi-Device Support</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Available on desktop (Windows, macOS via emulation) and mobile (iOS, Android)
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardHeader>
+                  <CardTitle>WebTrader Platform</CardTitle>
+                  <CardDescription>
+                    Trade directly from your browser without downloads
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="pb-2 border-b border-border/40">
+                      <h3 className="font-medium mb-1">Instant Access</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Trade immediately from any browser with no installation required
+                      </p>
+                    </div>
+                    <div className="pb-2 border-b border-border/40">
+                      <h3 className="font-medium mb-1">Interactive Charts</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Multiple chart types with over 30 popular technical indicators
+                      </p>
+                    </div>
+                    <div className="pb-2 border-b border-border/40">
+                      <h3 className="font-medium mb-1">One-Click Trading</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Execute trades with a single click for lightning-fast entries
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="font-medium mb-1">Cross-Platform Compatibility</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Works on all operating systems including Windows, macOS, and Linux
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-16 bg-background border-t border-border/40">
         <div className="container px-4">
