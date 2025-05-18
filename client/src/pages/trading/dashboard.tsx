@@ -67,7 +67,7 @@ export default function TradingDashboardPage() {
                     </select>
                   </div>
                 </div>
-                <div className="h-[800px] p-0 bg-[#131722] text-white overflow-hidden">
+                <div className="h-[1000px] p-0 bg-[#131722] text-white overflow-hidden">
                   {/* Trading View Chart would be rendered here */}
                   <div className="relative h-full w-full bg-[#131722] overflow-hidden">
                     <div className="h-8 border-b border-[#2A2E39] flex items-center px-3 justify-between">
@@ -94,7 +94,7 @@ export default function TradingDashboardPage() {
                     
                     <div className="flex">
                       {/* Left sidebar with price scale */}
-                      <div className="w-20 h-[728px] flex flex-col justify-between p-1 text-right text-xs text-[#d1d4dc] border-r border-[#2A2E39]">
+                      <div className="w-20 h-[928px] flex flex-col justify-between p-1 text-right text-xs text-[#d1d4dc] border-r border-[#2A2E39]">
                         <div>3,252.500</div>
                         <div>3,250.000</div>
                         <div>3,247.500</div>
@@ -141,7 +141,7 @@ export default function TradingDashboardPage() {
                         </div>
                         
                         {/* Chart content - We'll use an image to simulate the chart */}
-                        <div className="w-full h-[728px] overflow-hidden relative">
+                        <div className="w-full h-[928px] overflow-hidden relative">
                           <div className="absolute inset-0 grid grid-cols-6 w-full h-full pointer-events-none">
                             {[...Array(6)].map((_, i) => (
                               <div key={i} className="border-r border-[#2A2E39] h-full"></div>
