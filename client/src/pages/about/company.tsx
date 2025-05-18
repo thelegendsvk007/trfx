@@ -147,7 +147,7 @@ export default function CompanyPage() {
           <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="aspect-square rounded-md bg-muted/50 mb-4"></div>
-              <h3 className="text-xl font-bold">OLO</h3>
+              <h3 className="text-xl font-bold">Michael Richards</h3>
               <p className="text-muted-foreground mb-2">CEO & Founder</p>
               <p className="text-sm text-muted-foreground">
                 Former head of FX trading at a leading investment bank with 15+ years of trading experience. MSc in Financial Engineering from MIT.
@@ -156,8 +156,8 @@ export default function CompanyPage() {
             
             <div className="text-center">
               <div className="aspect-square rounded-md bg-muted/50 mb-4"></div>
-              <h3 className="text-xl font-bold">SVK</h3>
-              <p className="text-muted-foreground mb-2">CEO & Founder</p>
+              <h3 className="text-xl font-bold">Sarah Chen</h3>
+              <p className="text-muted-foreground mb-2">Chief Risk Officer</p>
               <p className="text-sm text-muted-foreground">
                 Over 12 years of risk management experience at major financial institutions. Previously managed $2B+ portfolios and trading operations.
               </p>
@@ -165,8 +165,8 @@ export default function CompanyPage() {
             
             <div className="text-center">
               <div className="aspect-square rounded-md bg-muted/50 mb-4"></div>
-              <h3 className="text-xl font-bold">Ghufy</h3>
-              <p className="text-muted-foreground mb-2">CEO & Founder</p>
+              <h3 className="text-xl font-bold">David Okafor</h3>
+              <p className="text-muted-foreground mb-2">Head of Trader Development</p>
               <p className="text-sm text-muted-foreground">
                 Veteran trader with 10+ years of proprietary trading experience. Specializes in developing evaluation programs and trader analytics.
               </p>

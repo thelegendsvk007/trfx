@@ -59,7 +59,7 @@ export function MainNav({ className }: { className?: string }) {
       title: 'Trading',
       path: '/trading',
       dropdown: [
-        { name: 'Trading Dashboard', href: '/trading' },
+        { name: 'Trading Dashboard', href: '/trading/dashboard' },
         { name: 'MetaTrader 4', href: '/trading/metatrader4' },
         { name: 'MetaTrader 5', href: '/trading/metatrader5' },
         { name: 'Trading Products', href: '/trading/products' },
@@ -179,12 +179,6 @@ export function MainNav({ className }: { className?: string }) {
           <div className="hidden md:flex md:items-center md:space-x-2">
             {isAuthenticated ? (
               <>
-                <Button variant="outline" size="sm" asChild>
-                  <Link href="/dashboard">
-                    <User className="mr-2 h-4 w-4" />
-                    Dashboard
-                  </Link>
-                </Button>
                 <Button 
                   variant="ghost" 
                   size="sm"
@@ -284,14 +278,6 @@ export function MainNav({ className }: { className?: string }) {
                 <div className="pt-4 border-t flex flex-col space-y-2">
                   {isAuthenticated ? (
                     <>
-                      <SheetClose asChild>
-                        <Link href="/dashboard">
-                          <Button variant="outline" className="w-full justify-start">
-                            <User className="mr-2 h-4 w-4" />
-                            Dashboard
-                          </Button>
-                        </Link>
-                      </SheetClose>
                       <Button 
                         variant="ghost" 
                         className="w-full justify-start"

@@ -343,11 +343,72 @@ async function addStripeRoutes(app: Express) {
   });
 }
 
+// Market data functions
+async function addMarketDataRoutes(app: Express) {
+  // Base prices for market simulation
+  const marketPrices = {
+    "EUR/USD": { base: 1.0945, volatility: 0.0005 },
+    "GBP/USD": { base: 1.2648, volatility: 0.0007 },
+    "USD/JPY": { base: 156.75, volatility: 0.05 },
+    "XAU/USD": { base: 2374.68, volatility: 1.2 },
+    "USOIL": { base: 76.28, volatility: 0.3 },
+    "XAGUSD": { base: 28.45, volatility: 0.15 }
+  };
+  
+  // Keep track of last prices to create realistic movements
+  const lastPrices: Record<string, number> = {};
+  
+  // Initialize last prices
+  Object.entries(marketPrices).forEach(([symbol, data]) => {
+    lastPrices[symbol] = data.base;
+  });
+  
+  // API endpoint for market data
+  app.get('/api/market-data', (req, res) => {
+    try {
+      const { symbol } = req.query;
+      
+      // Validate symbol parameter
+      if (!symbol || typeof symbol !== 'string') {
+        return res.status(400).json({ message: "Symbol parameter is required" });
+      }
+      
+      // Check if symbol exists in our pricing data
+      if (!marketPrices[symbol as keyof typeof marketPrices]) {
+        return res.status(404).json({ message: "Symbol not found" });
+      }
+      
+      // Generate realistic market movement
+      const priceInfo = marketPrices[symbol as keyof typeof marketPrices];
+      const lastPrice = lastPrices[symbol] || priceInfo.base;
+      
+      // Random direction (slightly biased toward momentum)
+      const direction = lastPrice > priceInfo.base 
+        ? (Math.random() > 0.45 ? 1 : -1) 
+        : (Math.random() > 0.55 ? 1 : -1);
+        
+      // Random movement based on volatility
+      const change = direction * priceInfo.volatility * Math.random();
+      const newPrice = lastPrice + change;
+      
+      // Store the current price for next time
+      lastPrices[symbol] = newPrice;
+      
+      // Send the price data
+      res.json({ price: newPrice });
+    } catch (error) {
+      console.error('Market data error:', error);
+      res.status(500).json({ message: "Server error" });
+    }
+  });
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   const httpServer = createServer(app);
   
   // Add payment, withdrawal and MetaTrader integration routes
   await addStripeRoutes(app);
+  await addMarketDataRoutes(app);
   
   // WebSocket server for real-time updates
   const wss = new WebSocketServer({ server: httpServer, path: '/ws' });

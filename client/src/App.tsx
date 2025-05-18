@@ -40,6 +40,10 @@ import TradingDashboardPage from "@/pages/trading/dashboard";
 import TradingProductsPage from "@/pages/trading/products";
 import SpreadsLeveragePage from "@/pages/trading/spreads-leverage";
 
+// Import Checkout pages
+import CheckoutPage from "@/pages/checkout";
+import PaymentConfirmationPage from "@/pages/payment-confirmation";
+
 // Import About pages
 import CompanyPage from "@/pages/about/company";
 import ContactPage from "@/pages/about/contact";
@@ -294,8 +298,8 @@ function Router() {
         <Route path="/signup" component={SignupPage} />
         
         {/* Main section routes */}
-        <Route path="/dashboard" component={TradingDashboardPage} />
         <Route path="/trading" component={TradingPage} />
+        <Route path="/trading/dashboard" component={TradingDashboardPage} />
         <Route path="/challenges">
           {/* Redirect to challenges compare page */}
           <Route path="/challenges/compare" component={ComparePlansPage} />
@@ -327,6 +331,10 @@ function Router() {
         <Route path="/challenges/aggressive" component={AggressiveChallengePage} />
         <Route path="/challenges/evaluation" component={EvaluationProgramPage} />
         <Route path="/challenges/compare" component={ComparePlansPage} />
+        
+        {/* Checkout routes */}
+        <Route path="/checkout/:planId" component={CheckoutPage} />
+        <Route path="/payment-confirmation" component={PaymentConfirmationPage} />
         
         {/* About routes */}
         <Route path="/about/company" component={CompanyPage} />

@@ -234,25 +234,46 @@ export default function ComparePlansPage() {
                       <tr className="bg-muted/20">
                         <td className="text-left p-4 border-b border-border"></td>
                         <td className="text-center p-4 border-b border-border">
-                          <Button asChild>
-                            <Link href="/challenges/standard">
-                              View Standard
-                            </Link>
-                          </Button>
+                          <div className="space-y-2">
+                            <Button asChild className="w-full">
+                              <Link href="/challenges/standard">
+                                View Details
+                              </Link>
+                            </Button>
+                            <Button asChild className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90">
+                              <Link href="/checkout/1">
+                                Start Challenge
+                              </Link>
+                            </Button>
+                          </div>
                         </td>
                         <td className="text-center p-4 border-b border-border">
-                          <Button asChild>
-                            <Link href="/challenges/aggressive">
-                              View Aggressive
-                            </Link>
-                          </Button>
+                          <div className="space-y-2">
+                            <Button asChild className="w-full">
+                              <Link href="/challenges/aggressive">
+                                View Details
+                              </Link>
+                            </Button>
+                            <Button asChild className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90">
+                              <Link href="/checkout/2">
+                                Start Challenge
+                              </Link>
+                            </Button>
+                          </div>
                         </td>
                         <td className="text-center p-4 border-b border-border">
-                          <Button asChild>
-                            <Link href="/challenges/evaluation">
-                              View Evaluation
-                            </Link>
-                          </Button>
+                          <div className="space-y-2">
+                            <Button asChild className="w-full">
+                              <Link href="/challenges/evaluation">
+                                View Details
+                              </Link>
+                            </Button>
+                            <Button asChild className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90">
+                              <Link href="/checkout/3">
+                                Start Challenge
+                              </Link>
+                            </Button>
+                          </div>
                         </td>
                       </tr>
                     </tbody>
@@ -302,11 +323,18 @@ export default function ComparePlansPage() {
                         </div>
                       </div>
                       
-                      <Button className="w-full" asChild>
-                        <Link href="/challenges/standard">
-                          View Standard Challenge
-                        </Link>
-                      </Button>
+                      <div className="space-y-2">
+                        <Button asChild className="w-full">
+                          <Link href="/challenges/standard">
+                            View Details
+                          </Link>
+                        </Button>
+                        <Button asChild className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90">
+                          <Link href="/checkout/1">
+                            Purchase Now
+                          </Link>
+                        </Button>
+                      </div>
                     </CardContent>
                   </Card>
                   
