@@ -271,7 +271,7 @@ export default function MetaTrader4Page() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Open MT4 and go to "File" > "Login to Trade Account" and enter your TRFX server, login ID, and password.
+                  Open MT4 and go to "File" &gt; "Login to Trade Account" and enter your TRFX server, login ID, and password.
                 </p>
               </CardContent>
             </Card>
