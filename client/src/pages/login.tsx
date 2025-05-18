@@ -9,9 +9,10 @@ import { LineChart, AlertCircle, Mail, Lock, Github, Apple, Facebook } from "luc
 import { useTheme } from "@/components/theme-provider";
 import { MainNav } from "@/components/main-nav";
 import { Separator } from "@/components/ui/separator";
+import useAuth from "@/hooks/useAuth";
 
 export default function LoginPage() {
-  const { login, loading, error } = useAuth();
+  const { login, loginWithProvider, loading, error } = useAuth();
   const [, navigate] = useLocation();
   const { theme, setTheme } = useTheme();
   
@@ -68,7 +69,7 @@ export default function LoginPage() {
         <div className="text-center">
           <h1 className="text-3xl font-bold text-primary-800 dark:text-primary-300 flex items-center justify-center">
             <LineChart className="inline-block mr-2" size={28} />
-            TradeFunded
+            TRFX
           </h1>
           <h2 className="mt-6 text-3xl font-extrabold text-gray-900 dark:text-white">
             Sign in to your account
@@ -178,7 +179,12 @@ export default function LoginPage() {
               </div>
 
               <div className="mt-6 grid grid-cols-2 gap-3">
-                <Button variant="outline" className="w-full">
+                <Button 
+                  variant="outline" 
+                  className="w-full" 
+                  onClick={() => loginWithProvider('google')}
+                  disabled={loading}
+                >
                   <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
                     <g transform="matrix(1, 0, 0, 1, 27.009001, -39.238998)">
                       <path fill="#4285F4" d="M -3.264 51.509 C -3.264 50.719 -3.334 49.969 -3.454 49.239 L -14.754 49.239 L -14.754 53.749 L -8.284 53.749 C -8.574 55.229 -9.424 56.479 -10.684 57.329 L -10.684 60.329 L -6.824 60.329 C -4.564 58.239 -3.264 55.159 -3.264 51.509 Z"></path>
@@ -189,11 +195,39 @@ export default function LoginPage() {
                   </svg>
                   Google
                 </Button>
-                <Button variant="outline" className="w-full">
+                <Button 
+                  variant="outline" 
+                  className="w-full" 
+                  onClick={() => loginWithProvider('microsoft')}
+                  disabled={loading}
+                >
                   <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
-                    <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+                    <path d="M0 0h11.5v11.5H0V0z" fill="#F25022"/>
+                    <path d="M12.5 0H24v11.5H12.5V0z" fill="#7FBA00"/>
+                    <path d="M0 12.5h11.5V24H0V12.5z" fill="#00A4EF"/>
+                    <path d="M12.5 12.5H24V24H12.5V12.5z" fill="#FFB900"/>
                   </svg>
-                  Facebook
+                  Microsoft
+                </Button>
+              </div>
+              <div className="mt-3 grid grid-cols-2 gap-3">
+                <Button 
+                  variant="outline" 
+                  className="w-full" 
+                  onClick={() => loginWithProvider('apple')}
+                  disabled={loading}
+                >
+                  <Apple className="w-5 h-5 mr-2" />
+                  Apple
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={() => loginWithProvider('github')}
+                  disabled={loading}
+                >
+                  <Github className="w-5 h-5 mr-2" />
+                  GitHub
                 </Button>
               </div>
             </div>

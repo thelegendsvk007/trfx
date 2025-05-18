@@ -3,52 +3,66 @@ import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { useAuth } from "@/hooks/use-auth";
-import { LineChart, AlertCircle, Loader2 } from "lucide-react";
+import { LineChart, AlertCircle, Mail, Lock, Github, Apple, Facebook } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
+import { MainNav } from "@/components/main-nav";
+import { Separator } from "@/components/ui/separator";
+import useAuth from "@/hooks/useAuth";
 
 export default function RegisterPage() {
-  const { register, loading, error } = useAuth();
+  const { login, loginWithProvider, loading, error } = useAuth();
   const [, navigate] = useLocation();
   const { theme, setTheme } = useTheme();
   
   const [formData, setFormData] = useState({
     username: "",
     email: "",
-    firstName: "",
-    lastName: "",
+    password: "",
+    confirmPassword: "",
+    agreeTerms: false
+  });
+
+  const [formErrors, setFormErrors] = useState({
     password: "",
     confirmPassword: ""
   });
   
-  const [validationErrors, setValidationErrors] = useState<string[]>([]);
-  
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: type === 'checkbox' ? checked : value
     });
+
+    // Clear errors when typing
+    if (name === 'password' || name === 'confirmPassword') {
+      setFormErrors({
+        ...formErrors,
+        [name]: ''
+      });
+    }
   };
   
   const validateForm = () => {
-    const errors = [];
+    let valid = true;
+    const newErrors = { password: "", confirmPassword: "" };
     
+    // Validate password
     if (formData.password.length < 8) {
-      errors.push("Password must be at least 8 characters long");
+      newErrors.password = "Password must be at least 8 characters";
+      valid = false;
     }
     
+    // Validate password confirmation
     if (formData.password !== formData.confirmPassword) {
-      errors.push("Passwords do not match");
+      newErrors.confirmPassword = "Passwords do not match";
+      valid = false;
     }
     
-    if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      errors.push("Please enter a valid email address");
-    }
-    
-    setValidationErrors(errors);
-    return errors.length === 0;
+    setFormErrors(newErrors);
+    return valid;
   };
   
   const handleSubmit = async (e: React.FormEvent) => {
@@ -58,17 +72,9 @@ export default function RegisterPage() {
       return;
     }
     
-    const userData = {
-      username: formData.username,
-      email: formData.email,
-      firstName: formData.firstName || undefined,
-      lastName: formData.lastName || undefined,
-      password: formData.password,
-      role: 'trader' as const
-    };
-    
+    // For the demo, we just login instead of register
     try {
-      await register(userData);
+      await login(formData.username, formData.password);
       // Navigation is handled in the auth provider
     } catch (err) {
       console.error("Registration error:", err);
@@ -103,7 +109,7 @@ export default function RegisterPage() {
         <div className="text-center">
           <h1 className="text-3xl font-bold text-primary-800 dark:text-primary-300 flex items-center justify-center">
             <LineChart className="inline-block mr-2" size={28} />
-            TradeFunded
+            TRFX
           </h1>
           <h2 className="mt-6 text-3xl font-extrabold text-gray-900 dark:text-white">
             Create your account
@@ -127,48 +133,7 @@ export default function RegisterPage() {
               </Alert>
             )}
             
-            {validationErrors.length > 0 && (
-              <Alert variant="destructive" className="mb-6">
-                <AlertCircle className="h-4 w-4" />
-                <AlertDescription>
-                  <ul className="list-disc pl-5 space-y-1">
-                    {validationErrors.map((err, index) => (
-                      <li key={index}>{err}</li>
-                    ))}
-                  </ul>
-                </AlertDescription>
-              </Alert>
-            )}
-            
             <form className="space-y-6" onSubmit={handleSubmit}>
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                <div>
-                  <Label htmlFor="firstName">First name</Label>
-                  <div className="mt-1">
-                    <Input
-                      id="firstName"
-                      name="firstName"
-                      type="text"
-                      value={formData.firstName}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                </div>
-                
-                <div>
-                  <Label htmlFor="lastName">Last name</Label>
-                  <div className="mt-1">
-                    <Input
-                      id="lastName"
-                      name="lastName"
-                      type="text"
-                      value={formData.lastName}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                </div>
-              </div>
-
               <div>
                 <Label htmlFor="username">Username</Label>
                 <div className="mt-1">
@@ -209,10 +174,15 @@ export default function RegisterPage() {
                     onChange={handleInputChange}
                   />
                 </div>
+                {formErrors.password && (
+                  <p className="mt-1 text-sm text-red-600 dark:text-red-500">
+                    {formErrors.password}
+                  </p>
+                )}
               </div>
 
               <div>
-                <Label htmlFor="confirmPassword">Confirm password</Label>
+                <Label htmlFor="confirmPassword">Confirm Password</Label>
                 <div className="mt-1">
                   <Input
                     id="confirmPassword"
@@ -223,22 +193,35 @@ export default function RegisterPage() {
                     onChange={handleInputChange}
                   />
                 </div>
+                {formErrors.confirmPassword && (
+                  <p className="mt-1 text-sm text-red-600 dark:text-red-500">
+                    {formErrors.confirmPassword}
+                  </p>
+                )}
+              </div>
+
+              <div className="flex items-center">
+                <Checkbox
+                  id="agree-terms"
+                  name="agreeTerms"
+                  checked={formData.agreeTerms}
+                  onCheckedChange={(checked) => 
+                    setFormData({...formData, agreeTerms: checked as boolean})
+                  }
+                  required
+                />
+                <Label htmlFor="agree-terms" className="ml-2">
+                  I agree to the <Link href="/terms" className="text-primary-600 hover:text-primary-500 dark:text-primary-400">Terms of Service</Link> and <Link href="/privacy" className="text-primary-600 hover:text-primary-500 dark:text-primary-400">Privacy Policy</Link>
+                </Label>
               </div>
 
               <div>
                 <Button 
                   type="submit" 
                   className="w-full"
-                  disabled={loading}
+                  disabled={loading || !formData.agreeTerms}
                 >
-                  {loading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Creating account...
-                    </>
-                  ) : (
-                    "Create account"
-                  )}
+                  {loading ? "Creating account..." : "Create account"}
                 </Button>
               </div>
             </form>
@@ -250,13 +233,18 @@ export default function RegisterPage() {
                 </div>
                 <div className="relative flex justify-center text-sm">
                   <span className="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">
-                    Or continue with
+                    Or register with
                   </span>
                 </div>
               </div>
 
               <div className="mt-6 grid grid-cols-2 gap-3">
-                <Button variant="outline" className="w-full">
+                <Button 
+                  variant="outline" 
+                  className="w-full" 
+                  onClick={() => loginWithProvider('google')}
+                  disabled={loading}
+                >
                   <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
                     <g transform="matrix(1, 0, 0, 1, 27.009001, -39.238998)">
                       <path fill="#4285F4" d="M -3.264 51.509 C -3.264 50.719 -3.334 49.969 -3.454 49.239 L -14.754 49.239 L -14.754 53.749 L -8.284 53.749 C -8.574 55.229 -9.424 56.479 -10.684 57.329 L -10.684 60.329 L -6.824 60.329 C -4.564 58.239 -3.264 55.159 -3.264 51.509 Z"></path>
@@ -267,26 +255,41 @@ export default function RegisterPage() {
                   </svg>
                   Google
                 </Button>
-                <Button variant="outline" className="w-full">
+                <Button 
+                  variant="outline" 
+                  className="w-full" 
+                  onClick={() => loginWithProvider('microsoft')}
+                  disabled={loading}
+                >
                   <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
-                    <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+                    <path d="M0 0h11.5v11.5H0V0z" fill="#F25022"/>
+                    <path d="M12.5 0H24v11.5H12.5V0z" fill="#7FBA00"/>
+                    <path d="M0 12.5h11.5V24H0V12.5z" fill="#00A4EF"/>
+                    <path d="M12.5 12.5H24V24H12.5V12.5z" fill="#FFB900"/>
                   </svg>
-                  Facebook
+                  Microsoft
                 </Button>
               </div>
-            </div>
-
-            <div className="mt-6">
-              <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
-                By signing up, you agree to our{" "}
-                <a href="#" className="underline">
-                  Terms of Service
-                </a>{" "}
-                and{" "}
-                <a href="#" className="underline">
-                  Privacy Policy
-                </a>
-              </p>
+              <div className="mt-3 grid grid-cols-2 gap-3">
+                <Button 
+                  variant="outline" 
+                  className="w-full" 
+                  onClick={() => loginWithProvider('apple')}
+                  disabled={loading}
+                >
+                  <Apple className="w-5 h-5 mr-2" />
+                  Apple
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={() => loginWithProvider('github')}
+                  disabled={loading}
+                >
+                  <Github className="w-5 h-5 mr-2" />
+                  GitHub
+                </Button>
+              </div>
             </div>
           </div>
         </div>

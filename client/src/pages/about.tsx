@@ -130,7 +130,7 @@ export default function AboutPage() {
               <Badge variant="outline" className="border-primary/50 text-primary">Established 2021</Badge>
               <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
                 <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                  About TradeFunded
+                  About TRFX
                 </span>
               </h1>
               <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
@@ -148,10 +148,10 @@ export default function AboutPage() {
             <div className="space-y-4">
               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Our Story</h2>
               <p className="text-muted-foreground">
-                TradeFunded was born from a simple but powerful observation: there are highly skilled traders worldwide who lack the capital to maximize their potential, while capital holders lack the specialized trading skills to optimize their returns.
+                TRFX was born from a simple but powerful observation: there are highly skilled traders worldwide who lack the capital to maximize their potential, while capital holders lack the specialized trading skills to optimize their returns.
               </p>
               <p className="text-muted-foreground">
-                Founded in 2021 by Michael Anderson, a former hedge fund trader, TradeFunded set out to bridge this gap by creating a meritocratic platform that evaluates trader skill through objective challenges and funds successful traders with substantial capital.
+                Founded in 2021 by Michael Anderson, a former hedge fund trader, TRFX set out to bridge this gap by creating a meritocratic platform that evaluates trader skill through objective challenges and funds successful traders with substantial capital.
               </p>
               <p className="text-muted-foreground">
                 What began as a small team working with 50 traders has grown into a global operation funding over 2,500 traders across 120+ countries. Our team now comprises experienced traders, technologists, and financial professionals united by our mission to democratize access to trading capital.

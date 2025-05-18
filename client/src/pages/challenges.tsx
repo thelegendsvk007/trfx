@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { useAuth } from "@/hooks/use-auth";
+import useAuth from "@/hooks/useAuth";
 import { useTradingAccounts } from "@/hooks/use-trading-accounts";
 import { useQuery } from "@tanstack/react-query";
 import { formatCurrency } from "@/lib/utils";
