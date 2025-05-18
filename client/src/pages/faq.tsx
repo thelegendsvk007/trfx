@@ -96,67 +96,77 @@ export default function FAQPage() {
                 
                 <AccordionItem value="item-2">
                   <AccordionTrigger>What are the different types of challenges offered?</AccordionTrigger>
-                  <AccordionContent>
-                    <p className="mb-2">We offer three main types of challenges:</p>
-                    <ul className="list-disc pl-5 space-y-1 mb-2">
-                      <li><strong>Standard Challenge:</strong> 8% profit target with 5% maximum drawdown.</li>
-                      <li><strong>Aggressive Challenge:</strong> 12% profit target with 8% maximum drawdown.</li>
-                      <li><strong>Evaluation Program:</strong> Two-phase process with 6% profit target in each phase and 5% maximum drawdown.</li>
-                    </ul>
-                    <p>Each challenge type is available with different account sizes ranging from $10,000 to $200,000.</p>
+                  <AccordionContent className="break-words">
+                    <div className="prose prose-sm max-w-none text-muted-foreground">
+                      <p className="mb-2">We offer three main types of challenges:</p>
+                      <ul className="list-disc pl-5 space-y-1 mb-2">
+                        <li><strong>Standard Challenge:</strong> 8% profit target with 5% maximum drawdown.</li>
+                        <li><strong>Aggressive Challenge:</strong> 12% profit target with 8% maximum drawdown.</li>
+                        <li><strong>Evaluation Program:</strong> Two-phase process with 6% profit target in each phase and 5% maximum drawdown.</li>
+                      </ul>
+                      <p>Each challenge type is available with different account sizes ranging from $10,000 to $200,000.</p>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
                 
                 <AccordionItem value="item-3">
                   <AccordionTrigger>How long do I have to complete a challenge?</AccordionTrigger>
-                  <AccordionContent>
-                    <p className="mb-2">The time allowed varies by challenge type:</p>
-                    <ul className="list-disc pl-5 space-y-1 mb-2">
-                      <li><strong>Standard & Aggressive Challenges:</strong> You have up to 30 calendar days.</li>
-                      <li><strong>Evaluation Program Phase 1:</strong> You have up to 30 calendar days.</li>
-                      <li><strong>Evaluation Program Phase 2:</strong> You have up to 60 calendar days.</li>
-                    </ul>
-                    <p>There's no minimum time requirement for Standard and Aggressive challenges - if you reach your profit target while following all rules, you can pass immediately. The Evaluation Program requires a minimum of 5 trading days for Phase 1 and 10 trading days for Phase 2.</p>
+                  <AccordionContent className="break-words">
+                    <div className="prose prose-sm max-w-none text-muted-foreground">
+                      <p className="mb-2">The time allowed varies by challenge type:</p>
+                      <ul className="list-disc pl-5 space-y-1 mb-2">
+                        <li><strong>Standard & Aggressive Challenges:</strong> You have up to 30 calendar days.</li>
+                        <li><strong>Evaluation Program Phase 1:</strong> You have up to 30 calendar days.</li>
+                        <li><strong>Evaluation Program Phase 2:</strong> You have up to 60 calendar days.</li>
+                      </ul>
+                      <p>There's no minimum time requirement for Standard and Aggressive challenges - if you reach your profit target while following all rules, you can pass immediately. The Evaluation Program requires a minimum of 5 trading days for Phase 1 and 10 trading days for Phase 2.</p>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
                 
                 <AccordionItem value="item-4">
                   <AccordionTrigger>What happens if I fail a challenge?</AccordionTrigger>
-                  <AccordionContent>
-                    <p className="mb-2">If you fail a challenge, your account will be closed. You have several options:</p>
-                    <ul className="list-disc pl-5 space-y-1 mb-2">
-                      <li>Purchase a new challenge to start over.</li>
-                      <li>Use our Reset option to restart your existing challenge for a discounted fee (typically 20-30% of the full challenge price).</li>
-                      <li>Try a different challenge type that might better match your trading style.</li>
-                    </ul>
-                    <p>We don't limit the number of attempts - many successful funded traders failed their first challenge but learned from the experience and succeeded on subsequent attempts.</p>
+                  <AccordionContent className="break-words">
+                    <div className="prose prose-sm max-w-none text-muted-foreground">
+                      <p className="mb-2">If you fail a challenge, your account will be closed. You have several options:</p>
+                      <ul className="list-disc pl-5 space-y-1 mb-2">
+                        <li>Purchase a new challenge to start over.</li>
+                        <li>Use our Reset option to restart your existing challenge for a discounted fee (typically 20-30% of the full challenge price).</li>
+                        <li>Try a different challenge type that might better match your trading style.</li>
+                      </ul>
+                      <p>We don't limit the number of attempts - many successful funded traders failed their first challenge but learned from the experience and succeeded on subsequent attempts.</p>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
                 
                 <AccordionItem value="item-5">
                   <AccordionTrigger>Can I trade any instruments during the challenge?</AccordionTrigger>
-                  <AccordionContent>
-                    <p className="mb-2">You can trade:</p>
-                    <ul className="list-disc pl-5 space-y-1 mb-2">
-                      <li>All major and minor forex pairs</li>
-                      <li>Major indices (US30, NASDAQ, S&P 500, etc.)</li>
-                      <li>Commodities (Gold, Silver, Oil, etc.)</li>
-                      <li>Selected cryptocurrencies</li>
-                    </ul>
-                    <p>However, there are some restrictions on exotic pairs and trading during major market news events. We provide a complete list of available instruments upon challenge purchase.</p>
+                  <AccordionContent className="break-words">
+                    <div className="prose prose-sm max-w-none text-muted-foreground">
+                      <p className="mb-2">You can trade:</p>
+                      <ul className="list-disc pl-5 space-y-1 mb-2">
+                        <li>All major and minor forex pairs</li>
+                        <li>Major indices (US30, NASDAQ, S&P 500, etc.)</li>
+                        <li>Commodities (Gold, Silver, Oil, etc.)</li>
+                        <li>Selected cryptocurrencies</li>
+                      </ul>
+                      <p>However, there are some restrictions on exotic pairs and trading during major market news events. We provide a complete list of available instruments upon challenge purchase.</p>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
                 
                 <AccordionItem value="item-6">
                   <AccordionTrigger>Do I need to trade daily during the challenge?</AccordionTrigger>
-                  <AccordionContent>
-                    <p className="mb-2">For Standard and Aggressive challenges, there is no minimum trading day requirement. You can complete the challenge in a single day if you meet the profit target while following all the rules.</p>
-                    <p className="mb-2">For the Evaluation Program:</p>
-                    <ul className="list-disc pl-5 space-y-1">
-                      <li>Phase 1 requires at least 5 trading days.</li>
-                      <li>Phase 2 requires at least 10 trading days.</li>
-                    </ul>
-                    <p>In all cases, we recommend focusing on quality trades rather than frequent trading. Consistently applying your strategy is more important than trading every day.</p>
+                  <AccordionContent className="break-words">
+                    <div className="prose prose-sm max-w-none text-muted-foreground">
+                      <p className="mb-2">For Standard and Aggressive challenges, there is no minimum trading day requirement. You can complete the challenge in a single day if you meet the profit target while following all the rules.</p>
+                      <p className="mb-2">For the Evaluation Program:</p>
+                      <ul className="list-disc pl-5 space-y-1">
+                        <li>Phase 1 requires at least 5 trading days.</li>
+                        <li>Phase 2 requires at least 10 trading days.</li>
+                      </ul>
+                      <p>In all cases, we recommend focusing on quality trades rather than frequent trading. Consistently applying your strategy is more important than trading every day.</p>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
@@ -171,63 +181,73 @@ export default function FAQPage() {
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="item-7">
                   <AccordionTrigger>How quickly will I get funded after passing a challenge?</AccordionTrigger>
-                  <AccordionContent>
-                    <p className="mb-2">Once you successfully pass a challenge or both phases of the Evaluation Program, your funded account is typically set up within 1-3 business days. You'll receive an email with your funded account login credentials and can start trading immediately.</p>
-                    <p>For the Evaluation Program, you'll move to Phase 2 immediately after passing Phase 1, with no delays in between the phases.</p>
+                  <AccordionContent className="break-words">
+                    <div className="prose prose-sm max-w-none text-muted-foreground">
+                      <p className="mb-2">Once you successfully pass a challenge or both phases of the Evaluation Program, your funded account is typically set up within 1-3 business days. You'll receive an email with your funded account login credentials and can start trading immediately.</p>
+                      <p>For the Evaluation Program, you'll move to Phase 2 immediately after passing Phase 1, with no delays in between the phases.</p>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
                 
                 <AccordionItem value="item-8">
                   <AccordionTrigger>What is the profit split on funded accounts?</AccordionTrigger>
-                  <AccordionContent>
-                    <p className="mb-2">Our profit split ranges from 70% to 85% in your favor, depending on the account size and challenge type:</p>
-                    <ul className="list-disc pl-5 space-y-1 mb-2">
-                      <li><strong>$10,000 accounts:</strong> 70% to you, 30% to TRFX</li>
-                      <li><strong>$50,000 accounts:</strong> 75% to you, 25% to TRFX</li>
-                      <li><strong>$100,000 accounts:</strong> 80% to you, 20% to TRFX</li>
-                      <li><strong>$200,000 accounts:</strong> 85% to you, 15% to TRFX</li>
-                    </ul>
-                    <p>The profit split applies to the net profits generated in your funded account. There are no additional fees or charges beyond this split.</p>
+                  <AccordionContent className="break-words">
+                    <div className="prose prose-sm max-w-none text-muted-foreground">
+                      <p className="mb-2">Our profit split ranges from 70% to 85% in your favor, depending on the account size and challenge type:</p>
+                      <ul className="list-disc pl-5 space-y-1 mb-2">
+                        <li><strong>$10,000 accounts:</strong> 70% to you, 30% to TRFX</li>
+                        <li><strong>$50,000 accounts:</strong> 75% to you, 25% to TRFX</li>
+                        <li><strong>$100,000 accounts:</strong> 80% to you, 20% to TRFX</li>
+                        <li><strong>$200,000 accounts:</strong> 85% to you, 15% to TRFX</li>
+                      </ul>
+                      <p>The profit split applies to the net profits generated in your funded account. There are no additional fees or charges beyond this split.</p>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
                 
                 <AccordionItem value="item-9">
                   <AccordionTrigger>How often are profits paid out?</AccordionTrigger>
-                  <AccordionContent>
-                    <p className="mb-2">We process payouts on a bi-weekly schedule. Here's how it works:</p>
-                    <ul className="list-disc pl-5 space-y-1 mb-2">
-                      <li>The payout period ends on the 15th and last day of each month.</li>
-                      <li>Payout requests are processed within 3 business days.</li>
-                      <li>Funds are typically received within 1-5 business days after processing, depending on your chosen payment method.</li>
-                    </ul>
-                    <p>There is no minimum profit requirement for payouts - you can withdraw any amount of profit you've generated during the payout period.</p>
+                  <AccordionContent className="break-words">
+                    <div className="prose prose-sm max-w-none text-muted-foreground">
+                      <p className="mb-2">We process payouts on a bi-weekly schedule. Here's how it works:</p>
+                      <ul className="list-disc pl-5 space-y-1 mb-2">
+                        <li>The payout period ends on the 15th and last day of each month.</li>
+                        <li>Payout requests are processed within 3 business days.</li>
+                        <li>Funds are typically received within 1-5 business days after processing, depending on your chosen payment method.</li>
+                      </ul>
+                      <p>There is no minimum profit requirement for payouts - you can withdraw any amount of profit you've generated during the payout period.</p>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
                 
                 <AccordionItem value="item-10">
                   <AccordionTrigger>What payment methods are available for payouts?</AccordionTrigger>
-                  <AccordionContent>
-                    <p className="mb-2">We offer several payment methods for receiving your profits:</p>
-                    <ul className="list-disc pl-5 space-y-1 mb-2">
-                      <li><strong>Bank Transfer:</strong> Direct deposit to your bank account (available worldwide).</li>
-                      <li><strong>PayPal:</strong> Fast and convenient for most countries.</li>
-                      <li><strong>Cryptocurrency:</strong> BTC, ETH, and USDT options for those preferring crypto payments.</li>
-                      <li><strong>Wise (formerly TransferWise):</strong> For international payments with lower fees.</li>
-                    </ul>
-                    <p>All payment methods are secure, and we don't charge processing fees. However, your payment provider might apply their standard fees.</p>
+                  <AccordionContent className="break-words">
+                    <div className="prose prose-sm max-w-none text-muted-foreground">
+                      <p className="mb-2">We offer several payment methods for receiving your profits:</p>
+                      <ul className="list-disc pl-5 space-y-1 mb-2">
+                        <li><strong>Bank Transfer:</strong> Direct deposit to your bank account (available worldwide).</li>
+                        <li><strong>PayPal:</strong> Fast and convenient for most countries.</li>
+                        <li><strong>Cryptocurrency:</strong> BTC, ETH, and USDT options for those preferring crypto payments.</li>
+                        <li><strong>Wise (formerly TransferWise):</strong> For international payments with lower fees.</li>
+                      </ul>
+                      <p>All payment methods are secure, and we don't charge processing fees. However, your payment provider might apply their standard fees.</p>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
                 
                 <AccordionItem value="item-11">
                   <AccordionTrigger>Can I scale up my account size over time?</AccordionTrigger>
-                  <AccordionContent>
-                    <p className="mb-2">Yes, we offer a scaling program for funded traders who demonstrate consistent profitability. Here's how it works:</p>
-                    <ul className="list-disc pl-5 space-y-1 mb-2">
-                      <li>After achieving a 10% profit in your funded account, you become eligible for a 25% account size increase.</li>
-                      <li>After the first scale-up, each additional 5% profit makes you eligible for another 25% increase.</li>
-                      <li>You can continue scaling up until reaching a maximum of $2,000,000 in account size.</li>
-                    </ul>
-                    <p>The profit split remains the same throughout the scaling process, ensuring you continue to receive the same percentage of profits as your account grows.</p>
+                  <AccordionContent className="break-words">
+                    <div className="prose prose-sm max-w-none text-muted-foreground">
+                      <p className="mb-2">Yes, we offer a scaling program for funded traders who demonstrate consistent profitability. Here's how it works:</p>
+                      <ul className="list-disc pl-5 space-y-1 mb-2">
+                        <li>After achieving a 10% profit in your funded account, you become eligible for a 25% account size increase.</li>
+                        <li>After the first scale-up, each additional 5% profit makes you eligible for another 25% increase.</li>
+                        <li>You can continue scaling up until reaching a maximum of $2,000,000 in account size.</li>
+                      </ul>
+                      <p>The profit split remains the same throughout the scaling process, ensuring you continue to receive the same percentage of profits as your account grows.</p>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
                 
