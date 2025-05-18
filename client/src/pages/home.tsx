@@ -521,78 +521,7 @@ export default function HomePage() {
         </div>
       </section>
       
-      {/* Testimonials Section */}
-      <section className="py-16 bg-background">
-        <div className="container px-4">
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">What Our Traders Say</h2>
-            <p className="text-xl text-muted-foreground">
-              Join thousands of satisfied traders who have been funded by TRFX
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <Card className="border border-border/50">
-              <CardContent className="pt-6">
-                <div className="mb-4 flex items-center">
-                  <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
-                    JD
-                  </div>
-                  <div className="ml-3">
-                    <p className="font-medium">John D.</p>
-                    <p className="text-sm text-muted-foreground">Funded Trader</p>
-                  </div>
-                </div>
-                <p className="text-muted-foreground">
-                  "I've tried several prop firms, but TRFX offers the most reasonable trading rules and the best profit split. I passed the $50K challenge in just 12 days and now trade with their capital full-time."
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="border border-border/50">
-              <CardContent className="pt-6">
-                <div className="mb-4 flex items-center">
-                  <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
-                    SM
-                  </div>
-                  <div className="ml-3">
-                    <p className="font-medium">Sarah M.</p>
-                    <p className="text-sm text-muted-foreground">Funded Trader</p>
-                  </div>
-                </div>
-                <p className="text-muted-foreground">
-                  "The payouts are consistently on time, and their support team is always available to help. I've been trading with a funded $100K account for six months now and have withdrawn over $18,000 in profits."
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="border border-border/50">
-              <CardContent className="pt-6">
-                <div className="mb-4 flex items-center">
-                  <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
-                    RL
-                  </div>
-                  <div className="ml-3">
-                    <p className="font-medium">Robert L.</p>
-                    <p className="text-sm text-muted-foreground">Funded Trader</p>
-                  </div>
-                </div>
-                <p className="text-muted-foreground">
-                  "TRFX's evaluation program is tough but fair. It really tests your discipline and risk management skills. After passing both phases, I now manage a $200K account and couldn't be happier with the opportunity."
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-          
-          <div className="text-center mt-10">
-            <Button variant="outline" asChild>
-              <Link href="/about/testimonials">
-                Read More Testimonials
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+
       
       {/* CTA section */}
       <section className="py-20 bg-muted/30 border-t">
