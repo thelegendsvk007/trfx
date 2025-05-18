@@ -1,9 +1,10 @@
 import type { Express, Request as ExpressRequest, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { WebSocketServer } from "ws";
+import { WebSocketServer, WebSocket } from "ws";
 import jwt from "jsonwebtoken";
 import { compare } from "bcrypt";
+import Stripe from "stripe";
 import { 
   insertUserSchema, 
   insertChallengePlanSchema, 
@@ -15,6 +16,15 @@ import {
   User
 } from "@shared/schema";
 import { z } from "zod";
+
+// Initialize Stripe
+if (!process.env.STRIPE_SECRET_KEY) {
+  throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
+}
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: "2023-10-16",
+});
 
 // Extend the Request type to include user
 interface Request extends ExpressRequest {
@@ -64,26 +74,155 @@ export async function registerRoutes(app: Express): Promise<Server> {
   const httpServer = createServer(app);
   
   // WebSocket server for real-time updates
-  const wss = new WebSocketServer({ server: httpServer });
+  const wss = new WebSocketServer({ server: httpServer, path: '/ws' });
+  
+  // Track connected clients with their user IDs
+  const connectedClients = new Map<string, WebSocket>();
 
-  wss.on('connection', (ws) => {
+  wss.on('connection', (ws, req) => {
+    let userId: string | null = null;
+    
+    // Authentication for WebSocket connections
     ws.on('message', (message) => {
       try {
         const data = JSON.parse(message.toString());
-        // Handle different message types
+        
+        // Handle authentication message
+        if (data.type === 'auth') {
+          try {
+            const decoded = jwt.verify(data.token, JWT_SECRET) as any;
+            userId = decoded.id.toString();
+            connectedClients.set(userId, ws);
+            
+            // Send confirmation
+            ws.send(JSON.stringify({
+              type: 'auth_success',
+              userId: userId
+            }));
+            
+            console.log(`WebSocket client authenticated: User ${userId}`);
+          } catch (err) {
+            ws.send(JSON.stringify({
+              type: 'auth_error',
+              message: 'Invalid authentication token'
+            }));
+          }
+          return;
+        }
+        
+        // Handle trading data subscriptions
+        if (data.type === 'subscribe') {
+          if (!userId) {
+            ws.send(JSON.stringify({
+              type: 'error',
+              message: 'Authentication required'
+            }));
+            return;
+          }
+          
+          if (data.channel === 'accounts') {
+            ws.send(JSON.stringify({
+              type: 'subscription_success',
+              channel: 'accounts'
+            }));
+            
+            // Send initial data
+            sendUserAccountsData(userId, ws);
+          }
+          
+          if (data.channel === 'market_data') {
+            ws.send(JSON.stringify({
+              type: 'subscription_success',
+              channel: 'market_data',
+              symbol: data.symbol || 'XAUUSD'
+            }));
+            
+            // Start sending periodic market data updates
+            startMarketDataUpdates(ws, data.symbol || 'XAUUSD');
+          }
+        }
+        
       } catch (error) {
         console.error('WebSocket message error:', error);
       }
     });
+    
+    // Handle client disconnect
+    ws.on('close', () => {
+      if (userId) {
+        connectedClients.delete(userId);
+        console.log(`WebSocket client disconnected: User ${userId}`);
+      }
+    });
   });
+
+  // Send user accounts data
+  async function sendUserAccountsData(userId: string, ws: WebSocket) {
+    try {
+      const accounts = await storage.getUserTradingAccounts(parseInt(userId));
+      
+      ws.send(JSON.stringify({
+        type: 'accounts_update',
+        accounts: accounts
+      }));
+    } catch (error) {
+      console.error('Error sending account data via WebSocket:', error);
+    }
+  }
+  
+  // Mock market data updates
+  function startMarketDataUpdates(ws: WebSocket, symbol: string) {
+    // Initial price points based on symbol
+    let basePrice = symbol === 'XAUUSD' ? 2380.45 : 1.25;
+    let volatility = symbol === 'XAUUSD' ? 5.0 : 0.005;
+    
+    // Send initial data
+    ws.send(JSON.stringify({
+      type: 'market_data',
+      symbol: symbol,
+      price: basePrice,
+      timestamp: Date.now()
+    }));
+    
+    // Simulate price updates every second
+    const interval = setInterval(() => {
+      if (ws.readyState === WebSocket.OPEN) {
+        const change = (Math.random() - 0.5) * volatility;
+        basePrice += change;
+        
+        ws.send(JSON.stringify({
+          type: 'market_data',
+          symbol: symbol,
+          price: basePrice,
+          change: change,
+          timestamp: Date.now()
+        }));
+      } else {
+        clearInterval(interval);
+      }
+    }, 1000);
+    
+    // Clear interval on client disconnect
+    ws.on('close', () => clearInterval(interval));
+  }
 
   // Broadcast to all connected clients
   const broadcast = (data: any) => {
     wss.clients.forEach((client) => {
-      if (client.readyState === 1) { // WebSocket.OPEN
+      if (client.readyState === WebSocket.OPEN) {
         client.send(JSON.stringify(data));
       }
     });
+  };
+  
+  // Send notification to specific user
+  const notifyUser = (userId: number, data: any) => {
+    const userIdStr = userId.toString();
+    const client = connectedClients.get(userIdStr);
+    
+    if (client && client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify(data));
+    }
   };
 
   // Auth routes
