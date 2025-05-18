@@ -1,5 +1,6 @@
 import * as client from "openid-client";
 import { Strategy, type VerifyFunction } from "openid-client/passport";
+
 import passport from "passport";
 import session from "express-session";
 import type { Express, RequestHandler } from "express";
@@ -26,12 +27,12 @@ export function getSession() {
   const pgStore = connectPg(session);
   const sessionStore = new pgStore({
     conString: process.env.DATABASE_URL,
-    createTableIfMissing: false,
+    createTableIfMissing: true,
     ttl: sessionTtl,
     tableName: "sessions",
   });
   return session({
-    secret: process.env.SESSION_SECRET || "development-secret-key",
+    secret: process.env.SESSION_SECRET ?? "secret-key-for-dev",
     store: sessionStore,
     resave: false,
     saveUninitialized: false,
