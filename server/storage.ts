@@ -12,65 +12,103 @@ import { eq, and, gte, desc, like, sql, lt, lte, not, or, between, isNull, isNot
 import { hash, compare } from "bcrypt";
 
 export interface IStorage {
-  // User operations
-  getUser(id: number): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
+  // User operations for Replit Auth
+  getUser(id: string): Promise<User | undefined>;
+  upsertUser(userData: { id: string, email: string | null, firstName: string | null, lastName: string | null, profileImageUrl: string | null }): Promise<User>;
+  
+  // Additional user operations
   getUserByEmail(email: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
-  updateUser(id: number, data: Partial<InsertUser>): Promise<User | undefined>;
+  updateUser(id: string, data: Partial<Omit<User, 'id'>>): Promise<User | undefined>;
   getAllUsers(page: number, limit: number): Promise<{users: User[], count: number}>;
   
   // Challenge plan operations
   createChallengePlan(plan: InsertChallengePlan): Promise<ChallengePlan>;
-  getChallengePlan(id: number): Promise<ChallengePlan | undefined>;
-  updateChallengePlan(id: number, data: Partial<InsertChallengePlan>): Promise<ChallengePlan | undefined>;
+  getChallengePlan(id: string): Promise<ChallengePlan | undefined>;
+  updateChallengePlan(id: string, data: Partial<InsertChallengePlan>): Promise<ChallengePlan | undefined>;
   getAllChallengePlans(): Promise<ChallengePlan[]>;
   getActiveChallengePlans(): Promise<ChallengePlan[]>;
   
   // Trading account operations
   createTradingAccount(account: InsertTradingAccount): Promise<TradingAccount>;
-  getTradingAccount(id: number): Promise<TradingAccount | undefined>;
+  getTradingAccount(id: string): Promise<TradingAccount | undefined>;
   getTradingAccountByNumber(accountNumber: string): Promise<TradingAccount | undefined>;
-  getUserTradingAccounts(userId: number): Promise<TradingAccount[]>;
-  updateTradingAccount(id: number, data: Partial<InsertTradingAccount>): Promise<TradingAccount | undefined>;
+  getUserTradingAccounts(userId: string): Promise<TradingAccount[]>;
+  updateTradingAccount(id: string, data: Partial<InsertTradingAccount>): Promise<TradingAccount | undefined>;
   getAllTradingAccounts(page: number, limit: number): Promise<{accounts: TradingAccount[], count: number}>;
   
   // Trade operations
   createTrade(trade: InsertTrade): Promise<Trade>;
-  getTrade(id: number): Promise<Trade | undefined>;
-  getAccountTrades(accountId: number, page: number, limit: number): Promise<{trades: Trade[], count: number}>;
-  updateTrade(id: number, data: Partial<InsertTrade>): Promise<Trade | undefined>;
+  getTrade(id: string): Promise<Trade | undefined>;
+  getAccountTrades(accountId: string, page: number, limit: number): Promise<{trades: Trade[], count: number}>;
+  updateTrade(id: string, data: Partial<InsertTrade>): Promise<Trade | undefined>;
   
   // Payment operations
   createPayment(payment: InsertPayment): Promise<Payment>;
-  getPayment(id: number): Promise<Payment | undefined>;
-  getUserPayments(userId: number): Promise<Payment[]>;
-  updatePayment(id: number, data: Partial<InsertPayment>): Promise<Payment | undefined>;
+  getPayment(id: string): Promise<Payment | undefined>;
+  getUserPayments(userId: string): Promise<Payment[]>;
+  updatePayment(id: string, data: Partial<InsertPayment>): Promise<Payment | undefined>;
   
   // Payout operations
   createPayout(payout: InsertPayout): Promise<Payout>;
-  getPayout(id: number): Promise<Payout | undefined>;
-  getUserPayouts(userId: number): Promise<Payout[]>;
-  updatePayout(id: number, data: Partial<InsertPayout>): Promise<Payout | undefined>;
+  getPayout(id: string): Promise<Payout | undefined>;
+  getUserPayouts(userId: string): Promise<Payout[]>;
+  updatePayout(id: string, data: Partial<InsertPayout>): Promise<Payout | undefined>;
   getAllPendingPayouts(): Promise<Payout[]>;
   
   // Activity log operations
   createActivityLog(log: InsertActivityLog): Promise<ActivityLog>;
-  getUserActivityLogs(userId: number, page: number, limit: number): Promise<{logs: ActivityLog[], count: number}>;
-  getAccountActivityLogs(accountId: number, page: number, limit: number): Promise<{logs: ActivityLog[], count: number}>;
+  getUserActivityLogs(userId: string, page: number, limit: number): Promise<{logs: ActivityLog[], count: number}>;
+  getAccountActivityLogs(accountId: string, page: number, limit: number): Promise<{logs: ActivityLog[], count: number}>;
   getRecentActivityLogs(limit: number): Promise<ActivityLog[]>;
 }
 
 export class DatabaseStorage implements IStorage {
   // User operations
-  async getUser(id: number): Promise<User | undefined> {
+  async getUser(id: string): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.id, id));
     return user;
   }
-
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.username, username));
-    return user;
+  
+  async upsertUser(userData: { id: string, email: string | null, firstName: string | null, lastName: string | null, profileImageUrl: string | null }): Promise<User> {
+    const { id, email, firstName, lastName, profileImageUrl } = userData;
+    
+    const [existingUser] = await db
+      .select()
+      .from(users)
+      .where(eq(users.id, id));
+      
+    if (existingUser) {
+      // Update existing user
+      const [updatedUser] = await db
+        .update(users)
+        .set({
+          email: email || existingUser.email,
+          firstName: firstName || existingUser.firstName,
+          lastName: lastName || existingUser.lastName,
+          profileImageUrl: profileImageUrl || existingUser.profileImageUrl,
+          updatedAt: new Date()
+        })
+        .where(eq(users.id, id))
+        .returning();
+        
+      return updatedUser;
+    } else {
+      // Create new user
+      const [newUser] = await db
+        .insert(users)
+        .values({
+          id,
+          email: email || null,
+          firstName: firstName || null,
+          lastName: lastName || null,
+          profileImageUrl: profileImageUrl || null,
+          role: 'trader',
+          status: 'active'
+        })
+        .returning();
+        
+      return newUser;
+    }
   }
 
   async getUserByEmail(email: string): Promise<User | undefined> {

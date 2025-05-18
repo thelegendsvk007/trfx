@@ -1,124 +1,134 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { Link, useLocation } from "wouter";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import {
-  BarChart3,
-  CircleDollarSign,
-  CreditCard,
-  Home,
+import { 
+  BarChart, 
+  CreditCard, 
+  Users, 
+  Settings, 
+  AlertTriangle,
   LogOut,
-  Settings,
-  Users,
+  Menu,
+  ChevronRight
 } from "lucide-react";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/theme-toggle-fixed";
 
 interface AdminLayoutProps {
   children: ReactNode;
 }
 
-export default function AdminLayout({ children }: AdminLayoutProps) {
+export function AdminLayout({ children }: AdminLayoutProps) {
   const [location] = useLocation();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const navigation = [
-    { name: "Dashboard", href: "/admin", icon: Home },
-    { name: "Traders", href: "/admin/traders", icon: Users },
-    { name: "Accounts", href: "/admin/accounts", icon: CreditCard },
-    { name: "Payouts", href: "/admin/payouts", icon: CircleDollarSign },
-    { name: "Analytics", href: "/admin/analytics", icon: BarChart3 },
-    { name: "Settings", href: "/admin/settings", icon: Settings },
+  const navigationItems = [
+    { name: 'Dashboard', href: '/admin', icon: BarChart },
+    { name: 'Traders', href: '/admin/traders', icon: Users },
+    { name: 'Trading Accounts', href: '/admin/accounts', icon: CreditCard },
+    { name: 'Payouts', href: '/admin/payouts', icon: CreditCard },
+    { name: 'Challenge Plans', href: '/admin/plans', icon: BarChart },
+    { name: 'System Alerts', href: '/admin/alerts', icon: AlertTriangle },
+    { name: 'Settings', href: '/admin/settings', icon: Settings },
   ];
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen overflow-hidden bg-gray-100 dark:bg-gray-900">
+      {/* Mobile sidebar backdrop */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 z-20 bg-black/50 lg:hidden" 
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <div className="hidden md:flex md:w-64 md:flex-col">
-        <div className="flex flex-col flex-1 min-h-0 border-r border-border bg-gradient-to-b from-background to-muted/30">
-          <div className="flex flex-col flex-1 pt-5 pb-4 overflow-y-auto">
-            <div className="flex items-center justify-center flex-shrink-0 px-4 mb-8">
-              <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                TradeFunded Admin
-              </h1>
-            </div>
-            <nav className="flex-1 px-3 space-y-2">
-              {navigation.map((item) => {
-                const isActive = location === item.href;
-                return (
-                  <Link href={item.href} key={item.name}>
+      <div 
+        className={cn(
+          "fixed inset-y-0 left-0 z-30 w-64 transform bg-white dark:bg-gray-800 shadow-lg transition-transform duration-200 ease-in-out lg:translate-x-0 lg:static lg:inset-0", 
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        )}
+      >
+        <div className="flex items-center justify-between h-16 px-6 border-b border-gray-200 dark:border-gray-700">
+          <Link href="/admin" className="flex items-center">
+            <BarChart className="h-8 w-8 text-primary" />
+            <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">Admin</span>
+          </Link>
+          <button 
+            onClick={() => setSidebarOpen(false)}
+            className="lg:hidden p-2 rounded-md text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300"
+          >
+            <span className="sr-only">Close sidebar</span>
+            <ChevronRight className="h-6 w-6" />
+          </button>
+        </div>
+        <nav className="px-3 py-4">
+          <ul className="space-y-1">
+            {navigationItems.map((item) => {
+              const isActive = location === item.href;
+              return (
+                <li key={item.name}>
+                  <Link href={item.href}>
                     <a
                       className={cn(
-                        "group flex items-center px-3 py-2.5 text-sm rounded-md font-medium transition-all",
-                        isActive
-                          ? "bg-primary/10 text-primary"
-                          : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                        "flex items-center px-3 py-2 text-sm font-medium rounded-md",
+                        isActive 
+                          ? "bg-primary-50 text-primary-700 dark:bg-primary-900 dark:text-primary-100" 
+                          : "text-gray-700 hover:text-gray-800 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700"
                       )}
                     >
-                      <item.icon
+                      <item.icon 
                         className={cn(
-                          "mr-3 h-5 w-5 flex-shrink-0 transition-colors",
-                          isActive ? "text-primary" : "text-muted-foreground group-hover:text-foreground"
+                          "mr-3 h-5 w-5 flex-shrink-0",
+                          isActive ? "text-primary-500 dark:text-primary-400" : "text-gray-400 dark:text-gray-500"
                         )}
                       />
-                      {item.name}
+                      <span>{item.name}</span>
                     </a>
                   </Link>
-                );
-              })}
-            </nav>
-          </div>
-          <div className="flex flex-shrink-0 p-4 border-t border-border">
-            <div className="flex items-center w-full">
-              <div className="flex-shrink-0">
-                <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary">
-                  A
-                </div>
-              </div>
-              <div className="ml-3">
-                <p className="text-sm font-medium">Admin User</p>
-                <p className="text-xs text-muted-foreground">admin@tradefunded.com</p>
-              </div>
-              <div className="flex-grow" />
-              <ThemeToggle />
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      {/* Mobile header */}
-      <div className="md:hidden flex items-center justify-between px-4 h-16 bg-background border-b border-border">
-        <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-          TradeFunded
-        </h1>
-        <div className="flex items-center space-x-3">
-          <ThemeToggle />
-          {/* Mobile menu button */}
-          <Button variant="outline" size="icon">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-5 h-5"
+                </li>
+              );
+            })}
+          </ul>
+          <div className="pt-6 mt-6 border-t border-gray-200 dark:border-gray-700">
+            <Button
+              variant="ghost"
+              className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:text-red-300 dark:hover:bg-red-900/20"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-              />
-            </svg>
-          </Button>
-        </div>
+              <LogOut className="mr-3 h-5 w-5" />
+              <span>Log out</span>
+            </Button>
+          </div>
+        </nav>
       </div>
 
       {/* Main content */}
       <div className="flex flex-col flex-1 w-0 overflow-hidden">
-        <main className="relative flex-1 overflow-y-auto focus:outline-none">
-          <div className="py-6 mx-auto px-4 sm:px-6 md:px-8">
-            {children}
+        <div className="flex items-center justify-between h-16 px-4 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="lg:hidden p-2 rounded-md text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300"
+          >
+            <span className="sr-only">Open sidebar</span>
+            <Menu className="h-6 w-6" />
+          </button>
+          <div className="flex items-center">
+            <ThemeToggle />
+            <div className="ml-3 relative">
+              {/* User dropdown would go here */}
+              <div className="h-8 w-8 rounded-full bg-primary-100 dark:bg-primary-800 flex items-center justify-center">
+                <span className="text-primary-700 dark:text-primary-200 font-medium">A</span>
+              </div>
+            </div>
           </div>
+        </div>
+
+        <main className="flex-1 overflow-y-auto p-4 bg-gray-50 dark:bg-gray-900">
+          {children}
         </main>
       </div>
     </div>
   );
 }
+
+export default AdminLayout;

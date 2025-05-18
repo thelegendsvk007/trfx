@@ -172,52 +172,62 @@ export default function LandingPage() {
         
         {/* Mobile nav menu */}
         {mobileNavOpen && (
-          <div className="sm:hidden">
-            <div className="pt-2 pb-3 space-y-1">
-              <a
-                href="#features"
-                className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300"
-              >
-                Features
-              </a>
-              <a
-                href="#pricing"
-                className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300"
-              >
-                Pricing
-              </a>
-              <a
-                href="#faq"
-                className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300"
-              >
-                FAQ
-              </a>
-            </div>
-            <div className="pt-4 pb-3 border-t border-gray-200 dark:border-gray-700">
-              <div className="space-y-1">
-                {user ? (
+          <div className="sm:hidden relative z-50">
+            {/* Backdrop */}
+            <div className="absolute inset-0 bg-background/80 backdrop-blur-md rounded-b-lg border-b border-r border-l border-border shadow-xl">
+              <div className="pt-3 pb-4">
+                <div className="space-y-1 px-4">
                   <a
-                    onClick={() => navigate("/dashboard")}
-                    className="block pl-3 pr-4 py-2 border-l-4 border-primary-500 text-base font-medium text-primary-700 dark:text-primary-300 bg-primary-50 dark:bg-primary-900 cursor-pointer"
+                    href="#features"
+                    className="flex items-center px-3 py-2 text-base font-medium rounded-md transition-colors text-foreground/80 hover:text-primary hover:bg-primary/5"
                   >
+                    <BarChart className="mr-3 h-5 w-5 text-primary/60" />
+                    Features
+                  </a>
+                  <a
+                    href="#pricing"
+                    className="flex items-center px-3 py-2 text-base font-medium rounded-md transition-colors text-foreground/80 hover:text-secondary hover:bg-secondary/5"
+                  >
+                    <CreditCard className="mr-3 h-5 w-5 text-secondary/60" />
+                    Pricing
+                  </a>
+                  <a
+                    href="#faq"
+                    className="flex items-center px-3 py-2 text-base font-medium rounded-md transition-colors text-foreground/80 hover:text-accent hover:bg-accent/5"
+                  >
+                    <Shield className="mr-3 h-5 w-5 text-accent/60" />
+                    FAQ
+                  </a>
+                </div>
+                <div className="mt-4 pt-4 border-t border-border">
+                  <div className="space-y-1 px-4">
+                    {user ? (
+                      <a
+                        onClick={() => navigate("/dashboard")}
+                    className="flex items-center px-3 py-2 text-base font-medium rounded-md bg-primary/10 text-primary"
+                  >
+                    <BarChart className="mr-3 h-5 w-5 text-primary" />
                     Dashboard
                   </a>
                 ) : (
-                  <>
+                  <div className="flex flex-col space-y-2">
                     <a
                       onClick={() => navigate("/login")}
-                      className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 cursor-pointer"
+                      className="flex items-center px-3 py-2 text-base font-medium rounded-md transition-colors text-foreground/80 hover:text-primary hover:bg-primary/5 cursor-pointer"
                     >
+                      <Users className="mr-3 h-5 w-5 text-primary/70" />
                       Log in
                     </a>
                     <a
                       onClick={() => navigate("/register")}
-                      className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 cursor-pointer"
+                      className="flex items-center px-3 py-2 text-base font-medium rounded-md bg-gradient-to-r from-primary to-accent text-white hover:opacity-90 transition-opacity cursor-pointer"
                     >
+                      <ArrowRight className="mr-3 h-5 w-5" />
                       Sign up
                     </a>
-                  </>
+                  </div>
                 )}
+              </div>
               </div>
             </div>
           </div>
