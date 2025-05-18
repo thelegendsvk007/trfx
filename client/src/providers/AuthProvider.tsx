@@ -18,6 +18,7 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   error: string | null;
+  isAuthenticated: boolean;
   login: (username: string, password: string) => Promise<void>;
   loginWithProvider: (provider: string) => Promise<void>;
   register: (userData: any) => Promise<void>;
@@ -30,8 +31,9 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 // Provider component that wraps the app and makes auth available to any child component
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true); // Start with loading true while checking storage
   const [error, setError] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [, navigate] = useLocation();
 
   // Check if user is logged in on initial load
@@ -41,11 +43,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // In a real app, we'd make an API call to check the session
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
-          setUser(JSON.parse(storedUser));
+          const userData = JSON.parse(storedUser);
+          setUser(userData);
+          setIsAuthenticated(true);
         }
       } catch (err) {
         console.error("Auth check failed", err);
         setUser(null);
+        setIsAuthenticated(false);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -74,10 +81,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       };
       
       setUser(userData);
+      setIsAuthenticated(true);
       localStorage.setItem('user', JSON.stringify(userData));
       navigate('/dashboard');
     } catch (err: any) {
       setError(err.message || "Login failed");
+      setIsAuthenticated(false);
     } finally {
       setLoading(false);
     }
@@ -104,10 +113,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       };
       
       setUser(userData);
+      setIsAuthenticated(true);
       localStorage.setItem('user', JSON.stringify(userData));
       navigate('/dashboard');
     } catch (err: any) {
       setError(err.message || `${provider} login failed`);
+      setIsAuthenticated(false);
     } finally {
       setLoading(false);
     }
@@ -134,10 +145,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       };
       
       setUser(newUser);
+      setIsAuthenticated(true);
       localStorage.setItem('user', JSON.stringify(newUser));
       navigate('/dashboard');
     } catch (err: any) {
       setError(err.message || "Registration failed");
+      setIsAuthenticated(false);
     } finally {
       setLoading(false);
     }
@@ -149,6 +162,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // This is a mock implementation - in a real app, we'd make an API call
       localStorage.removeItem('user');
       setUser(null);
+      setIsAuthenticated(false);
       navigate('/');
     } catch (err: any) {
       console.error("Logout failed", err);
@@ -159,6 +173,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     user,
     loading,
     error,
+    isAuthenticated,
     login,
     loginWithProvider,
     register,

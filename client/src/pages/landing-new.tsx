@@ -3,6 +3,7 @@ import { Activity, ArrowRight, CheckCircle, ChevronRight, LineChart, Shield, Use
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { Link } from "wouter";
 
 export default function LandingPage() {
   // Sample testimonials data
@@ -58,53 +59,33 @@ export default function LandingPage() {
           </div>
           
           <nav className="hidden md:flex items-center gap-6">
-            <Link href="/how-it-works">
-              <div className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
-                How It Works
-              </div>
+            <Link href="/how-it-works" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
+              How It Works
             </Link>
-            <Link href="/challenges">
-              <div className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
-                Challenges
-              </div>
+            <Link href="/challenges" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
+              Challenges
             </Link>
-            <Link href="/trading">
-              <div className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
-                Trading
-              </div>
+            <Link href="/trading" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
+              Trading
             </Link>
-            <Link href="/about">
-              <div className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
-                About
-              </div>
+            <Link href="/about" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
+              About
             </Link>
-            <Link href="/faq">
-              <div className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
-                FAQ
-              </div>
+            <Link href="/faq" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
+              FAQ
             </Link>
-            <Link href="/contact">
-              <div className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
-                Contact
-              </div>
+            <Link href="/contact" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
+              Contact
             </Link>
           </nav>
           
           <div className="flex items-center gap-4">
-            <Link href="/login">
-              <div>
-                <Button variant="ghost" size="sm">
-                  Log In
-                </Button>
-              </div>
-            </Link>
-            <Link href="/register">
-              <div>
-                <Button size="sm" className="bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity">
-                  Sign Up
-                </Button>
-              </div>
-            </Link>
+            <Button variant="ghost" size="sm" asChild>
+              <Link href="/login">Log In</Link>
+            </Button>
+            <Button size="sm" className="bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity" asChild>
+              <Link href="/register">Get Started</Link>
+            </Button>
           </div>
         </div>
       </header>
@@ -132,12 +113,16 @@ export default function LandingPage() {
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity">
-                  Get Started Now
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                <Button size="lg" className="bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity" asChild>
+                  <Link href="/register">
+                    Get Started Now
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
                 </Button>
-                <Button size="lg" variant="outline">
-                  Learn More
+                <Button size="lg" variant="outline" asChild>
+                  <Link href="/how-it-works">
+                    Learn More
+                  </Link>
                 </Button>
               </div>
               
