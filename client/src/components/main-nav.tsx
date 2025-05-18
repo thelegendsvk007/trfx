@@ -82,7 +82,6 @@ export function MainNav({ className }: { className?: string }) {
       dropdown: [
         { name: 'Our Company', href: '/about/company' },
         { name: 'Meet the Team', href: '/about/team' },
-        { name: 'Testimonials', href: '/about/testimonials' },
         { name: 'Contact Us', href: '/about/contact' },
       ],
     },

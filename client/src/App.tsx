@@ -22,6 +22,7 @@ import EvaluationProgramPage from "@/pages/challenges/evaluation";
 import ComparePlansPage from "@/pages/challenges/compare";
 
 // Import How It Works pages
+import ChallengeProcessPage from "@/pages/how-it-works/challenge-process";
 import EvaluationPhasePage from "@/pages/how-it-works/evaluation-phase";
 import FundingRequirementsPage from "@/pages/how-it-works/funding-requirements";
 import PayoutStructurePage from "@/pages/how-it-works/payout-structure";
@@ -70,9 +71,7 @@ function Router() {
         
         {/* How it works routes */}
         <Route path="/how-it-works" component={HowItWorksPage} />
-        <Route path="/how-it-works/challenge-process">
-          <PlaceholderPage title="Challenge Process" description="Understand the steps to complete our trading challenge and get funded." />
-        </Route>
+        <Route path="/how-it-works/challenge-process" component={ChallengeProcessPage} />
         <Route path="/how-it-works/evaluation-phase" component={EvaluationPhasePage} />
         <Route path="/how-it-works/funding-requirements" component={FundingRequirementsPage} />
         <Route path="/how-it-works/payout-structure" component={PayoutStructurePage} />
@@ -95,9 +94,7 @@ function Router() {
         {/* About routes */}
         <Route path="/about/company" component={CompanyPage} />
         <Route path="/about/team" component={TeamPage} />
-        <Route path="/about/testimonials">
-          <PlaceholderPage title="Testimonials" description="See what our funded traders say about their experience with TRFX." />
-        </Route>
+
         <Route path="/about/contact" component={ContactPage} />
         
         {/* Payment and Withdrawal routes */}
