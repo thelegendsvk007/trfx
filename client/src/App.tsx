@@ -15,6 +15,11 @@ import PayoutsPage from "@/pages/payouts-new";
 import ProfilePage from "@/pages/profile-new";
 import LoginPage from "@/pages/login";
 import RegisterPage from "@/pages/register";
+import HowItWorksPage from "@/pages/how-it-works";
+import AboutPage from "@/pages/about";
+import ContactPage from "@/pages/contact";
+import TradingPage from "@/pages/trading";
+import FAQPage from "@/pages/faq";
 import AdminDashboardPage from "@/pages/admin/dashboard";
 import AdminTradersPage from "@/pages/admin/traders";
 import AdminAccountsPage from "@/pages/admin/accounts";
@@ -34,6 +39,11 @@ function Router() {
       <Route path="/challenges" component={ChallengesPage} />
       <Route path="/checkout" component={CheckoutPage} />
       <Route path="/profile" component={ProfilePage} />
+      <Route path="/how-it-works" component={HowItWorksPage} />
+      <Route path="/about" component={AboutPage} />
+      <Route path="/contact" component={ContactPage} />
+      <Route path="/trading" component={TradingPage} />
+      <Route path="/faq" component={FAQPage} />
       <Route path="/admin" component={AdminDashboardPage} />
       <Route path="/admin/traders" component={AdminTradersPage} />
       <Route path="/admin/accounts" component={AdminAccountsPage} />
