@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { ArrowRight, Check, ChevronRight, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PageTemplate from "@/components/page-template";
 
@@ -12,6 +12,7 @@ export default function ComparePlansPage() {
       title="TRFX - Compare Challenge Plans"
       description="Compare our different funded trading challenge plans side by side and find the perfect match for your trading style."
     >
+      <TooltipProvider defaultScopeStrategy={(scope) => document.body}>
       {/* Hero Section */}
       <section className="bg-gradient-to-b from-background to-background/90 border-b border-border/40 py-16 md:py-20">
         <div className="container px-4">
@@ -606,6 +607,7 @@ export default function ComparePlansPage() {
           </div>
         </div>
       </section>
+      </TooltipProvider>
     </PageTemplate>
   );
 }
