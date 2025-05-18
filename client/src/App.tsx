@@ -29,6 +29,7 @@ import PayoutStructurePage from "@/pages/how-it-works/payout-structure";
 import TradingRulesPage from "@/pages/how-it-works/trading-rules";
 
 // Import Trading pages
+import TradingPage from "@/pages/trading";
 import TradingDashboardPage from "@/pages/trading/dashboard";
 import SpreadsLeveragePage from "@/pages/trading/spreads-leverage";
 
@@ -62,7 +63,14 @@ function Router() {
         {/* Main section routes */}
         <Route path="/dashboard" component={TradingDashboardPage} />
         <Route path="/trading">
-          <PlaceholderPage title="Trading" description="Access your trading platforms and real-time market data." />
+          <div className="container py-12">
+            <div className="text-center">
+              <h1 className="text-4xl font-bold tracking-tight mb-3">Trading</h1>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Access your trading platforms and real-time market data.
+              </p>
+            </div>
+          </div>
         </Route>
         <Route path="/challenges">
           <PlaceholderPage title="Trading Challenges" description="Prove your trading skills and get funded with our trading challenges." />
