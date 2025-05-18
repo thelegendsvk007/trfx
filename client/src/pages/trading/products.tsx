@@ -433,6 +433,74 @@ export default function TradingProductsPage() {
                       </TableBody>
                     </Table>
                     
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+                      <div className="bg-muted/30 p-5 rounded-lg">
+                        <h3 className="text-lg font-semibold mb-2 flex items-center">
+                          <Sparkles className="h-5 w-5 text-primary mr-2" />
+                          Benefits of Crypto CFD Trading
+                        </h3>
+                        <ul className="space-y-1.5 text-sm">
+                          <li className="flex items-start gap-2">
+                            <div className="h-5 w-5 flex items-center justify-center shrink-0">
+                              <span className="block h-1.5 w-1.5 rounded-full bg-primary"></span>
+                            </div>
+                            <span>Trade both rising and falling markets</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="h-5 w-5 flex items-center justify-center shrink-0">
+                              <span className="block h-1.5 w-1.5 rounded-full bg-primary"></span>
+                            </div>
+                            <span>No need for cryptocurrency wallets or exchanges</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="h-5 w-5 flex items-center justify-center shrink-0">
+                              <span className="block h-1.5 w-1.5 rounded-full bg-primary"></span>
+                            </div>
+                            <span>Enhanced security without direct exposure to crypto exchanges</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="h-5 w-5 flex items-center justify-center shrink-0">
+                              <span className="block h-1.5 w-1.5 rounded-full bg-primary"></span>
+                            </div>
+                            <span>Lower capital requirements through leverage</span>
+                          </li>
+                        </ul>
+                      </div>
+                      
+                      <div className="bg-muted/30 p-5 rounded-lg">
+                        <h3 className="text-lg font-semibold mb-2 flex items-center">
+                          <Info className="h-5 w-5 text-primary mr-2" />
+                          Trading Conditions
+                        </h3>
+                        <ul className="space-y-1.5 text-sm">
+                          <li className="flex items-start gap-2">
+                            <div className="h-5 w-5 flex items-center justify-center shrink-0">
+                              <span className="block h-1.5 w-1.5 rounded-full bg-primary"></span>
+                            </div>
+                            <span>Available 24/7, including weekends</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="h-5 w-5 flex items-center justify-center shrink-0">
+                              <span className="block h-1.5 w-1.5 rounded-full bg-primary"></span>
+                            </div>
+                            <span>Floating spreads that reflect market conditions</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="h-5 w-5 flex items-center justify-center shrink-0">
+                              <span className="block h-1.5 w-1.5 rounded-full bg-primary"></span>
+                            </div>
+                            <span>Lower leverage (1:5) to manage volatility risk</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="h-5 w-5 flex items-center justify-center shrink-0">
+                              <span className="block h-1.5 w-1.5 rounded-full bg-primary"></span>
+                            </div>
+                            <span>Zero commission on all crypto trades</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    
                     <div className="mt-6 bg-muted/40 p-4 rounded-lg">
                       <div className="flex items-start">
                         <Info className="h-5 w-5 text-primary mr-2 mt-0.5" />
@@ -513,8 +581,81 @@ export default function TradingProductsPage() {
         </div>
       </section>
       
-      {/* CTA Section */}
+      {/* Trading Education */}
       <section className="py-16 bg-background border-t border-border/40">
+        <div className="container px-4">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-3xl font-bold tracking-tight text-center mb-8">
+              Trading Education & Resources
+            </h2>
+            <p className="text-lg text-muted-foreground text-center mb-12 max-w-3xl mx-auto">
+              Enhance your trading knowledge and skills with our comprehensive educational resources
+            </p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <Card className="border border-border/50 bg-card/50">
+                <CardHeader>
+                  <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 text-primary mb-4">
+                    <BarChart className="h-6 w-6" />
+                  </div>
+                  <CardTitle>Market Analysis</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground mb-4">
+                    Access daily market analysis, technical insights, and fundamental news to inform your trading decisions across all asset classes.
+                  </p>
+                  <Button variant="outline" size="sm" className="w-full" asChild>
+                    <Link href="/education/market-analysis">
+                      Learn More
+                    </Link>
+                  </Button>
+                </CardContent>
+              </Card>
+              
+              <Card className="border border-border/50 bg-card/50">
+                <CardHeader>
+                  <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 text-primary mb-4">
+                    <Sparkles className="h-6 w-6" />
+                  </div>
+                  <CardTitle>Trading Strategies</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground mb-4">
+                    Discover proven trading strategies for different market conditions, from day trading techniques to long-term position management.
+                  </p>
+                  <Button variant="outline" size="sm" className="w-full" asChild>
+                    <Link href="/education/strategies">
+                      Explore Strategies
+                    </Link>
+                  </Button>
+                </CardContent>
+              </Card>
+              
+              <Card className="border border-border/50 bg-card/50">
+                <CardHeader>
+                  <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 text-primary mb-4">
+                    <Settings className="h-6 w-6" />
+                  </div>
+                  <CardTitle>Risk Management</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground mb-4">
+                    Learn essential risk management principles to protect your capital and maximize your potential in the markets.
+                  </p>
+                  <Button variant="outline" size="sm" className="w-full" asChild>
+                    <Link href="/education/risk-management">
+                      Master Risk
+                    </Link>
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* CTA Section */}
+      <section className="py-16 bg-muted/30 border-t border-border/40">
         <div className="container px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl font-bold tracking-tight mb-4">Ready to Start Trading?</h2>
@@ -523,7 +664,7 @@ export default function TradingProductsPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity" asChild>
-                <Link href="/challenges">
+                <Link href="/challenges/compare">
                   Explore Challenges
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
