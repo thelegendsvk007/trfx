@@ -174,7 +174,7 @@ export function MainNav({ className }: { className?: string }) {
       <div className="flex w-full justify-between">
         <div className="flex items-center">
           <Link to="/" className="flex items-center space-x-2 mr-6">
-            <span className="text-xl font-bold">TRFX</span>
+            <span className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">TRFX</span>
           </Link>
 
           {!isMobile && (

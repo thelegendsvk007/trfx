@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Link } from "wouter";
+import { Layout } from "@/components/layout";
+import PageTemplate from "@/components/page-template";
 
 export default function LandingPage() {
   // Sample testimonials data
@@ -49,46 +51,10 @@ export default function LandingPage() {
   ];
   
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Header/Navigation */}
-      <header className="sticky top-0 z-40 border-b bg-background/70 backdrop-blur-md">
-        <div className="container flex h-16 items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Activity className="h-6 w-6 text-primary" />
-            <span className="text-xl font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">TRFX</span>
-          </div>
-          
-          <nav className="hidden md:flex items-center gap-6">
-            <Link href="/how-it-works" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
-              How It Works
-            </Link>
-            <Link href="/challenges" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
-              Challenges
-            </Link>
-            <Link href="/trading" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
-              Trading
-            </Link>
-            <Link href="/about" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
-              About
-            </Link>
-            <Link href="/faq" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
-              FAQ
-            </Link>
-            <Link href="/contact" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
-              Contact
-            </Link>
-          </nav>
-          
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="sm" asChild>
-              <Link href="/login">Log In</Link>
-            </Button>
-            <Button size="sm" className="bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity" asChild>
-              <Link href="/register">Get Started</Link>
-            </Button>
-          </div>
-        </div>
-      </header>
+    <PageTemplate 
+      title="TRFX - Get Funded to Trade Like a Pro" 
+      description="Prove your trading skills and get funded with accounts up to $200,000. Keep up to 80% of the profits with no risk of your own capital."
+    >
       
       {/* Hero section */}
       <section className="relative py-20 md:py-32 bg-background">
