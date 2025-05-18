@@ -1,15 +1,16 @@
 import { Link } from "wouter";
-import { ArrowRight, ChevronRight, BarChart4, CheckCircle, AlertCircle, Medal, Clock, Target } from "lucide-react";
+import { ArrowRight, Target, BarChart3, ShieldCheck, Clock, Award, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import PageTemplate from "@/components/page-template";
 
 export default function EvaluationPhasePage() {
   return (
     <PageTemplate
       title="TRFX - Evaluation Phase"
-      description="Learn about the evaluation phases and their requirements for TRFX's funded trading program."
+      description="Learn about the TRFX evaluation process to qualify for a funded trading account."
     >
       {/* Hero Section */}
       <section className="bg-gradient-to-b from-background to-background/90 border-b border-border/40 py-16 md:py-24">
@@ -19,246 +20,240 @@ export default function EvaluationPhasePage() {
               Evaluation Phase
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
-              Understanding our two-phase evaluation process
+              Our structured approach to identify skilled traders for funded accounts
             </p>
-            <Button size="lg" className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity" asChild>
-              <Link href="/challenges/evaluation">
-                View Evaluation Program
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
           </div>
         </div>
       </section>
       
-      {/* Phase Overview */}
+      {/* Two-Phase Process Overview */}
       <section className="py-16 bg-background">
         <div className="container px-4">
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-3xl font-bold tracking-tight mb-4">Two-Phase Approach</h2>
-            <p className="text-lg text-muted-foreground">
-              Our Evaluation Program consists of two distinct phases to thoroughly assess your trading consistency
-            </p>
-          </div>
-          
-          <div className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              {/* Phase 1 */}
-              <Card className="border border-border/50 relative overflow-hidden">
-                <div className="absolute -right-10 -top-10 h-20 w-20 bg-primary/10 rounded-full"></div>
-                <div className="absolute -right-8 -top-8 h-16 w-16 bg-primary/10 rounded-full"></div>
-                <div className="absolute right-6 top-6 h-10 w-10 bg-primary/20 rounded-full flex items-center justify-center">
-                  <span className="font-bold">1</span>
-                </div>
-                <CardHeader>
-                  <CardTitle className="text-2xl">Phase 1: Initial Assessment</CardTitle>
-                  <CardDescription>Your first step toward funding</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center border-b border-border pb-2">
-                      <span className="font-medium">Profit Target</span>
-                      <span>6%</span>
-                    </div>
-                    <div className="flex justify-between items-center border-b border-border pb-2">
-                      <span className="font-medium">Maximum Drawdown</span>
-                      <span>5%</span>
-                    </div>
-                    <div className="flex justify-between items-center border-b border-border pb-2">
-                      <span className="font-medium">Daily Drawdown Limit</span>
-                      <span>4%</span>
-                    </div>
-                    <div className="flex justify-between items-center border-b border-border pb-2">
-                      <span className="font-medium">Minimum Trading Days</span>
-                      <span>5 days</span>
-                    </div>
-                    <div className="flex justify-between items-center border-b border-border pb-2">
-                      <span className="font-medium">Maximum Duration</span>
-                      <span>30 calendar days</span>
-                    </div>
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold tracking-tight mb-4">Two-Phase Evaluation Process</h2>
+              <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+                Our comprehensive evaluation consists of two distinct phases designed to identify traders with consistent profitability and disciplined risk management
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+              <Card className="border border-border/50">
+                <CardHeader className="pb-2">
+                  <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 text-primary mb-3">
+                    <div className="text-lg font-bold">1</div>
                   </div>
-                  
-                  <div className="space-y-3">
-                    <h3 className="font-medium">Key Objectives</h3>
-                    <div className="space-y-2">
-                      <div className="flex items-start gap-2">
-                        <CheckCircle className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
-                        <p className="text-sm text-muted-foreground">Demonstrate basic trading proficiency by reaching the 6% profit target</p>
+                  <CardTitle className="text-xl">Phase 1: Initial Challenge</CardTitle>
+                  <CardDescription>First step in proving your trading skills</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground mb-4">
+                    Phase 1 is your first opportunity to demonstrate trading discipline and profitability. You'll trade a simulated account with real market conditions to meet specific profit targets while adhering to risk management rules.
+                  </p>
+                  <div className="space-y-4">
+                    <div>
+                      <div className="flex justify-between mb-1 text-sm">
+                        <span>Profit Target: 8%</span>
+                        <span className="font-medium">Required</span>
                       </div>
-                      <div className="flex items-start gap-2">
-                        <CheckCircle className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
-                        <p className="text-sm text-muted-foreground">Show risk management discipline by staying within drawdown limits</p>
+                      <Progress value={80} className="h-2" />
+                    </div>
+                    <div>
+                      <div className="flex justify-between mb-1 text-sm">
+                        <span>Maximum Drawdown: 5%</span>
+                        <span className="font-medium">Limit</span>
                       </div>
-                      <div className="flex items-start gap-2">
-                        <CheckCircle className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
-                        <p className="text-sm text-muted-foreground">Trade on at least 5 different calendar days to show consistency</p>
+                      <Progress value={50} className="h-2 bg-muted" />
+                    </div>
+                    <div>
+                      <div className="flex justify-between mb-1 text-sm">
+                        <span>Duration: 30 Days</span>
+                        <span className="font-medium">Maximum</span>
                       </div>
+                      <Progress value={30} className="h-2" />
                     </div>
                   </div>
                 </CardContent>
-                <CardFooter>
-                  <div className="w-full">
-                    <div className="text-sm text-muted-foreground mb-2">After successful completion</div>
-                    <div className="p-3 bg-muted/30 rounded-md text-sm">
-                      <p className="font-medium">You'll automatically advance to Phase 2</p>
-                      <p className="text-muted-foreground mt-1">Your Phase 2 account will be set up within 24 hours with the same account size</p>
-                    </div>
-                  </div>
+                <CardFooter className="pt-2 border-t border-border/50 flex items-center justify-between bg-muted/20">
+                  <p className="text-sm text-muted-foreground">
+                    Progress to Phase 2 after success
+                  </p>
+                  <ChevronRight className="h-4 w-4 text-muted-foreground" />
                 </CardFooter>
               </Card>
               
-              {/* Phase 2 */}
-              <Card className="border border-border/50 relative overflow-hidden">
-                <div className="absolute -right-10 -top-10 h-20 w-20 bg-primary/10 rounded-full"></div>
-                <div className="absolute -right-8 -top-8 h-16 w-16 bg-primary/10 rounded-full"></div>
-                <div className="absolute right-6 top-6 h-10 w-10 bg-primary/20 rounded-full flex items-center justify-center">
-                  <span className="font-bold">2</span>
-                </div>
-                <CardHeader>
-                  <CardTitle className="text-2xl">Phase 2: Extended Verification</CardTitle>
-                  <CardDescription>Proving long-term consistency</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center border-b border-border pb-2">
-                      <span className="font-medium">Profit Target</span>
-                      <span>6%</span>
-                    </div>
-                    <div className="flex justify-between items-center border-b border-border pb-2">
-                      <span className="font-medium">Maximum Drawdown</span>
-                      <span>5%</span>
-                    </div>
-                    <div className="flex justify-between items-center border-b border-border pb-2">
-                      <span className="font-medium">Daily Drawdown Limit</span>
-                      <span>4%</span>
-                    </div>
-                    <div className="flex justify-between items-center border-b border-border pb-2">
-                      <span className="font-medium">Minimum Trading Days</span>
-                      <span>10 days</span>
-                    </div>
-                    <div className="flex justify-between items-center border-b border-border pb-2">
-                      <span className="font-medium">Maximum Duration</span>
-                      <span>60 calendar days</span>
-                    </div>
+              <Card className="border border-border/50">
+                <CardHeader className="pb-2">
+                  <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 text-primary mb-3">
+                    <div className="text-lg font-bold">2</div>
                   </div>
-                  
-                  <div className="space-y-3">
-                    <h3 className="font-medium">Key Objectives</h3>
-                    <div className="space-y-2">
-                      <div className="flex items-start gap-2">
-                        <CheckCircle className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
-                        <p className="text-sm text-muted-foreground">Verify trading consistency over a longer timeframe</p>
+                  <CardTitle className="text-xl">Phase 2: Verification</CardTitle>
+                  <CardDescription>Final step before funding</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground mb-4">
+                    Phase 2 verifies your consistency and ability to maintain profitability over time. The profit target is lower, but the focus is on sustainable trading with the same strict risk management rules.
+                  </p>
+                  <div className="space-y-4">
+                    <div>
+                      <div className="flex justify-between mb-1 text-sm">
+                        <span>Profit Target: 5%</span>
+                        <span className="font-medium">Required</span>
                       </div>
-                      <div className="flex items-start gap-2">
-                        <CheckCircle className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
-                        <p className="text-sm text-muted-foreground">Demonstrate sustainable trading strategies with the 10-day minimum</p>
+                      <Progress value={50} className="h-2" />
+                    </div>
+                    <div>
+                      <div className="flex justify-between mb-1 text-sm">
+                        <span>Maximum Drawdown: 5%</span>
+                        <span className="font-medium">Limit</span>
                       </div>
-                      <div className="flex items-start gap-2">
-                        <CheckCircle className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
-                        <p className="text-sm text-muted-foreground">Maintain consistent risk management discipline</p>
+                      <Progress value={50} className="h-2 bg-muted" />
+                    </div>
+                    <div>
+                      <div className="flex justify-between mb-1 text-sm">
+                        <span>Duration: 60 Days</span>
+                        <span className="font-medium">Maximum</span>
                       </div>
+                      <Progress value={60} className="h-2" />
                     </div>
                   </div>
                 </CardContent>
-                <CardFooter>
-                  <div className="w-full">
-                    <div className="text-sm text-muted-foreground mb-2">After successful completion</div>
-                    <div className="p-3 bg-muted/30 rounded-md text-sm">
-                      <p className="font-medium">You'll receive a funded trading account</p>
-                      <p className="text-muted-foreground mt-1">Your funded account will be set up within 1-3 business days with up to 85% profit split</p>
-                    </div>
-                  </div>
+                <CardFooter className="pt-2 border-t border-border/50 flex items-center justify-between bg-muted/20">
+                  <p className="text-sm text-muted-foreground">
+                    Receive funded account after success
+                  </p>
+                  <Award className="h-4 w-4 text-muted-foreground" />
                 </CardFooter>
               </Card>
+            </div>
+            
+            <div className="mt-10">
+              <Alert className="bg-muted/30 border-primary/20">
+                <AlertDescription>
+                  <p>
+                    <strong>Fast Track Option:</strong> Traders who demonstrate exceptional skill during Phase 1 by achieving 12% profit with the same risk parameters may qualify for our Fast Track program, allowing them to skip Phase 2 and receive immediate funding.
+                  </p>
+                </AlertDescription>
+              </Alert>
             </div>
           </div>
         </div>
       </section>
       
-      {/* Available Account Sizes */}
+      {/* Detailed Rules */}
       <section className="py-16 bg-muted/30 border-y border-border/40">
         <div className="container px-4">
           <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-3xl font-bold tracking-tight mb-4">Available Account Sizes</h2>
+            <h2 className="text-3xl font-bold tracking-tight mb-4">Evaluation Rules & Guidelines</h2>
             <p className="text-lg text-muted-foreground">
-              Choose from three account sizes in our Evaluation Program
+              Key parameters and rules that apply during the evaluation phases
             </p>
           </div>
           
-          <div className="max-w-4xl mx-auto overflow-hidden rounded-lg border border-border/50 bg-card">
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-muted/50">
-                  <TableHead className="w-[250px]">Account Size</TableHead>
-                  <TableHead>Challenge Fee</TableHead>
-                  <TableHead>Profit Split</TableHead>
-                  <TableHead>Targets & Limits</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                <TableRow>
-                  <TableCell className="font-medium">$25,000</TableCell>
-                  <TableCell>$149</TableCell>
-                  <TableCell>75% to trader</TableCell>
-                  <TableCell>
-                    <span className="block">6% profit target per phase</span>
-                    <span className="block text-sm text-muted-foreground">5% max drawdown</span>
-                  </TableCell>
-                </TableRow>
-                <TableRow className="bg-muted/20">
-                  <TableCell className="font-medium">$100,000</TableCell>
-                  <TableCell>$349</TableCell>
-                  <TableCell>80% to trader</TableCell>
-                  <TableCell>
-                    <span className="block">6% profit target per phase</span>
-                    <span className="block text-sm text-muted-foreground">5% max drawdown</span>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium">$200,000</TableCell>
-                  <TableCell>$599</TableCell>
-                  <TableCell>85% to trader</TableCell>
-                  <TableCell>
-                    <span className="block">6% profit target per phase</span>
-                    <span className="block text-sm text-muted-foreground">5% max drawdown</span>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </div>
-          
-          <div className="text-center mt-8">
-            <Button variant="outline" asChild>
-              <Link href="/challenges/evaluation">
-                View Evaluation Program Details
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-      
-      {/* Key Differences */}
-      <section className="py-16 bg-background">
-        <div className="container px-4">
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-3xl font-bold tracking-tight mb-4">Key Benefits of the Two-Phase Approach</h2>
-            <p className="text-lg text-muted-foreground">
-              Why some traders prefer our Evaluation Program over single-phase challenges
-            </p>
-          </div>
-          
-          <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
             <Card className="border border-border/50">
               <CardHeader className="pb-2">
                 <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 text-primary mb-3">
                   <Target className="h-6 w-6" />
                 </div>
-                <CardTitle className="text-xl">Lower Profit Target</CardTitle>
+                <CardTitle className="text-xl">Profit Targets</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">
-                  With a 6% profit target per phase (compared to 8-12% for single-phase challenges), our evaluation offers more achievable goals for methodical traders who prefer steady, consistent growth.
-                </p>
+                <ul className="space-y-3 text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                      <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                        <circle cx="4" cy="4" r="3" />
+                      </svg>
+                    </div>
+                    <span><strong>Phase 1:</strong> 8% minimum profit target</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                      <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                        <circle cx="4" cy="4" r="3" />
+                      </svg>
+                    </div>
+                    <span><strong>Phase 2:</strong> 5% minimum profit target</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                      <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                        <circle cx="4" cy="4" r="3" />
+                      </svg>
+                    </div>
+                    <span>No daily minimum profit requirements</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                      <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                        <circle cx="4" cy="4" r="3" />
+                      </svg>
+                    </div>
+                    <span>Profit measured as percentage of initial account balance</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                      <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                        <circle cx="4" cy="4" r="3" />
+                      </svg>
+                    </div>
+                    <span>Fast Track at 12%+ profit in Phase 1</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+            
+            <Card className="border border-border/50">
+              <CardHeader className="pb-2">
+                <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 text-primary mb-3">
+                  <ShieldCheck className="h-6 w-6" />
+                </div>
+                <CardTitle className="text-xl">Risk Management</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3 text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                      <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                        <circle cx="4" cy="4" r="3" />
+                      </svg>
+                    </div>
+                    <span><strong>Maximum Drawdown:</strong> 5% of account equity</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                      <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                        <circle cx="4" cy="4" r="3" />
+                      </svg>
+                    </div>
+                    <span><strong>Daily Drawdown Limit:</strong> 3% of account equity</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                      <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                        <circle cx="4" cy="4" r="3" />
+                      </svg>
+                    </div>
+                    <span>Drawdown calculated from highest equity point</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                      <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                        <circle cx="4" cy="4" r="3" />
+                      </svg>
+                    </div>
+                    <span>Maximum lot size: 10 standard lots per trade</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                      <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                        <circle cx="4" cy="4" r="3" />
+                      </svg>
+                    </div>
+                    <span>Breach of any risk rule results in disqualification</span>
+                  </li>
+                </ul>
               </CardContent>
             </Card>
             
@@ -267,206 +262,562 @@ export default function EvaluationPhasePage() {
                 <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 text-primary mb-3">
                   <Clock className="h-6 w-6" />
                 </div>
-                <CardTitle className="text-xl">Extended Timeframe</CardTitle>
+                <CardTitle className="text-xl">Time Parameters</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">
-                  With 30 days for Phase 1 and 60 days for Phase 2, you have more time to implement your trading strategy without rushing. This reduces pressure and allows for a more natural trading approach.
-                </p>
+                <ul className="space-y-3 text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                      <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                        <circle cx="4" cy="4" r="3" />
+                      </svg>
+                    </div>
+                    <span><strong>Phase 1 Duration:</strong> Maximum 30 calendar days</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                      <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                        <circle cx="4" cy="4" r="3" />
+                      </svg>
+                    </div>
+                    <span><strong>Phase 2 Duration:</strong> Maximum 60 calendar days</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                      <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                        <circle cx="4" cy="4" r="3" />
+                      </svg>
+                    </div>
+                    <span><strong>Minimum Trading Days:</strong> 5 days in Phase 1, 10 days in Phase 2</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                      <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                        <circle cx="4" cy="4" r="3" />
+                      </svg>
+                    </div>
+                    <span>Trading allowed 24/5 during market hours</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                      <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                        <circle cx="4" cy="4" r="3" />
+                      </svg>
+                    </div>
+                    <span>Accounts expire if targets not met within timeframe</span>
+                  </li>
+                </ul>
               </CardContent>
             </Card>
-            
-            <Card className="border border-border/50">
-              <CardHeader className="pb-2">
-                <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 text-primary mb-3">
-                  <Medal className="h-6 w-6" />
-                </div>
-                <CardTitle className="text-xl">Proven Consistency</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  By requiring trading on 5 days in Phase 1 and 10 days in Phase 2, we ensure funded traders have demonstrated consistent performance over time, not just short-term success.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-      
-      {/* Tips for Success */}
-      <section className="py-16 bg-muted/30 border-y border-border/40">
-        <div className="container px-4">
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-3xl font-bold tracking-tight mb-4">Tips for Success</h2>
-            <p className="text-lg text-muted-foreground">
-              Strategies to help you complete both evaluation phases successfully
-            </p>
           </div>
           
-          <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <div className="flex items-start gap-4">
-                <div className="flex items-center justify-center h-8 w-8 rounded-full bg-primary/10 text-primary shrink-0 mt-1">
-                  <span className="font-bold">1</span>
+          <div className="max-w-3xl mx-auto mt-10">
+            <Card className="border border-border/50">
+              <CardHeader>
+                <CardTitle className="text-xl">Trading Instruments & Restrictions</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <h3 className="font-medium mb-3">Available Instruments</h3>
+                    <ul className="space-y-2 text-muted-foreground">
+                      <li className="flex items-start gap-2">
+                        <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                          <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                            <circle cx="4" cy="4" r="3" />
+                          </svg>
+                        </div>
+                        <span>Major, minor and exotic forex pairs</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                          <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                            <circle cx="4" cy="4" r="3" />
+                          </svg>
+                        </div>
+                        <span>Major stock indices (US, European, Asian)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                          <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                            <circle cx="4" cy="4" r="3" />
+                          </svg>
+                        </div>
+                        <span>Metals (Gold, Silver)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                          <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                            <circle cx="4" cy="4" r="3" />
+                          </svg>
+                        </div>
+                        <span>Energies (WTI Oil, Brent Oil, Natural Gas)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                          <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                            <circle cx="4" cy="4" r="3" />
+                          </svg>
+                        </div>
+                        <span>Selected cryptocurrencies</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="font-medium mb-3">Trading Restrictions</h3>
+                    <ul className="space-y-2 text-muted-foreground">
+                      <li className="flex items-start gap-2">
+                        <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                          <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                            <circle cx="4" cy="4" r="3" />
+                          </svg>
+                        </div>
+                        <span>No overnight holding of high-risk news events</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                          <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                            <circle cx="4" cy="4" r="3" />
+                          </svg>
+                        </div>
+                        <span>No martingale or grid trading strategies</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                          <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                            <circle cx="4" cy="4" r="3" />
+                          </svg>
+                        </div>
+                        <span>No fully automated trading (EAs)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                          <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                            <circle cx="4" cy="4" r="3" />
+                          </svg>
+                        </div>
+                        <span>No copy trading or signal following</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                          <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                            <circle cx="4" cy="4" r="3" />
+                          </svg>
+                        </div>
+                        <span>No arbitrage or latency exploitation</span>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-lg font-medium mb-1">Focus on Consistency, Not Speed</h3>
-                  <p className="text-muted-foreground">
-                    The evaluation is designed to identify consistent traders, not those who take excessive risks for quick gains. Aim for steady progress toward the profit target rather than trying to achieve it in the minimum number of days.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-4">
-                <div className="flex items-center justify-center h-8 w-8 rounded-full bg-primary/10 text-primary shrink-0 mt-1">
-                  <span className="font-bold">2</span>
-                </div>
-                <div>
-                  <h3 className="text-lg font-medium mb-1">Plan Your Trading Days</h3>
-                  <p className="text-muted-foreground">
-                    With minimum trading day requirements (5 for Phase 1, 10 for Phase 2), plan your schedule to ensure you meet these requirements. Consider trading smaller positions on some days to avoid unnecessary risk while fulfilling the trading day requirement.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-4">
-                <div className="flex items-center justify-center h-8 w-8 rounded-full bg-primary/10 text-primary shrink-0 mt-1">
-                  <span className="font-bold">3</span>
-                </div>
-                <div>
-                  <h3 className="text-lg font-medium mb-1">Respect Daily Drawdown Limits</h3>
-                  <p className="text-muted-foreground">
-                    Remember that the 4% daily drawdown limit is separate from the 5% maximum overall drawdown. If you have a bad day approaching the daily limit, consider closing your positions and continuing fresh the next day.
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="space-y-4">
-              <div className="flex items-start gap-4">
-                <div className="flex items-center justify-center h-8 w-8 rounded-full bg-primary/10 text-primary shrink-0 mt-1">
-                  <span className="font-bold">4</span>
-                </div>
-                <div>
-                  <h3 className="text-lg font-medium mb-1">Use Phase 1 as Practice</h3>
-                  <p className="text-muted-foreground">
-                    Consider Phase 1 as not just a test but also preparation for Phase 2. Use it to refine your strategy and risk management approach so you're fully prepared for the longer Phase 2 evaluation.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-4">
-                <div className="flex items-center justify-center h-8 w-8 rounded-full bg-primary/10 text-primary shrink-0 mt-1">
-                  <span className="font-bold">5</span>
-                </div>
-                <div>
-                  <h3 className="text-lg font-medium mb-1">Manage Position Sizes Carefully</h3>
-                  <p className="text-muted-foreground">
-                    Adjust your position sizes based on market volatility and your distance from profit targets or drawdown limits. As you get closer to either, consider reducing position sizes to protect your progress.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-4">
-                <div className="flex items-center justify-center h-8 w-8 rounded-full bg-primary/10 text-primary shrink-0 mt-1">
-                  <span className="font-bold">6</span>
-                </div>
-                <div>
-                  <h3 className="text-lg font-medium mb-1">Keep a Trading Journal</h3>
-                  <p className="text-muted-foreground">
-                    Document your trades, strategies, and lessons learned throughout both phases. This not only helps you improve but also provides valuable insights when you transition to trading with the funded account.
-                  </p>
-                </div>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
       
-      {/* FAQ Section */}
+      {/* Evaluation Plans */}
       <section className="py-16 bg-background">
         <div className="container px-4">
           <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-3xl font-bold tracking-tight mb-4">Frequently Asked Questions</h2>
+            <h2 className="text-3xl font-bold tracking-tight mb-4">Evaluation Account Options</h2>
             <p className="text-lg text-muted-foreground">
-              Common questions about our evaluation phases
+              Choose the account size that matches your trading goals and experience
             </p>
           </div>
           
-          <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="border border-border/50">
-              <CardHeader>
-                <CardTitle className="text-lg">Is there a waiting period between phases?</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  No, there is no waiting period between Phase 1 and Phase 2. Once you successfully complete Phase 1, your Phase 2 account will be set up within 24 hours, allowing you to continue your evaluation process without interruption.
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="border border-border/50">
-              <CardHeader>
-                <CardTitle className="text-lg">What if I fail one of the phases?</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  If you fail either Phase 1 or Phase 2, your evaluation will end. You can purchase a new Evaluation Program or use our Reset option, which allows you to restart the failed phase for a reduced fee (typically 25-35% of the original program price).
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="border border-border/50">
-              <CardHeader>
-                <CardTitle className="text-lg">Can I trade any instruments during the evaluation?</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Yes, you can trade forex pairs, indices, commodities, and selected cryptocurrencies. The same instruments are available in both Phase 1 and Phase 2, as well as in the funded account once you successfully complete the evaluation.
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="border border-border/50">
-              <CardHeader>
-                <CardTitle className="text-lg">Why choose the two-phase evaluation over a single-phase challenge?</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  The two-phase evaluation offers lower profit targets per phase (6% vs 8-12% for single-phase challenges), making it more suitable for traders who prefer a methodical, lower-risk approach. While it takes longer to complete, many traders find the two-phase process easier to pass overall.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-          
-          <div className="text-center mt-10">
-            <Button variant="outline" asChild>
-              <Link href="/faq">
-                View All FAQs
-              </Link>
-            </Button>
+          <div className="max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Card className="border border-border/50">
+                <CardHeader>
+                  <CardTitle>Standard Challenge</CardTitle>
+                  <CardDescription>Balanced rules and requirements</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="text-center">
+                      <div className="text-3xl font-bold mb-1">$25,000 - $200,000</div>
+                      <p className="text-sm text-muted-foreground">Account Size Options</p>
+                    </div>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex justify-between">
+                        <span>Profit Target (Phase 1)</span>
+                        <span className="font-medium">8%</span>
+                      </li>
+                      <li className="flex justify-between">
+                        <span>Profit Target (Phase 2)</span>
+                        <span className="font-medium">5%</span>
+                      </li>
+                      <li className="flex justify-between">
+                        <span>Max Drawdown</span>
+                        <span className="font-medium">5%</span>
+                      </li>
+                      <li className="flex justify-between">
+                        <span>Daily Drawdown</span>
+                        <span className="font-medium">3%</span>
+                      </li>
+                      <li className="flex justify-between">
+                        <span>Time Limit (Phase 1)</span>
+                        <span className="font-medium">30 days</span>
+                      </li>
+                      <li className="flex justify-between">
+                        <span>Time Limit (Phase 2)</span>
+                        <span className="font-medium">60 days</span>
+                      </li>
+                      <li className="flex justify-between">
+                        <span>Min Trading Days</span>
+                        <span className="font-medium">5 / 10 days</span>
+                      </li>
+                    </ul>
+                  </div>
+                </CardContent>
+                <CardFooter className="border-t border-border pt-4 flex justify-center">
+                  <Button asChild>
+                    <Link href="/challenges/standard">
+                      View Standard Challenge
+                    </Link>
+                  </Button>
+                </CardFooter>
+              </Card>
+              
+              <Card className="border border-border/50 relative bg-card/50 border-primary/50 shadow-lg">
+                <div className="absolute -top-3 left-0 right-0 flex justify-center">
+                  <div className="bg-primary text-primary-foreground text-xs px-3 py-1 rounded-full">
+                    Most Popular
+                  </div>
+                </div>
+                <CardHeader>
+                  <CardTitle>Aggressive Challenge</CardTitle>
+                  <CardDescription>For experienced traders</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="text-center">
+                      <div className="text-3xl font-bold mb-1">$25,000 - $200,000</div>
+                      <p className="text-sm text-muted-foreground">Account Size Options</p>
+                    </div>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex justify-between">
+                        <span>Profit Target (Phase 1)</span>
+                        <span className="font-medium">10%</span>
+                      </li>
+                      <li className="flex justify-between">
+                        <span>Profit Target (Phase 2)</span>
+                        <span className="font-medium">5%</span>
+                      </li>
+                      <li className="flex justify-between">
+                        <span>Max Drawdown</span>
+                        <span className="font-medium">8%</span>
+                      </li>
+                      <li className="flex justify-between">
+                        <span>Daily Drawdown</span>
+                        <span className="font-medium">4%</span>
+                      </li>
+                      <li className="flex justify-between">
+                        <span>Time Limit (Phase 1)</span>
+                        <span className="font-medium">30 days</span>
+                      </li>
+                      <li className="flex justify-between">
+                        <span>Time Limit (Phase 2)</span>
+                        <span className="font-medium">60 days</span>
+                      </li>
+                      <li className="flex justify-between">
+                        <span>Min Trading Days</span>
+                        <span className="font-medium">5 / 10 days</span>
+                      </li>
+                    </ul>
+                  </div>
+                </CardContent>
+                <CardFooter className="border-t border-border pt-4 flex justify-center">
+                  <Button asChild className="bg-primary">
+                    <Link href="/challenges/aggressive">
+                      View Aggressive Challenge
+                    </Link>
+                  </Button>
+                </CardFooter>
+              </Card>
+              
+              <Card className="border border-border/50">
+                <CardHeader>
+                  <CardTitle>Evaluation Challenge</CardTitle>
+                  <CardDescription>One-phase direct evaluation</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="text-center">
+                      <div className="text-3xl font-bold mb-1">$10,000 - $100,000</div>
+                      <p className="text-sm text-muted-foreground">Account Size Options</p>
+                    </div>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex justify-between">
+                        <span>Profit Target</span>
+                        <span className="font-medium">12%</span>
+                      </li>
+                      <li className="flex justify-between">
+                        <span>Max Drawdown</span>
+                        <span className="font-medium">5%</span>
+                      </li>
+                      <li className="flex justify-between">
+                        <span>Daily Drawdown</span>
+                        <span className="font-medium">3%</span>
+                      </li>
+                      <li className="flex justify-between">
+                        <span>Time Limit</span>
+                        <span className="font-medium">45 days</span>
+                      </li>
+                      <li className="flex justify-between">
+                        <span>Min Trading Days</span>
+                        <span className="font-medium">10 days</span>
+                      </li>
+                      <li className="flex justify-between">
+                        <span>Phases</span>
+                        <span className="font-medium">Single Phase</span>
+                      </li>
+                      <li className="flex justify-between">
+                        <span>Direct Funding</span>
+                        <span className="font-medium">Upon Completion</span>
+                      </li>
+                    </ul>
+                  </div>
+                </CardContent>
+                <CardFooter className="border-t border-border pt-4 flex justify-center">
+                  <Button asChild>
+                    <Link href="/challenges/evaluation">
+                      View Evaluation Challenge
+                    </Link>
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
           </div>
         </div>
       </section>
       
-      {/* CTA section */}
-      <section className="py-20 bg-muted/30 border-t border-border/40">
-        <div className="container">
+      {/* Evaluation Assessment */}
+      <section className="py-16 bg-muted/30 border-y border-border/40">
+        <div className="container px-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 className="text-3xl font-bold tracking-tight mb-6">How We Evaluate Your Performance</h2>
+                <div className="space-y-4">
+                  <p className="text-muted-foreground">
+                    Our evaluation process is designed to identify traders who can consistently generate profits while maintaining disciplined risk management. We look beyond just the profit target to assess your overall trading approach.
+                  </p>
+                  <p className="text-muted-foreground">
+                    We analyze your trading patterns, risk management consistency, and ability to perform under different market conditions. These factors help us determine if you're ready to manage larger capital with the discipline required for long-term success.
+                  </p>
+                  <p className="text-muted-foreground">
+                    All evaluations are conducted using MetaTrader 4 or MetaTrader 5 platforms with real-time market data, providing an authentic trading environment that mirrors what you'll experience after funding.
+                  </p>
+                </div>
+              </div>
+              <div className="space-y-6">
+                <Card className="border border-border/50">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-lg">Key Performance Metrics</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-3 text-sm text-muted-foreground">
+                      <li className="flex items-start gap-2">
+                        <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                          <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                            <circle cx="4" cy="4" r="3" />
+                          </svg>
+                        </div>
+                        <span><strong>Profit Factor:</strong> Ratio of gross profits to gross losses (target: above 1.5)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                          <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                            <circle cx="4" cy="4" r="3" />
+                          </svg>
+                        </div>
+                        <span><strong>Win Rate:</strong> Percentage of winning trades vs. total trades</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                          <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                            <circle cx="4" cy="4" r="3" />
+                          </svg>
+                        </div>
+                        <span><strong>Average RRR:</strong> Risk-reward ratio across all trades</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                          <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                            <circle cx="4" cy="4" r="3" />
+                          </svg>
+                        </div>
+                        <span><strong>Drawdown Control:</strong> Management of equity fluctuations</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                          <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                            <circle cx="4" cy="4" r="3" />
+                          </svg>
+                        </div>
+                        <span><strong>Consistency:</strong> Regular trading activity without excessive gaps</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="rounded-full bg-primary/10 text-primary p-1 mt-0.5">
+                          <svg className="h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                            <circle cx="4" cy="4" r="3" />
+                          </svg>
+                        </div>
+                        <span><strong>Risk Per Trade:</strong> Appropriate position sizing relative to account</span>
+                      </li>
+                    </ul>
+                  </CardContent>
+                </Card>
+                
+                <Card className="border border-border/50">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-lg">Automatic Monitoring Systems</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground mb-4">
+                      Our proprietary evaluation system continuously monitors your trading performance and provides real-time updates on your progress through your trader dashboard.
+                    </p>
+                    <div className="flex justify-center">
+                      <Button variant="outline" asChild>
+                        <Link href="/trading/dashboard">
+                          View Trader Dashboard
+                        </Link>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* After Evaluation */}
+      <section className="py-16 bg-background">
+        <div className="container px-4">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h2 className="text-3xl font-bold tracking-tight mb-4">After Successful Evaluation</h2>
+            <p className="text-lg text-muted-foreground">
+              What happens once you've successfully completed the evaluation process
+            </p>
+          </div>
+          
+          <div className="max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Card className="border border-border/50">
+                <CardHeader className="pb-2">
+                  <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 text-primary mb-3">
+                    <div className="text-lg font-bold">1</div>
+                  </div>
+                  <CardTitle className="text-xl">Account Funding</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Upon successful completion of the evaluation phases, you'll receive access to a fully funded trading account with the same size as your challenge account. The funding process typically takes 1-3 business days.
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card className="border border-border/50">
+                <CardHeader className="pb-2">
+                  <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 text-primary mb-3">
+                    <div className="text-lg font-bold">2</div>
+                  </div>
+                  <CardTitle className="text-xl">Profit Sharing</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Start trading with our capital and earn up to 80% of the profits you generate. Profit withdrawals are processed twice a month, allowing you to consistently benefit from your trading success.
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card className="border border-border/50">
+                <CardHeader className="pb-2">
+                  <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 text-primary mb-3">
+                    <div className="text-lg font-bold">3</div>
+                  </div>
+                  <CardTitle className="text-xl">Scaling Opportunity</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Demonstrate consistent profitability with your funded account and qualify for our scaling program, which can increase your trading capital by up to 10x your initial funded amount over time.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+            
+            <div className="mt-10 bg-card border border-border/50 rounded-lg p-6">
+              <h3 className="text-xl font-bold mb-4 text-center">Ongoing Requirements</h3>
+              <p className="text-muted-foreground mb-6 text-center max-w-2xl mx-auto">
+                Funded accounts have more relaxed performance requirements, but still maintain essential risk management rules
+              </p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                <div className="text-center">
+                  <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 text-primary mb-3 mx-auto">
+                    <Target className="h-6 w-6" />
+                  </div>
+                  <h4 className="font-medium mb-1">No Profit Target</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Trade without pressure of meeting a specific profit goal
+                  </p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 text-primary mb-3 mx-auto">
+                    <ShieldCheck className="h-6 w-6" />
+                  </div>
+                  <h4 className="font-medium mb-1">10% Max Drawdown</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Slightly relaxed drawdown limit for funded accounts
+                  </p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 text-primary mb-3 mx-auto">
+                    <Clock className="h-6 w-6" />
+                  </div>
+                  <h4 className="font-medium mb-1">Consistency Rules</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Minimum of 5 trading days every 30-day period
+                  </p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 text-primary mb-3 mx-auto">
+                    <BarChart3 className="h-6 w-6" />
+                  </div>
+                  <h4 className="font-medium mb-1">5% Daily Drawdown</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Daily risk limit to ensure disciplined trading
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* CTA Section */}
+      <section className="py-16 bg-muted/30 border-t border-border/40">
+        <div className="container px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Ready to Begin Your Evaluation?</h2>
+            <h2 className="text-3xl font-bold tracking-tight mb-4">Ready to Prove Your Trading Skills?</h2>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Start your journey to becoming a funded trader with our thorough evaluation process
+              Take on our evaluation challenge and gain access to trading capital of up to $200,000
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity" asChild>
-                <Link href="/challenges/evaluation">
-                  View Evaluation Program
+                <Link href="/challenges">
+                  View Challenge Plans
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
                 <Link href="/challenges/compare">
-                  Compare All Challenges
+                  Compare Challenge Types
                 </Link>
               </Button>
             </div>
