@@ -21,11 +21,23 @@ interface TeamMember {
 export default function TeamPage() {
   const teamMembers: TeamMember[] = [
     {
-      name: "Svk Olo",
+      name: "Svk",
       role: "Lead Developer",
       bio: "Svk has over 8 years of experience in full-stack development with a focus on financial applications. He specializes in building robust trading platforms and real-time market data systems.",
       image: "https://randomuser.me/api/portraits/men/41.jpg",
       skills: ["React", "Node.js", "TypeScript", "Trading Algorithms", "WebSockets"],
+      socials: {
+        github: "https://github.com",
+        linkedin: "https://linkedin.com",
+        twitter: "https://twitter.com"
+      }
+    },
+    {
+      name: "Olo",
+      role: "Backend Architect",
+      bio: "Olo has a strong background in scaling financial systems and building secure payment infrastructure. He ensures our platform remains stable and reliable even during high market volatility.",
+      image: "https://randomuser.me/api/portraits/men/36.jpg",
+      skills: ["System Architecture", "Database Design", "Security", "Performance Optimization", "API Development"],
       socials: {
         github: "https://github.com",
         linkedin: "https://linkedin.com",

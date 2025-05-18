@@ -1,6 +1,4 @@
-import React from 'react';
-import { Helmet } from 'react-helmet';
-import { Layout } from './layout';
+import { Helmet } from "react-helmet";
 
 interface PageTemplateProps {
   title: string;
@@ -12,19 +10,16 @@ export default function PageTemplate({ title, description, children }: PageTempl
   return (
     <>
       <Helmet>
-        <title>{title} | TRFX</title>
+        <title>{title}</title>
         <meta name="description" content={description} />
-        <meta property="og:title" content={`${title} | TRFX`} />
+        <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
-        <meta property="og:type" content="website" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
       </Helmet>
-      <Layout>
-        <div className="py-12 md:py-16 lg:py-20">
-          <div className="container px-4 md:px-6">
-            {children}
-          </div>
-        </div>
-      </Layout>
+      <main className="min-h-screen">
+        {children}
+      </main>
     </>
   );
 }
