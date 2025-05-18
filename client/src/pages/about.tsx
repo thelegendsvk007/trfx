@@ -27,14 +27,14 @@ export default function AboutPage() {
     {
       name: "Michael Anderson",
       role: "Founder & CEO",
-      bio: "Former hedge fund trader with 15+ years experience in prop trading. Founded TradeFunded to democratize access to capital for skilled traders worldwide.",
+      bio: "Former hedge fund trader with 15+ years experience in prop trading. Founded TRFX to democratize access to capital for skilled traders worldwide.",
       image: null,
       initials: "MA"
     },
     {
       name: "Sarah Chen",
       role: "Chief Operating Officer",
-      bio: "Background in fintech operations and scaling startups. Led the expansion of TradeFunded across global markets and oversees daily operations.",
+      bio: "Background in fintech operations and scaling startups. Led the expansion of TRFX across global markets and oversees daily operations.",
       image: null,
       initials: "SC"
     },

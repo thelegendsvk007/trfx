@@ -5,9 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { useAuth } from "@/hooks/use-auth";
-import { LineChart, AlertCircle } from "lucide-react";
+import { LineChart, AlertCircle, Mail, Lock, Github, Apple, Facebook } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
+import { MainNav } from "@/components/main-nav";
+import { Separator } from "@/components/ui/separator";
 
 export default function LoginPage() {
   const { login, loading, error } = useAuth();

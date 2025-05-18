@@ -30,7 +30,10 @@ export default function SimpleApp() {
                   </div>
                   <nav className="hidden sm:ml-6 sm:flex sm:space-x-8">
                     <a href="/how-it-works" className="border-transparent text-foreground/70 hover:text-foreground hover:border-border inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
-                      How It Works
+                      How it works
+                    </a>
+                    <a href="/challenges" className="border-transparent text-foreground/70 hover:text-foreground hover:border-border inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
+                      Challenges
                     </a>
                     <a href="/trading" className="border-transparent text-foreground/70 hover:text-foreground hover:border-border inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
                       Trading
@@ -38,11 +41,11 @@ export default function SimpleApp() {
                     <a href="/about" className="border-transparent text-foreground/70 hover:text-foreground hover:border-border inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
                       About
                     </a>
-                    <a href="/contact" className="border-transparent text-foreground/70 hover:text-foreground hover:border-border inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
-                      Contact Us
-                    </a>
                     <a href="/faq" className="border-transparent text-foreground/70 hover:text-foreground hover:border-border inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
                       FAQ
+                    </a>
+                    <a href="/contact" className="border-transparent text-foreground/70 hover:text-foreground hover:border-border inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
+                      Contact
                     </a>
                   </nav>
                 </div>
