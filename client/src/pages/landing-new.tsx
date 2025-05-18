@@ -458,7 +458,7 @@ export default function LandingPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity" asChild>
-                <Link to="/register">
+                <Link to="/login">
                   Get Started Now
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>

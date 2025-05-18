@@ -29,7 +29,7 @@ export default function HomePage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <Button size="lg" className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity" asChild>
-                <Link href="/challenges">
+                <Link href="/login">
                   Start Challenge Now
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
