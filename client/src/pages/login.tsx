@@ -1,239 +1,218 @@
 import { useState } from "react";
-import { Link, useLocation } from "wouter";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { LineChart, AlertCircle, Mail, Lock, Github, Apple, Facebook } from "lucide-react";
-import { useTheme } from "@/components/theme-provider";
-import { MainNav } from "@/components/main-nav";
-import { Separator } from "@/components/ui/separator";
-import useAuth from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
+import { Loader2, LogIn } from "lucide-react";
+import { Link } from "wouter";
+import { FaGoogle, FaMicrosoft, FaApple, FaGithub } from "react-icons/fa";
+import PageTemplate from "@/components/page-template";
+
+// Validation schema
+const loginSchema = z.object({
+  username: z.string().min(1, "Username is required"),
+  password: z.string().min(1, "Password is required"),
+  rememberMe: z.boolean().optional(),
+});
+
+type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
-  const { login, loginWithProvider, loading, error } = useAuth();
-  const [, navigate] = useLocation();
-  const { theme, setTheme } = useTheme();
+  const { login, error: authError } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
   
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    rememberMe: false
+  // Initialize form
+  const form = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+      rememberMe: false
+    }
   });
   
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === 'checkbox' ? checked : value
-    });
-  };
-  
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Form submission handler
+  const onSubmit = async (values: LoginFormValues) => {
+    setIsLoading(true);
     
     try {
-      await login(formData.username, formData.password);
-      // Navigate is handled in the auth provider
-    } catch (err) {
-      console.error("Login error:", err);
+      await login(values.username, values.password);
+      
+      // Successful login is handled by the auth provider which redirects to the dashboard
+    } catch (error) {
+      console.error("Login error:", error);
+      toast({
+        title: "Login failed",
+        description: authError || "Invalid username or password",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
   
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
+  // Provider login handlers
+  const handleProviderLogin = (provider: string) => {
+    toast({
+      title: `${provider} Login`,
+      description: `${provider} authentication is not yet implemented.`,
+    });
   };
   
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="absolute top-4 right-4">
-        <Button 
-          variant="ghost" 
-          size="icon"
-          onClick={toggleTheme}
-        >
-          {theme === "dark" ? (
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-            </svg>
-          ) : (
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-            </svg>
-          )}
-        </Button>
-      </div>
-      
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold text-primary-800 dark:text-primary-300 flex items-center justify-center">
-            <LineChart className="inline-block mr-2" size={28} />
-            TRFX
-          </h1>
-          <h2 className="mt-6 text-3xl font-extrabold text-gray-900 dark:text-white">
-            Sign in to your account
-          </h2>
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-            Or{" "}
-            <Link href="/register">
-              <a className="font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300">
-                start your trading challenge
-              </a>
-            </Link>
-          </p>
-        </div>
-
-        {/* Image */}
-        <div className="mt-8 px-4">
-          <img 
-            src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3" 
-            alt="Professional trading setup with multiple screens showing charts" 
-            className="w-full h-auto rounded-lg shadow-md"
-          />
-        </div>
-
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-white dark:bg-gray-800 py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            {error && (
-              <Alert variant="destructive" className="mb-6">
-                <AlertCircle className="h-4 w-4" />
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
-            
-            <form className="space-y-6" onSubmit={handleSubmit}>
-              <div>
-                <Label htmlFor="username">Username</Label>
-                <div className="mt-1">
-                  <Input
-                    id="username"
-                    name="username"
-                    type="text"
-                    required
-                    value={formData.username}
-                    onChange={handleInputChange}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <Label htmlFor="password">Password</Label>
-                <div className="mt-1">
-                  <Input
-                    id="password"
-                    name="password"
-                    type="password"
-                    required
-                    value={formData.password}
-                    onChange={handleInputChange}
-                  />
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <Checkbox
-                    id="remember-me"
-                    name="rememberMe"
-                    checked={formData.rememberMe}
-                    onCheckedChange={(checked) => 
-                      setFormData({...formData, rememberMe: checked as boolean})
-                    }
-                  />
-                  <Label htmlFor="remember-me" className="ml-2">
-                    Remember me
-                  </Label>
-                </div>
-
-                <div className="text-sm">
-                  <Link href="/forgot-password">
-                    <a className="font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300">
-                      Forgot your password?
-                    </a>
-                  </Link>
-                </div>
-              </div>
-
-              <div>
-                <Button 
-                  type="submit" 
-                  className="w-full"
-                  disabled={loading}
-                >
-                  {loading ? "Signing in..." : "Sign in"}
-                </Button>
-              </div>
-            </form>
-
-            <div className="mt-6">
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-300 dark:border-gray-700"></div>
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">
-                    Or continue with
-                  </span>
-                </div>
-              </div>
-
-              <div className="mt-6 grid grid-cols-2 gap-3">
-                <Button 
-                  variant="outline" 
-                  className="w-full" 
-                  onClick={() => loginWithProvider('google')}
-                  disabled={loading}
-                >
-                  <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
-                    <g transform="matrix(1, 0, 0, 1, 27.009001, -39.238998)">
-                      <path fill="#4285F4" d="M -3.264 51.509 C -3.264 50.719 -3.334 49.969 -3.454 49.239 L -14.754 49.239 L -14.754 53.749 L -8.284 53.749 C -8.574 55.229 -9.424 56.479 -10.684 57.329 L -10.684 60.329 L -6.824 60.329 C -4.564 58.239 -3.264 55.159 -3.264 51.509 Z"></path>
-                      <path fill="#34A853" d="M -14.754 63.239 C -11.514 63.239 -8.804 62.159 -6.824 60.329 L -10.684 57.329 C -11.764 58.049 -13.134 58.489 -14.754 58.489 C -17.884 58.489 -20.534 56.379 -21.484 53.529 L -25.464 53.529 L -25.464 56.619 C -23.494 60.539 -19.444 63.239 -14.754 63.239 Z"></path>
-                      <path fill="#FBBC05" d="M -21.484 53.529 C -21.734 52.809 -21.864 52.039 -21.864 51.239 C -21.864 50.439 -21.724 49.669 -21.484 48.949 L -21.484 45.859 L -25.464 45.859 C -26.284 47.479 -26.754 49.299 -26.754 51.239 C -26.754 53.179 -26.284 54.999 -25.464 56.619 L -21.484 53.529 Z"></path>
-                      <path fill="#EA4335" d="M -14.754 43.989 C -12.984 43.989 -11.404 44.599 -10.154 45.789 L -6.734 42.369 C -8.804 40.429 -11.514 39.239 -14.754 39.239 C -19.444 39.239 -23.494 41.939 -25.464 45.859 L -21.484 48.949 C -20.534 46.099 -17.884 43.989 -14.754 43.989 Z"></path>
-                    </g>
-                  </svg>
-                  Google
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="w-full" 
-                  onClick={() => loginWithProvider('microsoft')}
-                  disabled={loading}
-                >
-                  <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
-                    <path d="M0 0h11.5v11.5H0V0z" fill="#F25022"/>
-                    <path d="M12.5 0H24v11.5H12.5V0z" fill="#7FBA00"/>
-                    <path d="M0 12.5h11.5V24H0V12.5z" fill="#00A4EF"/>
-                    <path d="M12.5 12.5H24V24H12.5V12.5z" fill="#FFB900"/>
-                  </svg>
-                  Microsoft
-                </Button>
-              </div>
-              <div className="mt-3 grid grid-cols-2 gap-3">
-                <Button 
-                  variant="outline" 
-                  className="w-full" 
-                  onClick={() => loginWithProvider('apple')}
-                  disabled={loading}
-                >
-                  <Apple className="w-5 h-5 mr-2" />
-                  Apple
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="w-full"
-                  onClick={() => loginWithProvider('github')}
-                  disabled={loading}
-                >
-                  <Github className="w-5 h-5 mr-2" />
-                  GitHub
-                </Button>
+    <PageTemplate
+      title="TRFX - Sign In"
+      description="Sign in to your TRFX account to access your trading dashboard and account details."
+    >
+      <div className="bg-background min-h-screen flex flex-col items-center justify-center p-4">
+        <div className="w-full max-w-md space-y-6">
+          {/* Logo and Heading */}
+          <div className="text-center space-y-2">
+            <div className="flex justify-center mb-6">
+              <div className="text-2xl font-bold tracking-tighter bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                TRFX
               </div>
             </div>
+            <h1 className="text-3xl font-bold tracking-tight">Sign in to your account</h1>
+            <p className="text-muted-foreground">
+              Or start your trading challenge
+            </p>
+          </div>
+          
+          {/* Chart Image */}
+          <div className="overflow-hidden rounded-lg border border-border/60 w-full">
+            <img 
+              src="/chart-background.png" 
+              alt="Trading Chart" 
+              className="w-full h-[120px] object-cover"
+              onError={(e) => {
+                // Fallback to a gradient if image fails to load
+                (e.target as HTMLImageElement).style.display = 'none';
+                (e.target as HTMLImageElement).parentElement!.style.background = 'linear-gradient(to right, #1f2937, #111827)';
+                (e.target as HTMLImageElement).parentElement!.style.height = '120px';
+              }}
+            />
+          </div>
+          
+          {/* Login Form */}
+          <div className="bg-card border rounded-lg shadow-sm p-6">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="username"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Username</FormLabel>
+                      <FormControl>
+                        <Input placeholder="johndoe" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input type="password" placeholder="••••••••" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <div className="flex items-center justify-between">
+                  <FormField
+                    control={form.control}
+                    name="rememberMe"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-center space-x-2 space-y-0">
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                        <div className="space-y-1 leading-none">
+                          <FormLabel>Remember me</FormLabel>
+                        </div>
+                      </FormItem>
+                    )}
+                  />
+                  <Link href="/forgot-password" className="text-sm text-primary hover:underline">
+                    Forgot your password?
+                  </Link>
+                </div>
+                
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Signing In...
+                    </>
+                  ) : (
+                    <>
+                      <LogIn className="mr-2 h-4 w-4" />
+                      Sign In
+                    </>
+                  )}
+                </Button>
+              </form>
+            </Form>
+            
+            {/* Social Logins Divider */}
+            <div className="relative mt-6">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t border-border"></span>
+              </div>
+              <div className="relative flex justify-center text-xs">
+                <span className="bg-card px-2 text-muted-foreground">Or continue with</span>
+              </div>
+            </div>
+            
+            {/* Social Login Buttons */}
+            <div className="mt-6 grid grid-cols-2 gap-3">
+              <Button variant="outline" type="button" onClick={() => handleProviderLogin("Google")}>
+                <FaGoogle className="mr-2 h-4 w-4" />
+                Google
+              </Button>
+              <Button variant="outline" type="button" onClick={() => handleProviderLogin("Microsoft")}>
+                <FaMicrosoft className="mr-2 h-4 w-4" />
+                Microsoft
+              </Button>
+              <Button variant="outline" type="button" onClick={() => handleProviderLogin("Apple")}>
+                <FaApple className="mr-2 h-4 w-4" />
+                Apple
+              </Button>
+              <Button variant="outline" type="button" onClick={() => handleProviderLogin("GitHub")}>
+                <FaGithub className="mr-2 h-4 w-4" />
+                GitHub
+              </Button>
+            </div>
+          </div>
+          
+          {/* Sign Up Link */}
+          <div className="text-center">
+            <p className="text-sm text-muted-foreground">
+              Don't have an account?{" "}
+              <Link href="/signup" className="text-primary hover:underline font-medium">
+                Sign up
+              </Link>
+            </p>
           </div>
         </div>
       </div>
-    </div>
+    </PageTemplate>
   );
 }

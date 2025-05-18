@@ -1,6 +1,9 @@
-import * as React from "react";
-import { Link, useLocation } from "wouter";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { Link, useLocation } from 'wouter';
+import { useAuth } from '@/hooks/use-auth';
+import { useTheme } from '@/components/theme-provider';
+import { Button } from '@/components/ui/button';
+import { ThemeToggle } from '@/components/theme-toggle';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -9,291 +12,314 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
+} from '@/components/ui/navigation-menu';
 import {
   Sheet,
   SheetContent,
+  SheetHeader,
+  SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
-import { ThemeToggle } from "./theme-toggle";
-import { useIsMobile } from "@/hooks/use-mobile";
-
-const howItWorksItems = [
-  {
-    title: "Evaluation Process",
-    href: "/how-it-works#evaluation-process",
-    description: "Learn about our 3-step process to become a funded trader.",
-  },
-  {
-    title: "Trading Objectives",
-    href: "/how-it-works#trading-objectives",
-    description: "Understand the targets and rules for each evaluation phase.",
-  },
-  {
-    title: "Scaling Plan",
-    href: "/how-it-works#scaling-plan",
-    description: "See how you can increase your account size over time.",
-  },
-];
-
-const tradingItems = [
-  {
-    title: "Trading Conditions",
-    href: "/trading/conditions",
-    description: "Review our trading hours, instruments, and leverage options.",
-  },
-  {
-    title: "Trading Platform",
-    href: "/trading/platform",
-    description: "Explore our powerful trading platform and tools.",
-  },
-  {
-    title: "Trading Rules",
-    href: "/trading/rules",
-    description: "Understand the guidelines and restrictions for trading.",
-  },
-];
-
-const aboutUsItems = [
-  {
-    title: "Our Story",
-    href: "/about/story",
-    description: "Learn about our mission and vision as a company.",
-  },
-  {
-    title: "Team",
-    href: "/about/team",
-    description: "Meet the team behind TRFX.",
-  },
-  {
-    title: "Careers",
-    href: "/about/careers",
-    description: "Join our growing team of professionals.",
-  },
-  {
-    title: "Contact Us",
-    href: "/about/contact",
-    description: "Get in touch with our support team.",
-  },
-];
+  SheetClose,
+} from '@/components/ui/sheet';
+import {
+  ChevronDown,
+  Menu,
+  LogIn,
+  LogOut,
+  User,
+  DollarSign,
+  BookOpen,
+  Award,
+  HelpCircle,
+  UserPlus,
+  Home,
+  BarChart2,
+} from 'lucide-react';
 
 export function MainNav({ className }: { className?: string }) {
-  const isMobile = useIsMobile();
+  const [location] = useLocation();
+  const { user, isAuthenticated, logout } = useAuth();
+  const { theme } = useTheme();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const NavMenuContent = () => (
-    <NavigationMenuList className="gap-2">
-      <NavigationMenuItem>
-        <NavigationMenuTrigger>How It Works</NavigationMenuTrigger>
-        <NavigationMenuContent>
-          <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-            {howItWorksItems.map((item) => (
-              <ListItem
-                key={item.title}
-                title={item.title}
-                href={item.href}
-              >
-                {item.description}
-              </ListItem>
-            ))}
-          </ul>
-        </NavigationMenuContent>
-      </NavigationMenuItem>
+  // Define navigation items
+  const navItems = [
+    {
+      title: 'How It Works',
+      path: '/how-it-works',
+      dropdown: [
+        { name: 'Challenge Process', href: '/how-it-works/challenge-process' },
+        { name: 'Evaluation Phase', href: '/how-it-works/evaluation-phase' },
+        { name: 'Funding Requirements', href: '/how-it-works/funding-requirements' },
+        { name: 'Payout Structure', href: '/how-it-works/payout-structure' },
+        { name: 'Trading Rules', href: '/how-it-works/trading-rules' },
+      ],
+    },
+    {
+      title: 'Trading',
+      path: '/trading',
+      dropdown: [
+        { name: 'Trading Dashboard', href: '/trading' },
+        { name: 'MetaTrader 4', href: '/trading/metatrader4' },
+        { name: 'MetaTrader 5', href: '/trading/metatrader5' },
+        { name: 'Trading Products', href: '/trading/products' },
+        { name: 'Spreads & Leverage', href: '/trading/spreads-leverage' },
+      ],
+    },
+    {
+      title: 'Challenges',
+      path: '/challenges',
+      dropdown: [
+        { name: 'Standard Challenge', href: '/challenges/standard' },
+        { name: 'Aggressive Challenge', href: '/challenges/aggressive' },
+        { name: 'Evaluation Program', href: '/challenges/evaluation' },
+        { name: 'Compare Plans', href: '/challenges/compare' },
+      ],
+    },
+    {
+      title: 'About Us',
+      path: '/about',
+      dropdown: [
+        { name: 'Our Company', href: '/about/company' },
+        { name: 'Meet the Team', href: '/about/team' },
+        { name: 'Testimonials', href: '/about/testimonials' },
+        { name: 'Contact Us', href: '/about/contact' },
+      ],
+    },
+    {
+      title: 'FAQ',
+      path: '/faq',
+      dropdown: null,
+    },
+  ];
 
-      <NavigationMenuItem>
-        <NavigationMenuTrigger>Trading</NavigationMenuTrigger>
-        <NavigationMenuContent>
-          <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-            {tradingItems.map((item) => (
-              <ListItem
-                key={item.title}
-                title={item.title}
-                href={item.href}
-              >
-                {item.description}
-              </ListItem>
-            ))}
-          </ul>
-        </NavigationMenuContent>
-      </NavigationMenuItem>
-
-      <NavigationMenuItem>
-        <Link to="/challenges">
-          <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-            Challenges
-          </NavigationMenuLink>
-        </Link>
-      </NavigationMenuItem>
-      
-      <NavigationMenuItem>
-        <Link to="/faq">
-          <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-            FAQ
-          </NavigationMenuLink>
-        </Link>
-      </NavigationMenuItem>
-
-      <NavigationMenuItem>
-        <NavigationMenuTrigger>About Us</NavigationMenuTrigger>
-        <NavigationMenuContent>
-          <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-            {aboutUsItems.map((item) => (
-              <ListItem
-                key={item.title}
-                title={item.title}
-                href={item.href}
-              >
-                {item.description}
-              </ListItem>
-            ))}
-          </ul>
-        </NavigationMenuContent>
-      </NavigationMenuItem>
-    </NavigationMenuList>
-  );
-
-  const authButtons = (
-    <div className="flex items-center gap-2">
-      <ThemeToggle />
-      <Link to="/login">
-        <Button variant="outline" size="sm">
-          Login
-        </Button>
-      </Link>
-      <Link to="/signup">
-        <Button size="sm">
-          Sign Up
-        </Button>
-      </Link>
-    </div>
-  );
+  // Check if a path matches the current location
+  const isActive = (path: string) => {
+    if (path === '/') {
+      return location === path;
+    }
+    return location.startsWith(path);
+  };
 
   return (
-    <div className="flex h-16 items-center justify-between py-4">
-      <div className="flex w-full justify-between">
+    <header className="sticky top-0 z-40 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+      <div className="container flex h-16 items-center justify-between">
+        {/* Logo */}
         <div className="flex items-center">
-          <Link to="/" className="flex items-center space-x-2 mr-6">
-            <span className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">TRFX</span>
+          <Link href="/">
+            <div className="flex items-center space-x-2">
+              <div className="text-2xl font-bold tracking-tighter bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                TRFX
+              </div>
+            </div>
           </Link>
-
-          {!isMobile && (
-            <NavigationMenu>
-              <NavMenuContent />
-            </NavigationMenu>
-          )}
         </div>
-        
-        {isMobile ? (
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
-            
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button size="icon" variant="ghost">
-                  <Menu className="h-5 w-5" />
-                  <span className="sr-only">Toggle navigation menu</span>
+
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex">
+          <NavigationMenu>
+            <NavigationMenuList>
+              {navItems.map((item) => (
+                <NavigationMenuItem key={item.title}>
+                  {item.dropdown ? (
+                    <>
+                      <NavigationMenuTrigger 
+                        className={isActive(item.path) ? 'text-primary' : ''}
+                      >
+                        {item.title}
+                      </NavigationMenuTrigger>
+                      <NavigationMenuContent>
+                        <ul className="grid w-[400px] gap-3 p-4">
+                          {item.dropdown.map((dropdownItem) => (
+                            <li key={dropdownItem.name}>
+                              <NavigationMenuLink asChild>
+                                <Link href={dropdownItem.href}>
+                                  <div className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                                    <div className="text-sm font-medium leading-none">
+                                      {dropdownItem.name}
+                                    </div>
+                                  </div>
+                                </Link>
+                              </NavigationMenuLink>
+                            </li>
+                          ))}
+                        </ul>
+                      </NavigationMenuContent>
+                    </>
+                  ) : (
+                    <Link href={item.path}>
+                      <NavigationMenuLink className={navigationMenuTriggerStyle({
+                        className: isActive(item.path) ? 'text-primary' : ''
+                      })}>
+                        {item.title}
+                      </NavigationMenuLink>
+                    </Link>
+                  )}
+                </NavigationMenuItem>
+              ))}
+            </NavigationMenuList>
+          </NavigationMenu>
+        </div>
+
+        {/* Right side: theme toggle and auth buttons */}
+        <div className="flex items-center space-x-2">
+          <ThemeToggle />
+          
+          {/* Auth buttons (desktop) */}
+          <div className="hidden md:flex md:items-center md:space-x-2">
+            {isAuthenticated ? (
+              <>
+                <Button variant="outline" size="sm" asChild>
+                  <Link href="/dashboard">
+                    <User className="mr-2 h-4 w-4" />
+                    Dashboard
+                  </Link>
                 </Button>
-              </SheetTrigger>
-              <SheetContent side="right">
-                <div className="grid gap-2 py-6">
-                  <Link to="/">
-                    <Button variant="ghost" className="w-full justify-start" size="sm">
-                      Home
-                    </Button>
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={() => logout()}
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="outline" size="sm" asChild>
+                  <Link href="/signup">
+                    <UserPlus className="mr-2 h-4 w-4" />
+                    Sign Up
                   </Link>
-                  <Link to="/how-it-works">
-                    <Button variant="ghost" className="w-full justify-start" size="sm">
-                      How It Works
-                    </Button>
+                </Button>
+                <Button variant="default" size="sm" asChild>
+                  <Link href="/login">
+                    <LogIn className="mr-2 h-4 w-4" />
+                    Login
                   </Link>
-                  {howItWorksItems.map((item, i) => (
-                    <Link to={item.href} key={i}>
-                      <Button variant="ghost" className="w-full justify-start pl-8" size="sm">
-                        {item.title}
-                      </Button>
-                    </Link>
-                  ))}
-                  <Link to="/trading">
-                    <Button variant="ghost" className="w-full justify-start" size="sm">
-                      Trading
-                    </Button>
-                  </Link>
-                  {tradingItems.map((item, i) => (
-                    <Link to={item.href} key={i}>
-                      <Button variant="ghost" className="w-full justify-start pl-8" size="sm">
-                        {item.title}
-                      </Button>
-                    </Link>
-                  ))}
-                  <Link to="/challenges">
-                    <Button variant="ghost" className="w-full justify-start" size="sm">
-                      Challenges
-                    </Button>
-                  </Link>
-                  <Link to="/faq">
-                    <Button variant="ghost" className="w-full justify-start" size="sm">
-                      FAQ
-                    </Button>
-                  </Link>
-                  <Link to="/about">
-                    <Button variant="ghost" className="w-full justify-start" size="sm">
-                      About Us
-                    </Button>
-                  </Link>
-                  {aboutUsItems.map((item, i) => (
-                    <Link to={item.href} key={i}>
-                      <Button variant="ghost" className="w-full justify-start pl-8" size="sm">
-                        {item.title}
-                      </Button>
-                    </Link>
-                  ))}
-                  <div className="flex flex-col gap-2 mt-4">
-                    <Link to="/login">
-                      <Button variant="outline" className="w-full">
-                        Login
-                      </Button>
-                    </Link>
-                    <Link to="/signup">
-                      <Button className="w-full">
-                        Sign Up
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              </SheetContent>
-            </Sheet>
+                </Button>
+              </>
+            )}
           </div>
-        ) : (
-          authButtons
-        )}
+          
+          {/* Mobile menu button */}
+          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="sm" className="md:hidden">
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Toggle menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+              <SheetHeader className="mb-4">
+                <SheetTitle>Menu</SheetTitle>
+              </SheetHeader>
+              <div className="flex flex-col space-y-4">
+                {/* Mobile navigation links */}
+                <div className="flex flex-col space-y-2">
+                  <SheetClose asChild>
+                    <Link href="/">
+                      <Button 
+                        variant="ghost" 
+                        className={`justify-start ${isActive('/') ? 'text-primary' : ''}`}
+                      >
+                        <Home className="mr-2 h-4 w-4" />
+                        Home
+                      </Button>
+                    </Link>
+                  </SheetClose>
+                  
+                  {navItems.map((item) => (
+                    <div key={item.title} className="flex flex-col">
+                      {item.dropdown ? (
+                        <div className="flex flex-col">
+                          <div className="flex items-center px-3 py-2">
+                            {item.title === 'How It Works' && <BookOpen className="mr-2 h-4 w-4" />}
+                            {item.title === 'Trading' && <BarChart2 className="mr-2 h-4 w-4" />}
+                            {item.title === 'Challenges' && <Award className="mr-2 h-4 w-4" />}
+                            {item.title === 'About Us' && <User className="mr-2 h-4 w-4" />}
+                            {item.title === 'FAQ' && <HelpCircle className="mr-2 h-4 w-4" />}
+                            <span className="font-semibold">{item.title}</span>
+                          </div>
+                          <div className="ml-8 flex flex-col space-y-1">
+                            {item.dropdown.map((dropdownItem) => (
+                              <SheetClose key={dropdownItem.name} asChild>
+                                <Link href={dropdownItem.href}>
+                                  <Button variant="ghost" className="justify-start text-sm h-8">
+                                    {dropdownItem.name}
+                                  </Button>
+                                </Link>
+                              </SheetClose>
+                            ))}
+                          </div>
+                        </div>
+                      ) : (
+                        <SheetClose asChild>
+                          <Link href={item.path}>
+                            <Button 
+                              variant="ghost" 
+                              className={`justify-start ${isActive(item.path) ? 'text-primary' : ''}`}
+                            >
+                              {item.title === 'FAQ' && <HelpCircle className="mr-2 h-4 w-4" />}
+                              {item.title}
+                            </Button>
+                          </Link>
+                        </SheetClose>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                
+                {/* Mobile auth buttons */}
+                <div className="pt-4 border-t flex flex-col space-y-2">
+                  {isAuthenticated ? (
+                    <>
+                      <SheetClose asChild>
+                        <Link href="/dashboard">
+                          <Button variant="outline" className="w-full justify-start">
+                            <User className="mr-2 h-4 w-4" />
+                            Dashboard
+                          </Button>
+                        </Link>
+                      </SheetClose>
+                      <Button 
+                        variant="ghost" 
+                        className="w-full justify-start"
+                        onClick={() => {
+                          logout();
+                          setIsMobileMenuOpen(false);
+                        }}
+                      >
+                        <LogOut className="mr-2 h-4 w-4" />
+                        Logout
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <SheetClose asChild>
+                        <Link href="/signup">
+                          <Button variant="outline" className="w-full justify-start">
+                            <UserPlus className="mr-2 h-4 w-4" />
+                            Sign Up
+                          </Button>
+                        </Link>
+                      </SheetClose>
+                      <SheetClose asChild>
+                        <Link href="/login">
+                          <Button variant="default" className="w-full justify-start">
+                            <LogIn className="mr-2 h-4 w-4" />
+                            Login
+                          </Button>
+                        </Link>
+                      </SheetClose>
+                    </>
+                  )}
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
-    </div>
+    </header>
   );
 }
-
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, href, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <Link
-          to={href as string}
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </Link>
-      </NavigationMenuLink>
-    </li>
-  );
-});

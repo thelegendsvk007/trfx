@@ -1,129 +1,79 @@
 import { useEffect, useRef } from 'react';
 
-// Define the TradingView widget properties interface
-interface TradingViewWidgetProps {
+interface TradingViewChartProps {
   symbol?: string;
   interval?: string;
   theme?: 'light' | 'dark';
+  container?: string;
   width?: string | number;
   height?: string | number;
   autosize?: boolean;
-  timezone?: string;
-  locale?: string;
-  toolbar_bg?: string;
-  enable_publishing?: boolean;
-  hide_top_toolbar?: boolean;
-  withdateranges?: boolean;
-  hide_side_toolbar?: boolean;
-  allow_symbol_change?: boolean;
-  save_image?: boolean;
   studies?: string[];
-  show_popup_button?: boolean;
-  popup_width?: string | number;
-  popup_height?: string | number;
-  container_id?: string;
 }
 
 export default function TradingViewChart({
-  symbol = 'OANDA:XAUUSD', // Default to Gold (XAUUSD)
-  interval = '30',
+  symbol = 'XAUUSD',
+  interval = '1D',
   theme = 'dark',
+  container = 'tradingview_chart',
   width = '100%',
-  height = '600',
-  autosize = true,
-  timezone = 'exchange',
-  locale = 'en',
-  toolbar_bg = '#f1f3f6',
-  enable_publishing = false,
-  hide_top_toolbar = false,
-  withdateranges = true,
-  hide_side_toolbar = false,
-  allow_symbol_change = true,
-  save_image = true,
-  studies = [],
-  show_popup_button = false,
-  popup_width = '1000',
-  popup_height = '650',
-  container_id = 'tradingview_chart'
-}: TradingViewWidgetProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  height = 400,
+  autosize = false,
+  studies = []
+}: TradingViewChartProps) {
+  const chartContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Create the script element dynamically
+    // Clean up any existing scripts to avoid duplications
+    const existingScript = document.getElementById('tradingview-widget-script');
+    if (existingScript) existingScript.remove();
+
+    // Create script element
     const script = document.createElement('script');
+    script.id = 'tradingview-widget-script';
     script.src = 'https://s3.tradingview.com/tv.js';
     script.async = true;
     script.onload = () => {
-      if (typeof window.TradingView !== 'undefined' && containerRef.current) {
-        // Clear any existing content
-        containerRef.current.innerHTML = '';
-        
-        // Create and render the widget
+      if (typeof window.TradingView !== 'undefined' && chartContainerRef.current) {
         new window.TradingView.widget({
           autosize,
           symbol,
           interval,
-          timezone,
+          container_id: container,
+          library_path: 'https://s3.tradingview.com/charting_library/',
+          locale: 'en',
+          timezone: 'exchange',
           theme,
-          style: "1",
-          locale,
-          toolbar_bg,
-          enable_publishing,
-          hide_top_toolbar,
-          withdateranges,
-          hide_side_toolbar,
-          allow_symbol_change,
-          save_image,
+          style: '1',
+          toolbar_bg: theme === 'dark' ? '#1E1E1E' : '#F5F5F5',
+          enable_publishing: false,
+          allow_symbol_change: true,
+          save_image: false,
           studies,
-          show_popup_button,
-          popup_width,
-          popup_height,
-          container_id,
+          hide_top_toolbar: false,
+          hide_side_toolbar: false,
+          withdateranges: true,
+          width,
+          height
         });
       }
     };
-    
-    document.head.appendChild(script);
-    
-    // Cleanup function
-    return () => {
-      if (document.head.contains(script)) {
-        document.head.removeChild(script);
-      }
-    };
-  }, [
-    symbol,
-    interval,
-    theme,
-    timezone,
-    locale,
-    toolbar_bg,
-    enable_publishing,
-    hide_top_toolbar,
-    withdateranges,
-    hide_side_toolbar,
-    allow_symbol_change,
-    save_image,
-    studies,
-    show_popup_button,
-    popup_width,
-    popup_height,
-    container_id,
-    autosize,
-  ]);
 
-  return (
-    <div className="trading-chart-container">
-      <div id={container_id} ref={containerRef} style={{ width, height }} />
-    </div>
-  );
+    // Append script to document
+    document.head.appendChild(script);
+
+    return () => {
+      // Clean up
+      if (existingScript) existingScript.remove();
+    };
+  }, [symbol, interval, theme, container, width, height, autosize, studies]);
+
+  return <div id={container} ref={chartContainerRef} style={{ width, height }} />;
 }
 
-// Declare the TradingView object on the window
+// Declare TradingView in global window object
 declare global {
   interface Window {
-    TradingView: {
-      widget: any;
-    };
+    TradingView: any;
   }
 }
