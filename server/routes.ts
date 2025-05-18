@@ -22,9 +22,7 @@ if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
 }
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2023-10-16",
-});
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // Extend the Request type to include user
 interface Request extends ExpressRequest {
@@ -70,8 +68,286 @@ const authorize = (roles: string[]) => {
   };
 };
 
+// Add Stripe payment routes
+async function addStripeRoutes(app: Express) {
+  // Create a payment intent for challenge purchase
+  app.post('/api/create-payment-intent', authenticateJWT, async (req: Request, res: Response) => {
+    try {
+      const { planId, amount } = req.body;
+      
+      if (!req.user) {
+        return res.status(401).json({ message: "Authentication required" });
+      }
+      
+      // Validate the plan exists
+      const plan = await storage.getChallengePlan(parseInt(planId));
+      if (!plan) {
+        return res.status(404).json({ message: "Challenge plan not found" });
+      }
+      
+      // Create a payment intent
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: Math.round(amount * 100), // Convert to cents
+        currency: "usd",
+        metadata: {
+          userId: req.user.id.toString(),
+          planId: planId,
+          planName: plan.name,
+        },
+      });
+      
+      // Create a payment record in the database
+      await storage.createPayment({
+        userId: req.user.id,
+        amount: amount,
+        currency: "USD",
+        status: "pending",
+        paymentMethod: "stripe",
+        paymentIntentId: paymentIntent.id,
+        description: `Challenge purchase: ${plan.name}`,
+      });
+      
+      res.json({
+        clientSecret: paymentIntent.client_secret,
+      });
+    } catch (error: any) {
+      console.error('Payment intent creation error:', error);
+      res.status(500).json({ message: "Failed to create payment intent", error: error.message });
+    }
+  });
+  
+  // Webhook to handle Stripe events
+  app.post('/api/webhook/stripe', async (req, res) => {
+    const sig = req.headers['stripe-signature'] as string;
+    let event;
+    
+    try {
+      // This will throw an error if the signature is invalid
+      event = stripe.webhooks.constructEvent(
+        req.body,
+        sig,
+        process.env.STRIPE_WEBHOOK_SECRET || ''
+      );
+    } catch (err: any) {
+      console.error(`Webhook signature verification failed: ${err.message}`);
+      return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+    
+    // Handle the event
+    switch (event.type) {
+      case 'payment_intent.succeeded':
+        const paymentIntent = event.data.object;
+        
+        // Update payment status in database
+        const payment = await storage.getPaymentByIntentId(paymentIntent.id);
+        if (payment) {
+          await storage.updatePayment(payment.id, { status: "completed" });
+          
+          // Create trading account for the user
+          const userId = parseInt(paymentIntent.metadata.userId);
+          const planId = parseInt(paymentIntent.metadata.planId);
+          const plan = await storage.getChallengePlan(planId);
+          
+          if (plan) {
+            // Generate account number
+            const accountNumber = `TR${Date.now().toString().substring(3)}`;
+            
+            // Create the trading account
+            const newAccount = await storage.createTradingAccount({
+              userId: userId,
+              planId: planId,
+              accountNumber: accountNumber,
+              balance: plan.accountSize,
+              equity: plan.accountSize,
+              phase: "phase1",
+              status: "active",
+              targetProfit: plan.phase1Target,
+              maxDrawdown: plan.maxDrawdown,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            });
+            
+            // Log activity
+            await storage.createActivityLog({
+              userId: userId,
+              accountId: newAccount.id,
+              action: 'account_created',
+              details: `Trading account #${accountNumber} created after successful payment`,
+            });
+          }
+        }
+        break;
+        
+      case 'payment_intent.payment_failed':
+        const failedPaymentIntent = event.data.object;
+        
+        // Update payment status in database
+        const failedPayment = await storage.getPaymentByIntentId(failedPaymentIntent.id);
+        if (failedPayment) {
+          await storage.updatePayment(failedPayment.id, { status: "failed" });
+          
+          // Log activity
+          await storage.createActivityLog({
+            userId: failedPayment.userId,
+            action: 'payment_failed',
+            details: `Payment failed for ${failedPayment.description}`,
+          });
+        }
+        break;
+        
+      default:
+        console.log(`Unhandled event type: ${event.type}`);
+    }
+    
+    res.json({ received: true });
+  });
+  
+  // Initiate a withdrawal
+  app.post('/api/withdrawals/request', authenticateJWT, async (req: Request, res: Response) => {
+    try {
+      const { amount, accountId } = req.body;
+      
+      if (!req.user) {
+        return res.status(401).json({ message: "Authentication required" });
+      }
+      
+      // Check if amount is valid
+      if (!amount || amount <= 0) {
+        return res.status(400).json({ message: "Invalid withdrawal amount" });
+      }
+      
+      // Get the trading account
+      const account = await storage.getTradingAccount(parseInt(accountId));
+      if (!account) {
+        return res.status(404).json({ message: "Trading account not found" });
+      }
+      
+      // Verify account belongs to user
+      if (account.userId !== req.user.id) {
+        return res.status(403).json({ message: "You do not have permission to withdraw from this account" });
+      }
+      
+      // Verify account is in funded phase
+      if (account.phase !== "funded") {
+        return res.status(400).json({ message: "Withdrawals are only available for funded accounts" });
+      }
+      
+      // Check if account has enough balance
+      if (account.balance - amount < account.accountSize) {
+        return res.status(400).json({ message: "Insufficient funds for withdrawal. Only profits can be withdrawn." });
+      }
+      
+      // Create payout request
+      const payout = await storage.createPayout({
+        userId: req.user.id,
+        accountId: account.id,
+        amount: amount,
+        status: "pending",
+        paymentMethod: req.body.paymentMethod || "bank_transfer",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      
+      // Update account balance
+      await storage.updateTradingAccount(account.id, {
+        balance: account.balance - amount,
+        equity: account.equity - amount,
+      });
+      
+      // Log activity
+      await storage.createActivityLog({
+        userId: req.user.id,
+        accountId: account.id,
+        action: 'withdrawal_requested',
+        details: `Withdrawal request of $${amount} submitted`,
+      });
+      
+      res.status(201).json({
+        message: "Withdrawal request submitted successfully",
+        payout: payout
+      });
+    } catch (error: any) {
+      console.error('Withdrawal request error:', error);
+      res.status(500).json({ message: "Failed to process withdrawal request", error: error.message });
+    }
+  });
+  
+  // Admin approve/reject withdrawal
+  app.post('/api/admin/withdrawals/:id/process', authenticateJWT, authorize(['admin']), async (req: Request, res: Response) => {
+    try {
+      const payoutId = parseInt(req.params.id);
+      const { action, reason } = req.body;
+      
+      if (!['approve', 'reject'].includes(action)) {
+        return res.status(400).json({ message: "Invalid action. Must be 'approve' or 'reject'" });
+      }
+      
+      const payout = await storage.getPayout(payoutId);
+      if (!payout) {
+        return res.status(404).json({ message: "Payout request not found" });
+      }
+      
+      if (payout.status !== "pending") {
+        return res.status(400).json({ message: `This payout has already been ${payout.status}` });
+      }
+      
+      if (action === 'approve') {
+        // Update payout status
+        await storage.updatePayout(payoutId, {
+          status: "completed",
+          processedAt: new Date(),
+        });
+        
+        // Log activity
+        await storage.createActivityLog({
+          userId: payout.userId,
+          accountId: payout.accountId,
+          action: 'withdrawal_approved',
+          details: `Withdrawal of $${payout.amount} approved by admin`,
+        });
+        
+      } else {
+        // Reject payout
+        await storage.updatePayout(payoutId, {
+          status: "rejected",
+          rejectionReason: reason,
+          processedAt: new Date(),
+        });
+        
+        // Refund the amount to the account
+        const account = await storage.getTradingAccount(payout.accountId);
+        if (account) {
+          await storage.updateTradingAccount(account.id, {
+            balance: account.balance + payout.amount,
+            equity: account.equity + payout.amount,
+          });
+        }
+        
+        // Log activity
+        await storage.createActivityLog({
+          userId: payout.userId,
+          accountId: payout.accountId,
+          action: 'withdrawal_rejected',
+          details: `Withdrawal of $${payout.amount} rejected. Reason: ${reason}`,
+        });
+      }
+      
+      res.json({
+        message: `Payout ${action === 'approve' ? 'approved' : 'rejected'} successfully`,
+      });
+      
+    } catch (error: any) {
+      console.error('Process withdrawal error:', error);
+      res.status(500).json({ message: "Failed to process withdrawal", error: error.message });
+    }
+  });
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   const httpServer = createServer(app);
+  
+  // Add payment, withdrawal and MetaTrader integration routes
+  await addStripeRoutes(app);
   
   // WebSocket server for real-time updates
   const wss = new WebSocketServer({ server: httpServer, path: '/ws' });
