@@ -37,6 +37,7 @@ import TradingRulesPage from "@/pages/how-it-works/trading-rules";
 // Import Trading pages
 import TradingPage from "@/pages/trading";
 import TradingDashboardPage from "@/pages/trading/dashboard";
+import TradingProductsPage from "@/pages/trading/products";
 import SpreadsLeveragePage from "@/pages/trading/spreads-leverage";
 
 // Import About pages
@@ -318,9 +319,7 @@ function Router() {
         {/* Trading routes */}
         <Route path="/trading/metatrader4" component={MetaTrader4Page} />
         <Route path="/trading/metatrader5" component={MetaTrader5Page} />
-        <Route path="/trading/products">
-          <PlaceholderPage title="Trading Products" description="Explore the range of markets and instruments available for trading." />
-        </Route>
+        <Route path="/trading/products" component={TradingProductsPage} />
         <Route path="/trading/spreads-leverage" component={SpreadsLeveragePage} />
         
         {/* Challenge routes */}
