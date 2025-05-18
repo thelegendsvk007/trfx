@@ -61,16 +61,7 @@ export function MainNav({ className }: { className?: string }) {
             </Link>
           </Button>
 
-          {/* Testimonials */}
-          <Button 
-            variant={location === "/testimonials" ? "default" : "ghost"} 
-            size="sm"
-            asChild
-          >
-            <Link href="/testimonials">
-              Testimonials
-            </Link>
-          </Button>
+
 
           {/* Trading Dropdown */}
           <DropdownMenu>
@@ -147,16 +138,7 @@ export function MainNav({ className }: { className?: string }) {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {/* Academy */}
-          <Button 
-            variant={location === "/academy" ? "default" : "ghost"} 
-            size="sm"
-            asChild
-          >
-            <Link href="/academy">
-              Academy
-            </Link>
-          </Button>
+
         </nav>
 
         {/* Mobile Navigation Toggle (simplified for now) */}
