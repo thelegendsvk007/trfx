@@ -521,8 +521,6 @@ export default function HomePage() {
         </div>
       </section>
       
-
-      
       {/* CTA section */}
       <section className="py-20 bg-muted/30 border-t">
         <div className="container">
