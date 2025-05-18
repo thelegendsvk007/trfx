@@ -610,7 +610,7 @@ export default function HomePage() {
                 </Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <Link href="/challenges">
+                <Link href="/challenges/compare">
                   View Challenges
                 </Link>
               </Button>

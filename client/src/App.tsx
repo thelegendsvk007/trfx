@@ -296,7 +296,14 @@ function Router() {
         <Route path="/dashboard" component={TradingDashboardPage} />
         <Route path="/trading" component={TradingPage} />
         <Route path="/challenges">
-          <PlaceholderPage title="Trading Challenges" description="Prove your trading skills and get funded with our trading challenges." />
+          {/* Redirect to challenges compare page */}
+          <Route path="/challenges/compare" component={ComparePlansPage} />
+          <Route>
+            {() => {
+              window.location.href = "/challenges/compare";
+              return null;
+            }}
+          </Route>
         </Route>
         <Route path="/faq" component={FAQPage} />
         
