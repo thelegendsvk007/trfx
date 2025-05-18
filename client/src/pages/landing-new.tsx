@@ -8,7 +8,7 @@ export default function LandingPage() {
   // Sample testimonials data
   const testimonials = [
     {
-      quote: "TradeFunded helped me turn my trading passion into a full-time career. I passed the challenge in 12 days and now trade with a $100k funded account.",
+      quote: "TRFX helped me turn my trading passion into a full-time career. I passed the challenge in 12 days and now trade with a $100k funded account.",
       author: "Michael T.",
       role: "Forex Trader",
       location: "London, UK"
@@ -20,7 +20,7 @@ export default function LandingPage() {
       location: "Toronto, Canada"
     },
     {
-      quote: "What I love about TradeFunded is how they actually want you to succeed. Their analytics tools and support team are top-notch.",
+      quote: "What I love about TRFX is how they actually want you to succeed. Their analytics tools and support team are top-notch.",
       author: "David L.",
       role: "Commodity Trader",
       location: "Sydney, Australia"
@@ -54,31 +54,57 @@ export default function LandingPage() {
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
             <Activity className="h-6 w-6 text-primary" />
-            <span className="text-xl font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">TradeFunded</span>
+            <span className="text-xl font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">TRFX</span>
           </div>
           
           <nav className="hidden md:flex items-center gap-6">
-            <a href="#how-it-works" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-              How It Works
-            </a>
-            <a href="#why-choose-us" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-              Why Choose Us
-            </a>
-            <a href="#testimonials" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-              Testimonials
-            </a>
-            <a href="#faq" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-              FAQ
-            </a>
+            <Link href="/how-it-works">
+              <div className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
+                How It Works
+              </div>
+            </Link>
+            <Link href="/challenges">
+              <div className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
+                Challenges
+              </div>
+            </Link>
+            <Link href="/trading">
+              <div className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
+                Trading
+              </div>
+            </Link>
+            <Link href="/about">
+              <div className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
+                About
+              </div>
+            </Link>
+            <Link href="/faq">
+              <div className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
+                FAQ
+              </div>
+            </Link>
+            <Link href="/contact">
+              <div className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
+                Contact
+              </div>
+            </Link>
           </nav>
           
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="sm">
-              Log In
-            </Button>
-            <Button size="sm" className="bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity">
-              Sign Up
-            </Button>
+            <Link href="/login">
+              <div>
+                <Button variant="ghost" size="sm">
+                  Log In
+                </Button>
+              </div>
+            </Link>
+            <Link href="/register">
+              <div>
+                <Button size="sm" className="bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity">
+                  Sign Up
+                </Button>
+              </div>
+            </Link>
           </div>
         </div>
       </header>
