@@ -1,16 +1,36 @@
+import React from "react";
 import { Link } from "wouter";
-import { ArrowRight, Check, ChevronsUpDown, DollarSign, BarChart4, Globe } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ArrowRight, Settings, Info, BarChart, CreditCard, LineChart, Sparkles } from "lucide-react";
 import PageTemplate from "@/components/page-template";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
 
 export default function TradingProductsPage() {
   return (
     <PageTemplate
       title="TRFX - Trading Products"
-      description="Explore our wide range of trading instruments including forex pairs, indices, commodities, and cryptocurrencies."
+      description="Explore the wide range of trading instruments available on the TRFX platform including forex, commodities, indices, and cryptocurrencies."
     >
       {/* Hero Section */}
       <section className="bg-gradient-to-b from-background to-background/90 border-b border-border/40 py-16 md:py-24">
@@ -20,10 +40,10 @@ export default function TradingProductsPage() {
               Trading Products
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
-              Access a diverse range of global markets with competitive spreads
+              Trade a diverse range of financial instruments with competitive conditions
             </p>
             <Button size="lg" className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity" asChild>
-              <Link href="/signup">
+              <Link href="/challenges">
                 Start Trading Now
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
@@ -32,547 +52,485 @@ export default function TradingProductsPage() {
         </div>
       </section>
       
-      {/* Product Categories */}
+      {/* Products Overview */}
       <section className="py-16 bg-background">
         <div className="container px-4">
-          <Tabs defaultValue="forex" className="w-full">
-            <div className="flex justify-center mb-8">
-              <TabsList className="grid grid-cols-2 md:grid-cols-4">
-                <TabsTrigger value="forex" className="px-6">
-                  <DollarSign className="mr-2 h-4 w-4" />
-                  Forex
-                </TabsTrigger>
-                <TabsTrigger value="indices" className="px-6">
-                  <BarChart4 className="mr-2 h-4 w-4" />
-                  Indices
-                </TabsTrigger>
-                <TabsTrigger value="commodities" className="px-6">
-                  <Globe className="mr-2 h-4 w-4" />
-                  Commodities
-                </TabsTrigger>
-                <TabsTrigger value="crypto" className="px-6">
-                  <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-6h2v2h-2v-2zm0-8h2v6h-2V6z" fill="currentColor"/>
-                  </svg>
-                  Crypto
-                </TabsTrigger>
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-3xl font-bold tracking-tight text-center mb-8">
+              Our Trading Instruments
+            </h2>
+            <p className="text-lg text-muted-foreground text-center mb-12 max-w-3xl mx-auto">
+              Access global markets with over 170 tradable instruments across multiple asset classes
+            </p>
+            
+            <Tabs defaultValue="forex" className="w-full">
+              <TabsList className="grid grid-cols-4 mb-8">
+                <TabsTrigger value="forex">Forex</TabsTrigger>
+                <TabsTrigger value="commodities">Commodities</TabsTrigger>
+                <TabsTrigger value="indices">Indices</TabsTrigger>
+                <TabsTrigger value="crypto">Cryptocurrencies</TabsTrigger>
               </TabsList>
-            </div>
-            
-            {/* Forex Tab */}
-            <TabsContent value="forex">
-              <div className="max-w-5xl mx-auto">
-                <div className="flex flex-col md:flex-row gap-8 items-start">
-                  <div className="flex-1">
-                    <h2 className="text-2xl font-bold tracking-tight mb-4">Forex Pairs</h2>
-                    <p className="text-muted-foreground mb-6">
-                      Trade major, minor, and exotic currency pairs with tight spreads and fast execution. Our forex offering includes 50+ currency pairs across all major global regions.
-                    </p>
-                    <div className="space-y-4 mb-6">
-                      <div className="flex items-start gap-2">
-                        <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <div>
-                          <p className="font-medium">Competitive Spreads</p>
-                          <p className="text-sm text-muted-foreground">Starting from 0.5 pips on major pairs</p>
-                        </div>
+              
+              {/* Forex Tab */}
+              <TabsContent value="forex">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Forex Pairs</CardTitle>
+                    <CardDescription>
+                      Trade major, minor, and exotic currency pairs with tight spreads starting from 0.1 pips
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                      <div>
+                        <h3 className="text-xl font-semibold mb-3">Major Pairs</h3>
+                        <Table>
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead>Symbol</TableHead>
+                              <TableHead>Description</TableHead>
+                              <TableHead>Min Spread</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            <TableRow>
+                              <TableCell>EUR/USD</TableCell>
+                              <TableCell>Euro / US Dollar</TableCell>
+                              <TableCell>0.1 pips</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>GBP/USD</TableCell>
+                              <TableCell>British Pound / US Dollar</TableCell>
+                              <TableCell>0.3 pips</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>USD/JPY</TableCell>
+                              <TableCell>US Dollar / Japanese Yen</TableCell>
+                              <TableCell>0.3 pips</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>USD/CHF</TableCell>
+                              <TableCell>US Dollar / Swiss Franc</TableCell>
+                              <TableCell>0.4 pips</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>AUD/USD</TableCell>
+                              <TableCell>Australian Dollar / US Dollar</TableCell>
+                              <TableCell>0.3 pips</TableCell>
+                            </TableRow>
+                          </TableBody>
+                        </Table>
                       </div>
-                      <div className="flex items-start gap-2">
-                        <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <div>
-                          <p className="font-medium">24/5 Market Access</p>
-                          <p className="text-sm text-muted-foreground">Trade from Sunday evening to Friday evening</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <div>
-                          <p className="font-medium">Major, Minor & Exotic Pairs</p>
-                          <p className="text-sm text-muted-foreground">50+ currency pairs available</p>
-                        </div>
-                      </div>
-                    </div>
-                    <Button asChild>
-                      <Link href="/challenges">
-                        View Forex Challenges
-                      </Link>
-                    </Button>
-                  </div>
-                  
-                  <Card className="w-full md:w-2/5 border border-border/50">
-                    <CardHeader>
-                      <CardTitle className="text-lg">Popular Forex Pairs</CardTitle>
-                      <CardDescription>Most traded currency pairs with competitive spreads</CardDescription>
-                    </CardHeader>
-                    <CardContent className="p-0">
-                      <Table>
-                        <TableHeader>
-                          <TableRow className="hover:bg-transparent">
-                            <TableHead>Symbol</TableHead>
-                            <TableHead className="text-right">Spread from</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          <TableRow>
-                            <TableCell className="font-medium">EUR/USD</TableCell>
-                            <TableCell className="text-right">0.5 pips</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-medium">GBP/USD</TableCell>
-                            <TableCell className="text-right">0.8 pips</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-medium">USD/JPY</TableCell>
-                            <TableCell className="text-right">0.6 pips</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-medium">USD/CHF</TableCell>
-                            <TableCell className="text-right">0.9 pips</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-medium">AUD/USD</TableCell>
-                            <TableCell className="text-right">0.8 pips</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-medium">EUR/GBP</TableCell>
-                            <TableCell className="text-right">0.9 pips</TableCell>
-                          </TableRow>
-                        </TableBody>
-                      </Table>
-                    </CardContent>
-                    <CardFooter className="bg-muted/20 px-6 py-3">
-                      <p className="text-xs text-muted-foreground">
-                        Spreads shown are indicative and may vary based on market conditions.
-                      </p>
-                    </CardFooter>
-                  </Card>
-                </div>
-              </div>
-            </TabsContent>
-            
-            {/* Indices Tab */}
-            <TabsContent value="indices">
-              <div className="max-w-5xl mx-auto">
-                <div className="flex flex-col md:flex-row gap-8 items-start">
-                  <div className="flex-1">
-                    <h2 className="text-2xl font-bold tracking-tight mb-4">Global Indices</h2>
-                    <p className="text-muted-foreground mb-6">
-                      Trade the world's most popular stock indices including US30, S&P 500, NASDAQ, and other major global markets with tight spreads and low commissions.
-                    </p>
-                    <div className="space-y-4 mb-6">
-                      <div className="flex items-start gap-2">
-                        <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <div>
-                          <p className="font-medium">Major Global Indices</p>
-                          <p className="text-sm text-muted-foreground">US, European, and Asian markets</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <div>
-                          <p className="font-medium">Extended Hours Trading</p>
-                          <p className="text-sm text-muted-foreground">Access pre-market and after-hours movements</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <div>
-                          <p className="font-medium">Low Commissions</p>
-                          <p className="text-sm text-muted-foreground">Competitive pricing on all index products</p>
-                        </div>
+                      
+                      <div>
+                        <h3 className="text-xl font-semibold mb-3">Cross Pairs</h3>
+                        <Table>
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead>Symbol</TableHead>
+                              <TableHead>Description</TableHead>
+                              <TableHead>Min Spread</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            <TableRow>
+                              <TableCell>EUR/GBP</TableCell>
+                              <TableCell>Euro / British Pound</TableCell>
+                              <TableCell>0.5 pips</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>EUR/JPY</TableCell>
+                              <TableCell>Euro / Japanese Yen</TableCell>
+                              <TableCell>0.7 pips</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>GBP/JPY</TableCell>
+                              <TableCell>British Pound / Japanese Yen</TableCell>
+                              <TableCell>0.8 pips</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>AUD/CAD</TableCell>
+                              <TableCell>Australian Dollar / Canadian Dollar</TableCell>
+                              <TableCell>0.9 pips</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>NZD/USD</TableCell>
+                              <TableCell>New Zealand Dollar / US Dollar</TableCell>
+                              <TableCell>0.6 pips</TableCell>
+                            </TableRow>
+                          </TableBody>
+                        </Table>
                       </div>
                     </div>
-                    <Button asChild>
-                      <Link href="/challenges">
-                        View Index Challenges
-                      </Link>
-                    </Button>
-                  </div>
-                  
-                  <Card className="w-full md:w-2/5 border border-border/50">
-                    <CardHeader>
-                      <CardTitle className="text-lg">Popular Indices</CardTitle>
-                      <CardDescription>Major stock index markets around the world</CardDescription>
-                    </CardHeader>
-                    <CardContent className="p-0">
-                      <Table>
-                        <TableHeader>
-                          <TableRow className="hover:bg-transparent">
-                            <TableHead>Symbol</TableHead>
-                            <TableHead className="text-right">Spread from</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          <TableRow>
-                            <TableCell className="font-medium">US30 (Dow Jones)</TableCell>
-                            <TableCell className="text-right">1.5 points</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-medium">SPX500 (S&P 500)</TableCell>
-                            <TableCell className="text-right">0.9 points</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-medium">NASDAQ</TableCell>
-                            <TableCell className="text-right">1.0 points</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-medium">GER40 (DAX)</TableCell>
-                            <TableCell className="text-right">1.2 points</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-medium">UK100 (FTSE)</TableCell>
-                            <TableCell className="text-right">1.0 points</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-medium">JPN225 (Nikkei)</TableCell>
-                            <TableCell className="text-right">5.0 points</TableCell>
-                          </TableRow>
-                        </TableBody>
-                      </Table>
-                    </CardContent>
-                    <CardFooter className="bg-muted/20 px-6 py-3">
-                      <p className="text-xs text-muted-foreground">
-                        Spreads shown are indicative and may vary based on market conditions.
-                      </p>
-                    </CardFooter>
-                  </Card>
-                </div>
-              </div>
-            </TabsContent>
-            
-            {/* Commodities Tab */}
-            <TabsContent value="commodities">
-              <div className="max-w-5xl mx-auto">
-                <div className="flex flex-col md:flex-row gap-8 items-start">
-                  <div className="flex-1">
-                    <h2 className="text-2xl font-bold tracking-tight mb-4">Commodities</h2>
-                    <p className="text-muted-foreground mb-6">
-                      Trade a diverse range of commodities including precious metals, energy products, and agricultural commodities. Gain exposure to these essential markets with competitive spreads.
-                    </p>
-                    <div className="space-y-4 mb-6">
-                      <div className="flex items-start gap-2">
-                        <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <div>
-                          <p className="font-medium">Precious Metals</p>
-                          <p className="text-sm text-muted-foreground">Gold, Silver, Platinum, Palladium</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <div>
-                          <p className="font-medium">Energy Products</p>
-                          <p className="text-sm text-muted-foreground">Crude Oil, Brent Oil, Natural Gas</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <div>
-                          <p className="font-medium">Agricultural Commodities</p>
-                          <p className="text-sm text-muted-foreground">Coffee, Sugar, Wheat, Cotton</p>
-                        </div>
+                    
+                    <div className="mt-6 bg-muted/40 p-4 rounded-lg">
+                      <div className="flex items-start">
+                        <Info className="h-5 w-5 text-primary mr-2 mt-0.5" />
+                        <p className="text-sm">
+                          TRFX offers over 45 forex pairs with competitive spreads and leverage up to 1:100. All pairs are available 24/5 during market hours. Trading conditions may vary between challenge and funded accounts.
+                        </p>
                       </div>
                     </div>
-                    <Button asChild>
-                      <Link href="/challenges">
-                        View Commodity Challenges
-                      </Link>
-                    </Button>
-                  </div>
-                  
-                  <Card className="w-full md:w-2/5 border border-border/50">
-                    <CardHeader>
-                      <CardTitle className="text-lg">Popular Commodities</CardTitle>
-                      <CardDescription>Most traded commodity markets</CardDescription>
-                    </CardHeader>
-                    <CardContent className="p-0">
-                      <Table>
-                        <TableHeader>
-                          <TableRow className="hover:bg-transparent">
-                            <TableHead>Symbol</TableHead>
-                            <TableHead className="text-right">Spread from</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          <TableRow>
-                            <TableCell className="font-medium">XAUUSD (Gold)</TableCell>
-                            <TableCell className="text-right">25 cents</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-medium">XAGUSD (Silver)</TableCell>
-                            <TableCell className="text-right">2.0 cents</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-medium">OIL.WTI (Crude Oil)</TableCell>
-                            <TableCell className="text-right">3.0 cents</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-medium">OIL.BRENT (Brent)</TableCell>
-                            <TableCell className="text-right">3.5 cents</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-medium">NATGAS (Natural Gas)</TableCell>
-                            <TableCell className="text-right">0.0035 points</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-medium">COPPER</TableCell>
-                            <TableCell className="text-right">0.0003 points</TableCell>
-                          </TableRow>
-                        </TableBody>
-                      </Table>
-                    </CardContent>
-                    <CardFooter className="bg-muted/20 px-6 py-3">
-                      <p className="text-xs text-muted-foreground">
-                        Spreads shown are indicative and may vary based on market conditions.
-                      </p>
-                    </CardFooter>
-                  </Card>
-                </div>
-              </div>
-            </TabsContent>
-            
-            {/* Crypto Tab */}
-            <TabsContent value="crypto">
-              <div className="max-w-5xl mx-auto">
-                <div className="flex flex-col md:flex-row gap-8 items-start">
-                  <div className="flex-1">
-                    <h2 className="text-2xl font-bold tracking-tight mb-4">Cryptocurrencies</h2>
-                    <p className="text-muted-foreground mb-6">
-                      Trade the most popular cryptocurrencies against USD and other major currencies. Access Bitcoin, Ethereum, and other leading digital assets with competitive pricing.
-                    </p>
-                    <div className="space-y-4 mb-6">
-                      <div className="flex items-start gap-2">
-                        <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <div>
-                          <p className="font-medium">Major Cryptocurrencies</p>
-                          <p className="text-sm text-muted-foreground">Bitcoin, Ethereum, and other leading tokens</p>
-                        </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              
+              {/* Commodities Tab */}
+              <TabsContent value="commodities">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Commodities</CardTitle>
+                    <CardDescription>
+                      Trade precious metals, energy products, and agricultural commodities with competitive conditions
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                      <div>
+                        <h3 className="text-xl font-semibold mb-3">Metals & Energy</h3>
+                        <Table>
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead>Symbol</TableHead>
+                              <TableHead>Description</TableHead>
+                              <TableHead>Trading Hours</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            <TableRow>
+                              <TableCell>XAUUSD</TableCell>
+                              <TableCell>Gold / US Dollar</TableCell>
+                              <TableCell>23:00 Sun - 22:00 Fri</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>XAGUSD</TableCell>
+                              <TableCell>Silver / US Dollar</TableCell>
+                              <TableCell>23:00 Sun - 22:00 Fri</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>USOIL</TableCell>
+                              <TableCell>US Crude Oil</TableCell>
+                              <TableCell>23:00 Sun - 22:00 Fri</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>UKOIL</TableCell>
+                              <TableCell>Brent Crude Oil</TableCell>
+                              <TableCell>01:00 Mon - 23:00 Fri</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>NGAS</TableCell>
+                              <TableCell>Natural Gas</TableCell>
+                              <TableCell>23:00 Sun - 22:00 Fri</TableCell>
+                            </TableRow>
+                          </TableBody>
+                        </Table>
                       </div>
-                      <div className="flex items-start gap-2">
-                        <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <div>
-                          <p className="font-medium">Cryptocurrency Crosses</p>
-                          <p className="text-sm text-muted-foreground">Crypto vs USD and other major currencies</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <div>
-                          <p className="font-medium">Competitive Pricing</p>
-                          <p className="text-sm text-muted-foreground">Trade crypto with low spreads</p>
-                        </div>
+                      
+                      <div>
+                        <h3 className="text-xl font-semibold mb-3">Agricultural & Others</h3>
+                        <Table>
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead>Symbol</TableHead>
+                              <TableHead>Description</TableHead>
+                              <TableHead>Contract Size</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            <TableRow>
+                              <TableCell>CORN</TableCell>
+                              <TableCell>Corn Futures</TableCell>
+                              <TableCell>1 lot = 50 bushels</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>SOYBEAN</TableCell>
+                              <TableCell>Soybean Futures</TableCell>
+                              <TableCell>1 lot = 50 bushels</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>WHEAT</TableCell>
+                              <TableCell>Wheat Futures</TableCell>
+                              <TableCell>1 lot = 50 bushels</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>COTTON</TableCell>
+                              <TableCell>Cotton Futures</TableCell>
+                              <TableCell>1 lot = 50,000 lbs</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>COFFEE</TableCell>
+                              <TableCell>Coffee Futures</TableCell>
+                              <TableCell>1 lot = 37,500 lbs</TableCell>
+                            </TableRow>
+                          </TableBody>
+                        </Table>
                       </div>
                     </div>
-                    <div className="bg-muted/30 p-4 rounded-md border border-border/50 mb-6">
-                      <p className="text-sm text-muted-foreground">
-                        <strong>Important Note:</strong> While crypto markets are available 24/7, our funding program requires all positions to be closed before weekend market closure on Friday.
-                      </p>
+                    
+                    <div className="mt-6 bg-muted/40 p-4 rounded-lg">
+                      <div className="flex items-start">
+                        <Info className="h-5 w-5 text-primary mr-2 mt-0.5" />
+                        <p className="text-sm">
+                          Commodity contracts may be subject to increased margin requirements during periods of high volatility or upcoming major economic releases. Please refer to the platform for current trading conditions.
+                        </p>
+                      </div>
                     </div>
-                    <Button asChild>
-                      <Link href="/challenges">
-                        View Crypto Challenges
-                      </Link>
-                    </Button>
-                  </div>
-                  
-                  <Card className="w-full md:w-2/5 border border-border/50">
-                    <CardHeader>
-                      <CardTitle className="text-lg">Popular Cryptocurrencies</CardTitle>
-                      <CardDescription>Major cryptocurrencies available for trading</CardDescription>
-                    </CardHeader>
-                    <CardContent className="p-0">
-                      <Table>
-                        <TableHeader>
-                          <TableRow className="hover:bg-transparent">
-                            <TableHead>Symbol</TableHead>
-                            <TableHead className="text-right">Spread from</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          <TableRow>
-                            <TableCell className="font-medium">BTC/USD (Bitcoin)</TableCell>
-                            <TableCell className="text-right">30.0 points</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-medium">ETH/USD (Ethereum)</TableCell>
-                            <TableCell className="text-right">2.5 points</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-medium">XRP/USD (Ripple)</TableCell>
-                            <TableCell className="text-right">0.002 points</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-medium">LTC/USD (Litecoin)</TableCell>
-                            <TableCell className="text-right">0.12 points</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-medium">BCH/USD (Bitcoin Cash)</TableCell>
-                            <TableCell className="text-right">1.5 points</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-medium">ADA/USD (Cardano)</TableCell>
-                            <TableCell className="text-right">0.003 points</TableCell>
-                          </TableRow>
-                        </TableBody>
-                      </Table>
-                    </CardContent>
-                    <CardFooter className="bg-muted/20 px-6 py-3">
-                      <p className="text-xs text-muted-foreground">
-                        Spreads shown are indicative and may vary based on market conditions.
-                      </p>
-                    </CardFooter>
-                  </Card>
-                </div>
-              </div>
-            </TabsContent>
-          </Tabs>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              
+              {/* Indices Tab */}
+              <TabsContent value="indices">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Global Indices</CardTitle>
+                    <CardDescription>
+                      Trade major stock indices from the US, Europe, Asia, and beyond
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Symbol</TableHead>
+                          <TableHead>Description</TableHead>
+                          <TableHead>Region</TableHead>
+                          <TableHead>Trading Hours (GMT)</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell>US30</TableCell>
+                          <TableCell>Dow Jones Industrial Average</TableCell>
+                          <TableCell>North America</TableCell>
+                          <TableCell>00:00 - 23:00 Mon-Fri</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>NAS100</TableCell>
+                          <TableCell>Nasdaq 100 Index</TableCell>
+                          <TableCell>North America</TableCell>
+                          <TableCell>00:00 - 23:00 Mon-Fri</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>SPX500</TableCell>
+                          <TableCell>S&P 500 Index</TableCell>
+                          <TableCell>North America</TableCell>
+                          <TableCell>00:00 - 23:00 Mon-Fri</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>GER40</TableCell>
+                          <TableCell>DAX 40 Index</TableCell>
+                          <TableCell>Europe</TableCell>
+                          <TableCell>08:00 - 22:00 Mon-Fri</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>UK100</TableCell>
+                          <TableCell>FTSE 100 Index</TableCell>
+                          <TableCell>Europe</TableCell>
+                          <TableCell>08:00 - 16:30 Mon-Fri</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>FRA40</TableCell>
+                          <TableCell>CAC 40 Index</TableCell>
+                          <TableCell>Europe</TableCell>
+                          <TableCell>08:00 - 16:30 Mon-Fri</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>JPN225</TableCell>
+                          <TableCell>Nikkei 225 Index</TableCell>
+                          <TableCell>Asia</TableCell>
+                          <TableCell>00:00 - 06:00, 07:00 - 14:00 Mon-Fri</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>AUS200</TableCell>
+                          <TableCell>ASX 200 Index</TableCell>
+                          <TableCell>Asia-Pacific</TableCell>
+                          <TableCell>00:00 - 06:00, 07:00 - 14:00 Mon-Fri</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                    
+                    <div className="mt-6 bg-muted/40 p-4 rounded-lg">
+                      <div className="flex items-start">
+                        <Info className="h-5 w-5 text-primary mr-2 mt-0.5" />
+                        <p className="text-sm">
+                          Index trading hours may vary during daylight saving time changes and holidays. Overnight positions in indices may be subject to additional swap charges. Please refer to the economic calendar for market hours adjustments.
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              
+              {/* Cryptocurrencies Tab */}
+              <TabsContent value="crypto">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Cryptocurrencies</CardTitle>
+                    <CardDescription>
+                      Trade the world's leading cryptocurrencies as CFDs with leverage
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Symbol</TableHead>
+                          <TableHead>Description</TableHead>
+                          <TableHead>Min. Lot Size</TableHead>
+                          <TableHead>Max Leverage</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell>BTCUSD</TableCell>
+                          <TableCell>Bitcoin / US Dollar</TableCell>
+                          <TableCell>0.01</TableCell>
+                          <TableCell>1:5</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>ETHUSD</TableCell>
+                          <TableCell>Ethereum / US Dollar</TableCell>
+                          <TableCell>0.1</TableCell>
+                          <TableCell>1:5</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>LTCUSD</TableCell>
+                          <TableCell>Litecoin / US Dollar</TableCell>
+                          <TableCell>0.1</TableCell>
+                          <TableCell>1:5</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>XRPUSD</TableCell>
+                          <TableCell>Ripple / US Dollar</TableCell>
+                          <TableCell>1</TableCell>
+                          <TableCell>1:5</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>BCHUSD</TableCell>
+                          <TableCell>Bitcoin Cash / US Dollar</TableCell>
+                          <TableCell>0.1</TableCell>
+                          <TableCell>1:5</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>ADAUSD</TableCell>
+                          <TableCell>Cardano / US Dollar</TableCell>
+                          <TableCell>1</TableCell>
+                          <TableCell>1:5</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>DOTUSD</TableCell>
+                          <TableCell>Polkadot / US Dollar</TableCell>
+                          <TableCell>1</TableCell>
+                          <TableCell>1:5</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>SOLUSD</TableCell>
+                          <TableCell>Solana / US Dollar</TableCell>
+                          <TableCell>1</TableCell>
+                          <TableCell>1:5</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                    
+                    <div className="mt-6 bg-muted/40 p-4 rounded-lg">
+                      <div className="flex items-start">
+                        <Info className="h-5 w-5 text-primary mr-2 mt-0.5" />
+                        <p className="text-sm">
+                          Cryptocurrency CFDs are available 24/7, including weekends. Due to the volatile nature of cryptocurrencies, spreads may widen during periods of high market volatility. Reduced leverage is applied to crypto trading compared to other instruments to manage risk.
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
+          </div>
         </div>
       </section>
       
-      {/* Trading Instruments Count */}
-      <section className="py-16 bg-muted/30 border-y border-border/40">
+      {/* Features */}
+      <section className="py-16 bg-muted/30 border-t border-border/40">
         <div className="container px-4">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold tracking-tight text-center mb-12">
-              Comprehensive Market Access
+              Trading Features
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-              <Card className="border border-border/50 bg-card/50">
-                <CardContent className="pt-6">
-                  <div className="text-4xl md:text-5xl font-bold text-primary mb-2">50+</div>
-                  <div className="text-lg font-medium">Forex Pairs</div>
-                  <p className="text-sm text-muted-foreground mt-2">
-                    Major, minor, and exotic currency pairs
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <Card className="border border-border/50">
+                <CardHeader>
+                  <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 text-primary mb-4">
+                    <LineChart className="h-6 w-6" />
+                  </div>
+                  <CardTitle>Real-Time Quotes</CardTitle>
+                  <CardDescription>
+                    Access accurate, real-time price feeds across all instruments
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Our platform provides institutional-grade price feeds with minimal latency, ensuring you can execute trades at the prices you see on your chart.
                   </p>
                 </CardContent>
               </Card>
               
-              <Card className="border border-border/50 bg-card/50">
-                <CardContent className="pt-6">
-                  <div className="text-4xl md:text-5xl font-bold text-primary mb-2">20+</div>
-                  <div className="text-lg font-medium">Global Indices</div>
-                  <p className="text-sm text-muted-foreground mt-2">
-                    Major stock indices worldwide
+              <Card className="border border-border/50">
+                <CardHeader>
+                  <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 text-primary mb-4">
+                    <Settings className="h-6 w-6" />
+                  </div>
+                  <CardTitle>Advanced Execution</CardTitle>
+                  <CardDescription>
+                    Lightning-fast trade execution with no requotes
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Experience superior trade execution with average speeds below 100ms. Our system is designed to handle high-frequency trading with no slippage on limit orders.
                   </p>
                 </CardContent>
               </Card>
               
-              <Card className="border border-border/50 bg-card/50">
-                <CardContent className="pt-6">
-                  <div className="text-4xl md:text-5xl font-bold text-primary mb-2">15+</div>
-                  <div className="text-lg font-medium">Commodities</div>
-                  <p className="text-sm text-muted-foreground mt-2">
-                    Precious metals, energy, and more
-                  </p>
-                </CardContent>
-              </Card>
-              
-              <Card className="border border-border/50 bg-card/50">
-                <CardContent className="pt-6">
-                  <div className="text-4xl md:text-5xl font-bold text-primary mb-2">10+</div>
-                  <div className="text-lg font-medium">Cryptocurrencies</div>
-                  <p className="text-sm text-muted-foreground mt-2">
-                    Major digital assets and tokens
+              <Card className="border border-border/50">
+                <CardHeader>
+                  <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 text-primary mb-4">
+                    <CreditCard className="h-6 w-6" />
+                  </div>
+                  <CardTitle>Competitive Pricing</CardTitle>
+                  <CardDescription>
+                    Trade with tight spreads and zero commissions
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Benefit from institutional-grade pricing with spreads starting from 0.1 pips on major pairs and competitive pricing across all asset classes.
                   </p>
                 </CardContent>
               </Card>
             </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* Trading Hours */}
-      <section className="py-16 bg-background">
-        <div className="container px-4">
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-3xl font-bold tracking-tight mb-4">Trading Hours</h2>
-            <p className="text-lg text-muted-foreground">
-              Our trading hours follow standard market timing for each instrument category
-            </p>
-          </div>
-          
-          <div className="max-w-4xl mx-auto">
-            <Card className="border border-border/50">
-              <CardContent className="p-0">
-                <Table>
-                  <TableHeader>
-                    <TableRow className="hover:bg-transparent">
-                      <TableHead>Market</TableHead>
-                      <TableHead>Trading Hours (GMT)</TableHead>
-                      <TableHead className="text-right">Weekly Schedule</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell className="font-medium">Forex</TableCell>
-                      <TableCell>
-                        <div className="text-sm">
-                          <p>Sunday 22:00 - Friday 22:00</p>
-                          <p className="text-xs text-muted-foreground">24/5 continuous trading</p>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-right">5 days</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-medium">Indices</TableCell>
-                      <TableCell>
-                        <div className="text-sm">
-                          <p>Varies by exchange (US, EU, Asia)</p>
-                          <p className="text-xs text-muted-foreground">Extended hours available for most indices</p>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-right">5 days</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-medium">Commodities</TableCell>
-                      <TableCell>
-                        <div className="text-sm">
-                          <p>Metals: 24/5 (Sunday 22:00 - Friday 22:00)</p>
-                          <p>Energy: Based on exchange hours</p>
-                          <p className="text-xs text-muted-foreground">Some gaps may occur during session changes</p>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-right">5 days</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-medium">Cryptocurrencies</TableCell>
-                      <TableCell>
-                        <div className="text-sm">
-                          <p>24/7 markets</p>
-                          <p className="text-xs text-muted-foreground text-rose-500">Note: Positions must be closed by Friday 22:00 GMT for TRFX accounts</p>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-right">7 days*</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </CardContent>
-              <CardFooter className="px-6 py-4 bg-muted/20 border-t border-border">
-                <p className="text-xs text-muted-foreground">
-                  * While cryptocurrency markets are available 24/7, please note that all TRFX trading accounts require positions to be closed before weekend market closure on Friday at 22:00 GMT. Any open positions will be automatically closed at market price.
-                </p>
-              </CardFooter>
-            </Card>
           </div>
         </div>
       </section>
       
       {/* CTA Section */}
-      <section className="py-16 bg-muted/30 border-t border-border/40">
+      <section className="py-16 bg-background border-t border-border/40">
         <div className="container px-4">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl font-bold tracking-tight mb-4">Ready to Start Trading?</h2>
             <p className="text-xl text-muted-foreground mb-8">
-              Take on our trading challenge and gain access to our capital
+              Take on a TRFX challenge and prove your trading skills with our diverse range of instruments
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity" asChild>
                 <Link href="/challenges">
-                  View Challenge Plans
+                  Explore Challenges
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <Link href="/how-it-works">
-                  Learn How It Works
+                <Link href="/trading/spreads-leverage">
+                  View Spreads & Leverage
                 </Link>
               </Button>
             </div>
