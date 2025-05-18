@@ -7,28 +7,6 @@ import { Link } from "wouter";
 import PageTemplate from "@/components/page-template";
 
 export default function LandingPage() {
-  // Sample testimonials data
-  const testimonials = [
-    {
-      quote: "TRFX helped me turn my trading passion into a full-time career. I passed the challenge in 12 days and now trade with a $100k funded account.",
-      author: "Michael T.",
-      role: "Forex Trader",
-      location: "London, UK"
-    },
-    {
-      quote: "The platform is incredibly transparent and the payouts are always on time. I've been with them for 6 months and have already received over $25,000 in profits.",
-      author: "Sarah J.",
-      role: "Index Trader",
-      location: "Toronto, Canada"
-    },
-    {
-      quote: "What I love about TRFX is how they actually want you to succeed. Their analytics tools and support team are top-notch.",
-      author: "David L.",
-      role: "Commodity Trader",
-      location: "Sydney, Australia"
-    }
-  ];
-  
   // Sample FAQ data
   const faqs = [
     {
@@ -371,44 +349,6 @@ export default function LandingPage() {
                 <ChevronRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-          </div>
-        </div>
-      </section>
-      
-      {/* Testimonials section */}
-      <section className="py-20 bg-muted/30">
-        <div className="container">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl font-bold tracking-tight mb-4">What Our Traders Say</h2>
-            <p className="text-lg text-muted-foreground">
-              Join thousands of successful traders who have earned with TRFX
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, i) => (
-              <Card key={i} className="border-border/40 hover:border-border/80 transition-all duration-300 hover:shadow-lg">
-                <CardContent className="pt-6">
-                  <div className="mb-4 text-muted-foreground">
-                    {[...Array(5)].map((_, i) => (
-                      <svg key={i} className="inline-block h-5 w-5 text-yellow-400 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                        <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
-                      </svg>
-                    ))}
-                  </div>
-                  <blockquote className="italic text-muted-foreground mb-4">"{testimonial.quote}"</blockquote>
-                  <div className="flex items-center">
-                    <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
-                      <span className="text-sm font-bold text-primary">{testimonial.author.charAt(0)}</span>
-                    </div>
-                    <div>
-                      <p className="font-medium">{testimonial.author}</p>
-                      <p className="text-sm text-muted-foreground">{testimonial.role}, {testimonial.location}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
           </div>
         </div>
       </section>
