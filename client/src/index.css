@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Modern Light Theme - Soft whites and subtle grays */
+  --background: 210 40% 98%;
+  --foreground: 222 47% 11%;
+  --muted: 210 40% 93%;
+  --muted-foreground: 215 25% 40%;
+  --popover: 210 40% 98%;
+  --popover-foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  
+  /* Vibrant Primary - Electric Blue */
+  --primary: 210 100% 56%;
+  --primary-foreground: 0 0% 100%;
+  
+  /* Secondary - Soft Violet */
+  --secondary: 250 95% 76%;
+  --secondary-foreground: 0 0% 100%;
+  
+  /* Accent - Energetic Teal */
+  --accent: 174 75% 46%;
+  --accent-foreground: 0 0% 100%;
+  
+  /* Alert Colors */
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 210 40% 98%;
+  --success: 142 72% 50%;
+  --success-foreground: 210 40% 98%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 210 40% 98%;
+  --info: 210 100% 56%;
+  --info-foreground: 210 40% 98%;
+  
+  /* UI Elements */
+  --ring: 210 100% 56%;
+  --radius: 0.5rem;
+}
+
+.dark {
+  /* Futuristic Dark Theme - Deep blues and sleek grays */
+  --background: 222 47% 11%;
+  --foreground: 210 40% 98%;
+  --muted: 217 33% 17%;
+  --muted-foreground: 215 20% 65%;
+  --popover: 222 47% 11%;
+  --popover-foreground: 210 40% 98%;
+  --card: 222 47% 11%;
+  --card-foreground: 210 40% 98%;
+  --border: 217 33% 17%;
+  --input: 217 33% 17%;
+  
+  /* Vibrant Primary - Neon Blue */
+  --primary: 210 100% 56%;
+  --primary-foreground: 0 0% 100%;
+  
+  /* Secondary - Vibrant Purple */
+  --secondary: 250 95% 76%;
+  --secondary-foreground: 0 0% 100%;
+  
+  /* Accent - Bright Teal */
+  --accent: 174 75% 46%;
+  --accent-foreground: 0 0% 100%;
+  
+  /* Alert Colors */
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 210 40% 98%;
+  --success: 142 72% 50%;
+  --success-foreground: 210 40% 98%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 210 40% 98%;
+  --info: 210 100% 56%;
+  --info-foreground: 210 40% 98%;
+  
+  /* UI Elements */
+  --ring: 210 100% 56%;
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
