@@ -366,7 +366,7 @@ export default function LandingPage() {
           
           <div className="mt-8 text-center">
             <Button variant="outline" size="lg" asChild>
-              <Link to="/challenges">
+              <Link to="/challenges/compare">
                 View All Challenges
                 <ChevronRight className="ml-2 h-5 w-5" />
               </Link>

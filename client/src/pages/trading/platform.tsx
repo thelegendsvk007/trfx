@@ -218,7 +218,7 @@ export default function TradingPlatformPage() {
           <h3 className="text-xl font-medium mb-4">Ready to Start Trading?</h3>
           <div className="flex justify-center gap-4">
             <Button size="lg" asChild>
-              <a href="/challenges">Take the Challenge</a>
+              <a href="/challenges/compare">Take the Challenge</a>
             </Button>
             <Button variant="outline" size="lg" asChild>
               <a href="/faq">Learn More</a>
