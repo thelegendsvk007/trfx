@@ -253,18 +253,20 @@ export default function FAQPage() {
                 
                 <AccordionItem value="item-12">
                   <AccordionTrigger>What happens if I lose money in a funded account?</AccordionTrigger>
-                  <AccordionContent>
-                    <p className="mb-2">Funded accounts have the same maximum drawdown limits as challenges:</p>
-                    <ul className="list-disc pl-5 space-y-1 mb-2">
-                      <li>Standard accounts and Evaluation Program: 5% maximum drawdown</li>
-                      <li>Aggressive accounts: 8% maximum drawdown</li>
-                    </ul>
-                    <p className="mb-2">If you hit the maximum drawdown, your funded account will be closed. You have two options:</p>
-                    <ul className="list-disc pl-5 space-y-1">
-                      <li>Purchase a new challenge at the regular price.</li>
-                      <li>Use our Funded Reset program to restart your funded account for a discounted fee (typically 40-50% of the original challenge price).</li>
-                    </ul>
-                    <p>It's important to note that you never owe us money for losses - you're trading with our capital, so the financial risk is entirely ours.</p>
+                  <AccordionContent className="break-words">
+                    <div className="prose prose-sm max-w-none text-muted-foreground">
+                      <p className="mb-2">Funded accounts have the same maximum drawdown limits as challenges:</p>
+                      <ul className="list-disc pl-5 space-y-1 mb-2">
+                        <li>Standard accounts and Evaluation Program: 5% maximum drawdown</li>
+                        <li>Aggressive accounts: 8% maximum drawdown</li>
+                      </ul>
+                      <p className="mb-2">If you hit the maximum drawdown, your funded account will be closed. You have two options:</p>
+                      <ul className="list-disc pl-5 space-y-1">
+                        <li>Purchase a new challenge at the regular price.</li>
+                        <li>Use our Funded Reset program to restart your funded account for a discounted fee (typically 40-50% of the original challenge price).</li>
+                      </ul>
+                      <p>It's important to note that you never owe us money for losses - you're trading with our capital, so the financial risk is entirely ours.</p>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
@@ -279,17 +281,19 @@ export default function FAQPage() {
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="item-13">
                   <AccordionTrigger>What are the key trading rules I need to follow?</AccordionTrigger>
-                  <AccordionContent>
-                    <p className="mb-2">Here are the key trading rules for all challenge and funded accounts:</p>
-                    <ul className="list-disc pl-5 space-y-1 mb-2">
-                      <li><strong>Maximum Drawdown:</strong> 5% for Standard/Evaluation accounts, 8% for Aggressive accounts.</li>
-                      <li><strong>Daily Drawdown Limit:</strong> 4% maximum daily drawdown for all account types.</li>
-                      <li><strong>Profit Targets:</strong> 8% for Standard, 12% for Aggressive, 6% per phase for Evaluation.</li>
-                      <li><strong>Trading Hours:</strong> 24/5 market hours, but no holding positions over weekends.</li>
-                      <li><strong>News Trading:</strong> No trading during high-impact economic news events.</li>
-                      <li><strong>Risk Management:</strong> Maximum lot size limits based on account size.</li>
-                    </ul>
-                    <p>These rules are in place to encourage responsible trading and risk management. They apply equally to challenge and funded accounts.</p>
+                  <AccordionContent className="break-words">
+                    <div className="prose prose-sm max-w-none text-muted-foreground">
+                      <p className="mb-2">Here are the key trading rules for all challenge and funded accounts:</p>
+                      <ul className="list-disc pl-5 space-y-1 mb-2">
+                        <li><strong>Maximum Drawdown:</strong> 5% for Standard/Evaluation accounts, 8% for Aggressive accounts.</li>
+                        <li><strong>Daily Drawdown Limit:</strong> 4% maximum daily drawdown for all account types.</li>
+                        <li><strong>Profit Targets:</strong> 8% for Standard, 12% for Aggressive, 6% per phase for Evaluation.</li>
+                        <li><strong>Trading Hours:</strong> 24/5 market hours, but no holding positions over weekends.</li>
+                        <li><strong>News Trading:</strong> No trading during high-impact economic news events.</li>
+                        <li><strong>Risk Management:</strong> Maximum lot size limits based on account size.</li>
+                      </ul>
+                      <p>These rules are in place to encourage responsible trading and risk management. They apply equally to challenge and funded accounts.</p>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
                 

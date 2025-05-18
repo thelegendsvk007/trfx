@@ -12,7 +12,7 @@ export default function ComparePlansPage() {
       title="TRFX - Compare Challenge Plans"
       description="Compare our different funded trading challenge plans side by side and find the perfect match for your trading style."
     >
-      <TooltipProvider defaultScopeStrategy={(scope) => document.body}>
+      <TooltipProvider>
       {/* Hero Section */}
       <section className="bg-gradient-to-b from-background to-background/90 border-b border-border/40 py-16 md:py-20">
         <div className="container px-4">
