@@ -5,9 +5,12 @@ import { Toaster } from "@/components/ui/toaster";
 import { Layout } from "@/components/layout";
 
 // Import the pages we've already created
+import HomePage from "@/pages/home";
 import MetaTrader4Page from "@/pages/trading/metatrader4";
 import MetaTrader5Page from "@/pages/trading/metatrader5";
 import TeamPage from "@/pages/about/team";
+import LoginPage from "@/pages/login";
+import SignupPage from "@/pages/signup";
 
 // Placeholder component for pages we haven't created yet
 const PlaceholderPage = ({ title, description }: { title: string, description?: string }) => (
@@ -26,20 +29,11 @@ function Router() {
     <Layout>
       <Switch>
         {/* Landing page */}
-        <Route path="/">
-          <PlaceholderPage 
-            title="Welcome to TRFX" 
-            description="TRFX is a comprehensive forex trading platform designed to empower traders with advanced tools, educational resources, and an intuitive user experience."
-          />
-        </Route>
+        <Route path="/" component={HomePage} />
         
         {/* Auth routes */}
-        <Route path="/login">
-          <PlaceholderPage title="Login" description="Access your TRFX trading account." />
-        </Route>
-        <Route path="/signup">
-          <PlaceholderPage title="Sign Up" description="Create your TRFX trading account and start your journey." />
-        </Route>
+        <Route path="/login" component={LoginPage} />
+        <Route path="/signup" component={SignupPage} />
         
         {/* Main section routes */}
         <Route path="/dashboard">
