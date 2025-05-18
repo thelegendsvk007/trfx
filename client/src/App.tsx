@@ -6,13 +6,14 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
 
 import LandingPage from "@/pages/landing-new";
+import DashboardPage from "@/pages/dashboard-new";
+import TradeHistoryPage from "@/pages/trade-history-new";
+import ChallengesPage from "@/pages/challenges-new";
+import CheckoutPage from "@/pages/checkout-new";
 import LoginPage from "@/pages/login";
 import RegisterPage from "@/pages/register";
-import DashboardPage from "@/pages/dashboard";
-import TradeHistoryPage from "@/pages/trade-history";
 import AnalyticsPage from "@/pages/analytics";
 import PayoutsPage from "@/pages/payouts";
-import ChallengesPage from "@/pages/challenges";
 import ProfilePage from "@/pages/profile";
 import AdminDashboardPage from "@/pages/admin/dashboard";
 import AdminTradersPage from "@/pages/admin/traders";
@@ -31,6 +32,7 @@ function Router() {
       <Route path="/analytics" component={AnalyticsPage} />
       <Route path="/payouts" component={PayoutsPage} />
       <Route path="/challenges" component={ChallengesPage} />
+      <Route path="/checkout" component={CheckoutPage} />
       <Route path="/profile" component={ProfilePage} />
       <Route path="/admin" component={AdminDashboardPage} />
       <Route path="/admin/traders" component={AdminTradersPage} />

@@ -1,1020 +1,692 @@
 import { useState } from "react";
-import { Link, useLocation } from "wouter";
+import { Activity, ArrowRight, CheckCircle, ChevronRight, LineChart, Shield, Users, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  LineChart, 
-  CheckCircle2, 
-  ChevronRight, 
-  Menu,
-  Moon,
-  Sun,
-  ExternalLink,
-  ArrowRight, 
-  Users,
-  Shield,
-  BarChart,
-  DollarSign,
-  CreditCard,
-  Twitter,
-  Instagram,
-  Facebook,
-  Linkedin,
-  Phone,
-  Mail,
-  MapPin
-} from "lucide-react";
-import { useAuth } from "@/hooks/use-auth";
-import { useTheme } from "@/components/theme-provider";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 export default function LandingPage() {
-  const [location, navigate] = useLocation();
-  const { user } = useAuth();
-  const { theme, setTheme } = useTheme();
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
-  
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
-  
-  const handleGetStartedClick = () => {
-    if (user) {
-      navigate("/dashboard");
-    } else {
-      navigate("/register");
+  // Sample testimonials data
+  const testimonials = [
+    {
+      quote: "TradeFunded helped me turn my trading passion into a full-time career. I passed the challenge in 12 days and now trade with a $100k funded account.",
+      author: "Michael T.",
+      role: "Forex Trader",
+      location: "London, UK"
+    },
+    {
+      quote: "The platform is incredibly transparent and the payouts are always on time. I've been with them for 6 months and have already received over $25,000 in profits.",
+      author: "Sarah J.",
+      role: "Index Trader",
+      location: "Toronto, Canada"
+    },
+    {
+      quote: "What I love about TradeFunded is how they actually want you to succeed. Their analytics tools and support team are top-notch.",
+      author: "David L.",
+      role: "Commodity Trader",
+      location: "Sydney, Australia"
     }
-  };
+  ];
   
-  const challengePlans = [
+  // Sample FAQ data
+  const faqs = [
     {
-      id: 1,
-      title: "Standard Challenge - $25,000",
-      accountSize: 25000,
-      price: 99,
-      profitTarget: 8,
-      maxDrawdown: 5,
-      duration: 30,
-      profitSplit: 70,
-      featured: false
+      question: "How does the funding process work?",
+      answer: "Our funding process is straightforward: First, you purchase a challenge with your preferred account size. Next, complete the two-phase evaluation by meeting the profit targets while respecting the trading rules. Once successful, you receive a funded account where you keep up to 80% of the profits you generate."
     },
     {
-      id: 2,
-      title: "Standard Challenge - $50,000",
-      accountSize: 50000,
-      price: 199,
-      profitTarget: 8,
-      maxDrawdown: 5,
-      duration: 30,
-      profitSplit: 80,
-      featured: true
+      question: "What markets can I trade?",
+      answer: "We offer access to a wide range of markets including Forex, Indices, Commodities, Cryptocurrencies, and Stocks. This gives you the flexibility to trade in markets where you have expertise and see the most opportunity."
     },
     {
-      id: 3,
-      title: "Standard Challenge - $100,000",
-      accountSize: 100000,
-      price: 349,
-      profitTarget: 8,
-      maxDrawdown: 5,
-      duration: 30,
-      profitSplit: 80,
-      featured: false
+      question: "How often are profits paid out?",
+      answer: "For standard accounts, payouts are processed monthly. Elite and Expert account holders enjoy weekly payouts. You can request a payout once your profits exceed $100, and they are typically processed within 2-3 business days."
     },
     {
-      id: 4,
-      title: "Standard Challenge - $200,000",
-      accountSize: 200000,
-      price: 599,
-      profitTarget: 8,
-      maxDrawdown: 5,
-      duration: 30,
-      profitSplit: 80,
-      featured: false
+      question: "Are there any restrictions on trading styles?",
+      answer: "We support various trading styles including day trading, swing trading, and position trading. However, we prohibit certain high-risk strategies such as martingale and grid trading without proper risk management. All trading must adhere to our maximum drawdown rules."
     }
   ];
   
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Navigation */}
-      <header className="backdrop-blur-md bg-background/70 sticky top-0 z-50 border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex">
-              <div className="flex-shrink-0 flex items-center">
-                <LineChart className="h-8 w-8 text-primary" />
-                <span className="ml-2 text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">TradeFunded</span>
+    <div className="min-h-screen flex flex-col">
+      {/* Header/Navigation */}
+      <header className="sticky top-0 z-40 border-b bg-background/70 backdrop-blur-md">
+        <div className="container flex h-16 items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Activity className="h-6 w-6 text-primary" />
+            <span className="text-xl font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">TradeFunded</span>
+          </div>
+          
+          <nav className="hidden md:flex items-center gap-6">
+            <a href="#how-it-works" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+              How It Works
+            </a>
+            <a href="#why-choose-us" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+              Why Choose Us
+            </a>
+            <a href="#testimonials" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+              Testimonials
+            </a>
+            <a href="#faq" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+              FAQ
+            </a>
+          </nav>
+          
+          <div className="flex items-center gap-4">
+            <Button variant="ghost" size="sm">
+              Log In
+            </Button>
+            <Button size="sm" className="bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity">
+              Sign Up
+            </Button>
+          </div>
+        </div>
+      </header>
+      
+      {/* Hero section */}
+      <section className="relative py-20 md:py-32 bg-background">
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-1/3 -right-24 w-96 h-96 bg-primary/20 rounded-full blur-3xl opacity-70"></div>
+          <div className="absolute -top-24 -left-24 w-72 h-72 bg-secondary/20 rounded-full blur-3xl opacity-70"></div>
+          
+          {/* Grid pattern */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_20%,transparent_100%)] opacity-20"></div>
+        </div>
+        
+        <div className="container">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div className="space-y-8">
+              <div>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4 leading-tight">
+                  Get <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">Funded</span> to Trade Like a Pro
+                </h1>
+                <p className="text-xl text-muted-foreground">
+                  Prove your trading skills and get funded with accounts up to $200,000. Keep up to 80% of the profits with no risk of your own capital.
+                </p>
               </div>
-              <nav className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                <a href="#features" className="border-transparent text-foreground/70 hover:text-foreground hover:border-border inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
-                  Features
-                </a>
-                <a href="#pricing" className="border-transparent text-foreground/70 hover:text-foreground hover:border-border inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
-                  Pricing
-                </a>
-                <a href="#faq" className="border-transparent text-foreground/70 hover:text-foreground hover:border-border inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
-                  FAQ
-                </a>
-              </nav>
-            </div>
-            <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-4">
-              <Button 
-                variant="ghost" 
-                size="icon"
-                onClick={toggleTheme}
-                className="hover:bg-muted transition-colors"
-              >
-                {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-              </Button>
               
-              {user ? (
-                <Button 
-                  onClick={() => navigate("/dashboard")}
-                  className="bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity"
-                >
-                  Dashboard
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button size="lg" className="bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity">
+                  Get Started Now
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-              ) : (
-                <>
-                  <Link href="/login">
-                    <Button variant="outline" className="border-primary text-primary hover:bg-primary/10 transition-colors">
-                      Log in
-                    </Button>
-                  </Link>
-                  <Link href="/register">
-                    <Button className="bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity">
-                      Sign up
-                    </Button>
-                  </Link>
-                </>
-              )}
-            </div>
-            <div className="-mr-2 flex items-center sm:hidden">
-              <Button 
-                variant="ghost" 
-                size="icon"
-                onClick={toggleTheme}
-                className="mr-2 hover:bg-muted transition-colors"
-              >
-                {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-              </Button>
+                <Button size="lg" variant="outline">
+                  Learn More
+                </Button>
+              </div>
               
-              <Button
-                variant="ghost"
-                onClick={() => setMobileNavOpen(!mobileNavOpen)}
-                className="hover:bg-muted transition-colors"
-              >
-                <Menu className="h-6 w-6" />
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4">
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-500" />
+                  <span className="text-sm font-medium">Instant Funding</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-500" />
+                  <span className="text-sm font-medium">80% Profit Split</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-500" />
+                  <span className="text-sm font-medium">Fast Payouts</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="relative">
+              <div className="relative z-10 bg-background/70 backdrop-blur-sm border rounded-2xl shadow-xl overflow-hidden">
+                <div className="p-6 space-y-6">
+                  <div className="space-y-2">
+                    <h3 className="text-xl font-semibold">Trading Account</h3>
+                    <p className="text-sm text-muted-foreground">Professional Challenge</p>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-6">
+                    <div>
+                      <p className="text-sm text-muted-foreground">Account Size</p>
+                      <p className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">$50,000</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Current Balance</p>
+                      <p className="text-2xl font-bold">$53,841</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Profit</p>
+                      <p className="text-lg font-medium text-green-500">+$3,841 (+7.68%)</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Drawdown</p>
+                      <p className="text-lg font-medium">2.4% / 10%</p>
+                    </div>
+                  </div>
+                  
+                  <div className="pt-2">
+                    <div className="h-24 w-full bg-muted rounded-md flex items-center justify-center">
+                      <p className="text-xs text-muted-foreground">Trading chart visualization</p>
+                    </div>
+                  </div>
+                  
+                  <Button className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity">
+                    Start Trading Now
+                  </Button>
+                </div>
+              </div>
+              
+              {/* Decorative elements */}
+              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/20 rounded-full blur-xl"></div>
+              <div className="absolute -top-6 -left-6 w-32 h-32 bg-secondary/20 rounded-full blur-xl"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* How it works section */}
+      <section id="how-it-works" className="py-20 bg-muted/30">
+        <div className="container">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl font-bold tracking-tight mb-4">How It Works</h2>
+            <p className="text-lg text-muted-foreground">
+              Our simple 3-step process to get you trading with our capital
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="relative">
+              <Card className="h-full border-border/40 hover:border-border/80 transition-all duration-300 hover:shadow-lg relative z-10">
+                <CardHeader>
+                  <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                    <span className="text-xl font-bold text-primary">1</span>
+                  </div>
+                  <CardTitle>Purchase a Challenge</CardTitle>
+                  <CardDescription>Choose an account size that matches your trading goals</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-sm text-muted-foreground">
+                    Select from our range of account sizes from $25,000 to $200,000. Pay a one-time fee for the challenge with no recurring charges.
+                  </p>
+                  <div className="pt-2">
+                    <Button variant="secondary" size="sm" className="w-full">
+                      View Challenges
+                      <ChevronRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+              <div className="hidden md:block absolute top-1/2 -right-12 transform -translate-y-1/2 z-0">
+                <ArrowRight className="h-8 w-24 text-muted-foreground/30" />
+              </div>
+            </div>
+            
+            <div className="relative">
+              <Card className="h-full border-border/40 hover:border-border/80 transition-all duration-300 hover:shadow-lg relative z-10">
+                <CardHeader>
+                  <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                    <span className="text-xl font-bold text-primary">2</span>
+                  </div>
+                  <CardTitle>Pass the Evaluation</CardTitle>
+                  <CardDescription>Demonstrate your trading skill in two phases</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-sm text-muted-foreground">
+                    Achieve profit targets while respecting drawdown limits and trading rules. Trade for a minimum number of days to show consistency.
+                  </p>
+                  <div className="pt-2">
+                    <Button variant="secondary" size="sm" className="w-full">
+                      View Trading Rules
+                      <ChevronRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+              <div className="hidden md:block absolute top-1/2 -right-12 transform -translate-y-1/2 z-0">
+                <ArrowRight className="h-8 w-24 text-muted-foreground/30" />
+              </div>
+            </div>
+            
+            <div>
+              <Card className="h-full border-border/40 hover:border-border/80 transition-all duration-300 hover:shadow-lg">
+                <CardHeader>
+                  <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                    <span className="text-xl font-bold text-primary">3</span>
+                  </div>
+                  <CardTitle>Get Funded & Earn</CardTitle>
+                  <CardDescription>Trade with our capital and keep the profits</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-sm text-muted-foreground">
+                    Receive a funded account with the same balance. Keep up to 80% of all profits you generate and enjoy regular payouts.
+                  </p>
+                  <div className="pt-2">
+                    <Button variant="secondary" size="sm" className="w-full">
+                      Payout Structure
+                      <ChevronRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Featured challenges section */}
+      <section className="py-20 bg-background relative overflow-hidden">
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-50"></div>
+          <div className="absolute top-1/4 right-0 w-64 h-64 bg-secondary/10 rounded-full blur-3xl opacity-50"></div>
+        </div>
+        
+        <div className="container">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl font-bold tracking-tight mb-4">Featured Challenges</h2>
+            <p className="text-lg text-muted-foreground">
+              Select the perfect challenge for your trading style and experience
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Card className="border-border/40 hover:border-border/80 transition-all duration-300 hover:shadow-lg">
+              <CardHeader>
+                <CardTitle>Standard Challenge</CardTitle>
+                <CardDescription>Account size: $25,000</CardDescription>
+                <div className="text-3xl font-bold mt-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                  $99
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <div className="flex items-center">
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                    <span className="text-sm">8% profit target</span>
+                  </div>
+                  <div className="flex items-center">
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                    <span className="text-sm">10% max drawdown</span>
+                  </div>
+                  <div className="flex items-center">
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                    <span className="text-sm">80% profit split</span>
+                  </div>
+                  <div className="flex items-center">
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                    <span className="text-sm">Monthly payouts</span>
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button className="w-full">Get Started</Button>
+              </CardFooter>
+            </Card>
+            
+            <Card className="border-primary/30 hover:border-primary/60 transition-all duration-300 hover:shadow-lg relative">
+              <div className="absolute -top-3 inset-x-0 flex justify-center">
+                <div className="px-3 py-1 bg-primary text-primary-foreground text-xs font-bold rounded-full">
+                  MOST POPULAR
+                </div>
+              </div>
+              <CardHeader>
+                <CardTitle>Professional Challenge</CardTitle>
+                <CardDescription>Account size: $50,000</CardDescription>
+                <div className="text-3xl font-bold mt-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                  $199
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <div className="flex items-center">
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                    <span className="text-sm">8% profit target</span>
+                  </div>
+                  <div className="flex items-center">
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                    <span className="text-sm">10% max drawdown</span>
+                  </div>
+                  <div className="flex items-center">
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                    <span className="text-sm">80% profit split</span>
+                  </div>
+                  <div className="flex items-center">
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                    <span className="text-sm">Monthly payouts</span>
+                  </div>
+                  <div className="flex items-center">
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                    <span className="text-sm">Priority support</span>
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button className="w-full bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity">Get Started</Button>
+              </CardFooter>
+            </Card>
+            
+            <Card className="border-border/40 hover:border-border/80 transition-all duration-300 hover:shadow-lg">
+              <CardHeader>
+                <CardTitle>Expert Challenge</CardTitle>
+                <CardDescription>Account size: $100,000</CardDescription>
+                <div className="text-3xl font-bold mt-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                  $299
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <div className="flex items-center">
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                    <span className="text-sm">8% profit target</span>
+                  </div>
+                  <div className="flex items-center">
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                    <span className="text-sm">10% max drawdown</span>
+                  </div>
+                  <div className="flex items-center">
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                    <span className="text-sm">80% profit split</span>
+                  </div>
+                  <div className="flex items-center">
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                    <span className="text-sm">Weekly payouts</span>
+                  </div>
+                  <div className="flex items-center">
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                    <span className="text-sm">Priority support</span>
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button className="w-full">Get Started</Button>
+              </CardFooter>
+            </Card>
+          </div>
+          
+          <div className="text-center mt-10">
+            <Button variant="outline" size="lg">
+              View All Challenges
+              <ChevronRight className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </section>
+      
+      {/* Why choose us section */}
+      <section id="why-choose-us" className="py-20 bg-muted/30">
+        <div className="container">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl font-bold tracking-tight mb-4">Why Traders Choose Us</h2>
+            <p className="text-lg text-muted-foreground">
+              We've designed our program to help serious traders succeed
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <Card className="border-border/40 hover:border-border/80 transition-all duration-300 hover:shadow-lg">
+              <CardHeader>
+                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-2">
+                  <Shield className="h-6 w-6 text-primary" />
+                </div>
+                <CardTitle>Transparent Rules</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  All our challenges have clear, straightforward rules. No hidden conditions or misleading terms.
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="border-border/40 hover:border-border/80 transition-all duration-300 hover:shadow-lg">
+              <CardHeader>
+                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-2">
+                  <Zap className="h-6 w-6 text-primary" />
+                </div>
+                <CardTitle>Fast Funding</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  Pass our challenge and get funded immediately. No delays, no waiting periods after successfully completing the evaluation.
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="border-border/40 hover:border-border/80 transition-all duration-300 hover:shadow-lg">
+              <CardHeader>
+                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-2">
+                  <LineChart className="h-6 w-6 text-primary" />
+                </div>
+                <CardTitle>Advanced Analytics</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  Track your performance with detailed metrics and insights to help improve your trading strategy.
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="border-border/40 hover:border-border/80 transition-all duration-300 hover:shadow-lg">
+              <CardHeader>
+                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-2">
+                  <Users className="h-6 w-6 text-primary" />
+                </div>
+                <CardTitle>Supportive Community</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  Join our community of traders to share strategies, insights, and get support on your trading journey.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+      
+      {/* Testimonials section */}
+      <section id="testimonials" className="py-20 bg-background">
+        <div className="container">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl font-bold tracking-tight mb-4">What Our Traders Say</h2>
+            <p className="text-lg text-muted-foreground">
+              Hear from successful traders who have passed our challenges
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <Card key={index} className={cn(
+                "border-border/40 hover:border-border/80 transition-all duration-300 hover:shadow-lg",
+                index === 1 ? "md:translate-y-8" : ""
+              )}>
+                <CardContent className="pt-6">
+                  <div className="mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <span key={i} className="text-yellow-500 text-lg">★</span>
+                    ))}
+                  </div>
+                  <blockquote className="text-lg italic mb-6">
+                    "{testimonial.quote}"
+                  </blockquote>
+                  <div>
+                    <p className="font-semibold">{testimonial.author}</p>
+                    <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                    <p className="text-sm text-muted-foreground">{testimonial.location}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* FAQ section */}
+      <section id="faq" className="py-20 bg-muted/30">
+        <div className="container">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl font-bold tracking-tight mb-4">Frequently Asked Questions</h2>
+            <p className="text-lg text-muted-foreground">
+              Get answers to the most common questions about our trading challenges
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {faqs.map((faq, index) => (
+              <Card key={index} className="border-border/40 hover:border-border/80 transition-all duration-300 hover:shadow-lg">
+                <CardHeader>
+                  <CardTitle className="text-lg">{faq.question}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">{faq.answer}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          
+          <div className="text-center mt-12">
+            <p className="text-muted-foreground mb-4">Still have questions? Our support team is here to help.</p>
+            <Button variant="outline" size="lg">
+              Contact Support
+            </Button>
+          </div>
+        </div>
+      </section>
+      
+      {/* CTA section */}
+      <section className="py-20 bg-background relative overflow-hidden">
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/20 rounded-full blur-3xl opacity-30"></div>
+        </div>
+        
+        <div className="container">
+          <div className="max-w-3xl mx-auto text-center space-y-8">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+              Ready to Start Your Funded Trading Journey?
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Join thousands of traders who are already profiting with our funded accounts.
+              Take the first step toward financial freedom today.
+            </p>
+            <div className="pt-4">
+              <Button size="lg" className="bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity">
+                Get Started Now
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </div>
           </div>
         </div>
-        
-        {/* Mobile nav menu */}
-        {mobileNavOpen && (
-          <div className="sm:hidden relative z-50">
-            {/* Backdrop */}
-            <div className="absolute inset-0 bg-background/80 backdrop-blur-md rounded-b-lg border-b border-r border-l border-border shadow-xl">
-              <div className="pt-3 pb-4">
-                <div className="space-y-1 px-4">
-                  <a
-                    href="#features"
-                    className="flex items-center px-3 py-2 text-base font-medium rounded-md transition-colors text-foreground/80 hover:text-primary hover:bg-primary/5"
-                  >
-                    <BarChart className="mr-3 h-5 w-5 text-primary/60" />
-                    Features
-                  </a>
-                  <a
-                    href="#pricing"
-                    className="flex items-center px-3 py-2 text-base font-medium rounded-md transition-colors text-foreground/80 hover:text-secondary hover:bg-secondary/5"
-                  >
-                    <CreditCard className="mr-3 h-5 w-5 text-secondary/60" />
-                    Pricing
-                  </a>
-                  <a
-                    href="#faq"
-                    className="flex items-center px-3 py-2 text-base font-medium rounded-md transition-colors text-foreground/80 hover:text-accent hover:bg-accent/5"
-                  >
-                    <Shield className="mr-3 h-5 w-5 text-accent/60" />
-                    FAQ
-                  </a>
-                </div>
-                <div className="mt-4 pt-4 border-t border-border">
-                  <div className="space-y-1 px-4">
-                    {user ? (
-                      <a
-                        onClick={() => navigate("/dashboard")}
-                        className="flex items-center px-3 py-2 text-base font-medium rounded-md bg-primary/10 text-primary"
-                      >
-                        <BarChart className="mr-3 h-5 w-5 text-primary" />
-                        Dashboard
-                      </a>
-                    ) : (
-                      <div className="flex flex-col space-y-2">
-                        <a
-                          onClick={() => navigate("/login")}
-                          className="flex items-center px-3 py-2 text-base font-medium rounded-md transition-colors text-foreground/80 hover:text-primary hover:bg-primary/5 cursor-pointer"
-                        >
-                          <Users className="mr-3 h-5 w-5 text-primary/70" />
-                          Log in
-                        </a>
-                        <a
-                          onClick={() => navigate("/register")}
-                          className="flex items-center px-3 py-2 text-base font-medium rounded-md bg-gradient-to-r from-primary to-accent text-white hover:opacity-90 transition-opacity cursor-pointer"
-                        >
-                          <ArrowRight className="mr-3 h-5 w-5" />
-                          Sign up
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </header>
-
-      <main>
-        {/* Hero Section */}
-        <section className="relative py-24 overflow-hidden">
-          {/* Background elements */}
-          <div className="absolute inset-0 -z-10 bg-background">
-            <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/20 rounded-full blur-3xl opacity-70"></div>
-            <div className="absolute top-1/3 -left-24 w-72 h-72 bg-secondary/20 rounded-full blur-3xl opacity-70"></div>
-            <div className="absolute -bottom-24 right-1/3 w-80 h-80 bg-accent/20 rounded-full blur-3xl opacity-70"></div>
-            
-            {/* Grid pattern */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_20%,transparent_100%)] opacity-20"></div>
-          </div>
-          
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-              <div className="relative z-10">
-                <div className="inline-flex items-center rounded-full bg-muted/50 border border-border px-3 py-1 text-sm font-medium text-foreground mb-6">
-                  <span className="flex h-2 w-2 rounded-full bg-success mr-2"></span>
-                  Now accepting new traders
-                </div>
-                <h1 className="text-5xl sm:text-6xl font-extrabold tracking-tight">
-                  <span className="block">Trade with</span>
-                  <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">confidence.</span>
-                  <span className="block mt-1">Get</span>
-                  <span className="bg-gradient-to-r from-accent via-secondary to-primary bg-clip-text text-transparent">funded.</span>
-                </h1>
-                <p className="mt-6 text-xl text-foreground/80 max-w-lg">
-                  Complete our trading challenge and get access to accounts up to 
-                  <span className="font-bold text-foreground"> $200,000</span>. 
-                  Keep up to <span className="font-bold text-foreground">80%</span> of the profits with no risk of your own capital.
-                </p>
-                <div className="mt-10 flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
-                  <Button 
-                    size="lg" 
-                    onClick={handleGetStartedClick}
-                    className="bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity text-primary-foreground rounded-md px-8 py-3"
-                  >
-                    Get Started <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                  <Button 
-                    size="lg" 
-                    variant="outline" 
-                    onClick={() => navigate("/about")}
-                    className="border-primary text-primary hover:bg-primary/10 transition-colors rounded-md px-8 py-3"
-                  >
-                    Learn More <ExternalLink className="ml-2 h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-              
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg blur-xl -z-10"></div>
-                <div className="relative z-10 bg-card/30 backdrop-blur-sm border border-border rounded-lg p-6">
-                  <div className="bg-card rounded-lg p-4 mb-4 flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-muted-foreground">Account Balance</p>
-                      <p className="text-2xl font-bold">$54,892.00</p>
-                    </div>
-                    <div className="flex flex-col items-end">
-                      <span className="text-sm font-semibold text-success">+8.2%</span>
-                      <span className="text-xs text-muted-foreground">This month</span>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4 mb-4">
-                    <div className="bg-card rounded-lg p-3">
-                      <p className="text-xs text-muted-foreground">Win Rate</p>
-                      <p className="text-lg font-semibold">76%</p>
-                    </div>
-                    <div className="bg-card rounded-lg p-3">
-                      <p className="text-xs text-muted-foreground">Profit/Loss</p>
-                      <p className="text-lg font-semibold text-success">+$3,241</p>
-                    </div>
-                  </div>
-                  <div className="h-40 relative">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <p className="text-muted-foreground text-sm">Trading chart preview</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Features */}
-        <section id="features" className="relative py-24 overflow-hidden">
-          {/* Background elements */}
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_10%,transparent_100%)] opacity-20"></div>
-            <div className="absolute top-0 right-0 w-80 h-80 bg-primary/10 rounded-full blur-3xl opacity-70"></div>
-            <div className="absolute bottom-0 left-0 w-80 h-80 bg-secondary/10 rounded-full blur-3xl opacity-70"></div>
-          </div>
-          
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div className="text-center mb-16">
-              <div className="inline-flex mb-3 bg-muted/50 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium border border-border">
-                Why Choose Us
-              </div>
-              <h2 className="text-4xl font-extrabold tracking-tight">
-                <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Features</span> That Set Us Apart
-              </h2>
-              <p className="mt-4 text-xl text-foreground/70 max-w-3xl mx-auto">
-                We provide the tools, resources and capital to help you succeed as a trader.
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Feature 1 */}
-              <div className="bg-card/50 backdrop-blur-sm rounded-lg border border-border p-6 hover:bg-card/70 transition-colors group relative overflow-hidden">
-                <div className="absolute -right-8 -top-8 w-16 h-16 rounded-full bg-gradient-to-br from-primary/10 to-secondary/10 blur-2xl group-hover:w-20 group-hover:h-20 transition-all duration-300"></div>
-                
-                <div className="w-12 h-12 flex items-center justify-center rounded-full bg-primary/10 mb-6 group-hover:bg-primary/20 transition-colors">
-                  <DollarSign className="text-primary h-6 w-6" />
-                </div>
-                <h3 className="text-xl font-bold mb-2">Realistic Challenges</h3>
-                <p className="text-foreground/70">
-                  Our challenges are designed to identify disciplined traders with realistic profit targets and drawdown limits.
-                </p>
-                <ul className="mt-4 space-y-2">
-                  <li className="flex items-start">
-                    <CheckCircle2 className="h-5 w-5 text-success mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm">Two-phase evaluation process</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircle2 className="h-5 w-5 text-success mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm">8% profit target with 5% max drawdown</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircle2 className="h-5 w-5 text-success mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm">Unlimited trading time with no expiry</span>
-                  </li>
-                </ul>
-              </div>
-              
-              {/* Feature 2 */}
-              <div className="bg-card/50 backdrop-blur-sm rounded-lg border border-border p-6 hover:bg-card/70 transition-colors group relative overflow-hidden">
-                <div className="absolute -right-8 -top-8 w-16 h-16 rounded-full bg-gradient-to-br from-secondary/10 to-accent/10 blur-2xl group-hover:w-20 group-hover:h-20 transition-all duration-300"></div>
-                
-                <div className="w-12 h-12 flex items-center justify-center rounded-full bg-secondary/10 mb-6 group-hover:bg-secondary/20 transition-colors">
-                  <LineChart className="text-secondary h-6 w-6" />
-                </div>
-                <h3 className="text-xl font-bold mb-2">Advanced Platform</h3>
-                <p className="text-foreground/70">
-                  Trade with our cutting-edge platform providing real-time data, advanced charting and analytics.
-                </p>
-                <ul className="mt-4 space-y-2">
-                  <li className="flex items-start">
-                    <CheckCircle2 className="h-5 w-5 text-success mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm">Real-time market data and news</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircle2 className="h-5 w-5 text-success mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm">Comprehensive analytics dashboard</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircle2 className="h-5 w-5 text-success mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm">Custom indicators and strategy tools</span>
-                  </li>
-                </ul>
-              </div>
-              
-              {/* Feature 3 */}
-              <div className="bg-card/50 backdrop-blur-sm rounded-lg border border-border p-6 hover:bg-card/70 transition-colors group relative overflow-hidden">
-                <div className="absolute -right-8 -top-8 w-16 h-16 rounded-full bg-gradient-to-br from-accent/10 to-primary/10 blur-2xl group-hover:w-20 group-hover:h-20 transition-all duration-300"></div>
-                
-                <div className="w-12 h-12 flex items-center justify-center rounded-full bg-accent/10 mb-6 group-hover:bg-accent/20 transition-colors">
-                  <Users className="text-accent h-6 w-6" />
-                </div>
-                <h3 className="text-xl font-bold mb-2">Generous Profit Splits</h3>
-                <p className="text-foreground/70">
-                  Keep up to 80% of your trading profits with bi-weekly payouts directly to your account.
-                </p>
-                <ul className="mt-4 space-y-2">
-                  <li className="flex items-start">
-                    <CheckCircle2 className="h-5 w-5 text-success mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm">Up to 80% profit split</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircle2 className="h-5 w-5 text-success mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm">Bi-weekly payouts with no delays</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircle2 className="h-5 w-5 text-success mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm">Scale up to $1M+ accounts</span>
-                  </li>
-                </ul>
-              </div>
-              
-              {/* Additional Features */}
-              <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="bg-card/50 backdrop-blur-sm rounded-lg border border-border p-6 group hover:bg-card/70 transition-colors flex items-start space-x-4">
-                  <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                    <Users className="text-primary h-6 w-6" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold">Community Support</h3>
-                    <p className="mt-2 text-foreground/70">
-                      Join a community of successful traders who share strategies and insights.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="bg-card/50 backdrop-blur-sm rounded-lg border border-border p-6 group hover:bg-card/70 transition-colors flex items-start space-x-4">
-                  <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-full bg-secondary/10 group-hover:bg-secondary/20 transition-colors">
-                    <LineChart className="text-secondary h-6 w-6" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold">Detailed Reporting</h3>
-                    <p className="mt-2 text-foreground/70">
-                      Get comprehensive trading reports to understand your strengths and weaknesses.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* How It Works */}
-        <section className="relative py-24 overflow-hidden">
-          {/* Background elements */}
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_10%,transparent_100%)] opacity-20"></div>
-            <div className="absolute -bottom-40 left-1/4 w-80 h-80 bg-primary/10 rounded-full blur-3xl opacity-70"></div>
-            <div className="absolute top-40 right-1/4 w-60 h-60 bg-accent/10 rounded-full blur-3xl opacity-70"></div>
-          </div>
-          
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div className="text-center">
-              <div className="inline-flex mb-3 bg-muted/50 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium border border-border">
-                Simple Process
-              </div>
-              <h2 className="text-4xl font-extrabold tracking-tight">
-                How It <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">Works</span>
-              </h2>
-              <p className="mt-4 text-xl text-foreground/70 max-w-3xl mx-auto">
-                Our simple three-step process to get funded and start trading with our capital.
-              </p>
-            </div>
-            
-            <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Step 1 */}
-              <div className="relative flex flex-col items-center">
-                <div className="w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-r from-primary to-secondary p-[2px] relative z-10">
-                  <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
-                    <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">1</span>
-                  </div>
-                </div>
-                <div className="mt-6 text-center">
-                  <h3 className="text-xl font-bold">Choose Your Account Size</h3>
-                  <p className="mt-3 text-foreground/70 max-w-xs mx-auto">
-                    Select an account size that matches your trading experience and goals.
-                  </p>
-                </div>
-                <div className="mt-8 bg-card/50 backdrop-blur-sm border border-border rounded-lg p-4 w-full">
-                  <div className="flex items-center space-x-2 text-sm text-foreground/70">
-                    <DollarSign className="h-4 w-4 text-primary" />
-                    <span>Four account sizes from $25K to $200K</span>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Step 2 */}
-              <div className="relative flex flex-col items-center">
-                <div className="w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-r from-secondary to-accent p-[2px] relative z-10">
-                  <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
-                    <span className="text-2xl font-bold bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">2</span>
-                  </div>
-                </div>
-                <div className="mt-6 text-center">
-                  <h3 className="text-xl font-bold">Complete the Challenge</h3>
-                  <p className="mt-3 text-foreground/70 max-w-xs mx-auto">
-                    Pass our two-phase evaluation by meeting the profit targets while following the rules.
-                  </p>
-                </div>
-                <div className="mt-8 bg-card/50 backdrop-blur-sm border border-border rounded-lg p-4 w-full">
-                  <div className="flex items-center space-x-2 text-sm text-foreground/70">
-                    <LineChart className="h-4 w-4 text-secondary" />
-                    <span>Reach 8% profit target with max 5% drawdown</span>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Step 3 */}
-              <div className="relative flex flex-col items-center">
-                <div className="w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-r from-accent to-primary p-[2px] relative z-10">
-                  <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
-                    <span className="text-2xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">3</span>
-                  </div>
-                </div>
-                <div className="mt-6 text-center">
-                  <h3 className="text-xl font-bold">Get Funded & Earn</h3>
-                  <p className="mt-3 text-foreground/70 max-w-xs mx-auto">
-                    Receive your funded account and keep up to 80% of all profits you generate.
-                  </p>
-                </div>
-                <div className="mt-8 bg-card/50 backdrop-blur-sm border border-border rounded-lg p-4 w-full">
-                  <div className="flex items-center space-x-2 text-sm text-foreground/70">
-                    <DollarSign className="h-4 w-4 text-accent" />
-                    <span>Bi-weekly payouts directly to your account</span>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Call to action */}
-              <div className="mt-16 flex justify-center">
-                <Button 
-                  onClick={handleGetStartedClick}
-                  className="bg-gradient-to-r from-primary to-accent text-white px-8 py-3 rounded-md hover:opacity-90 transition-opacity flex items-center"
-                  size="lg"
-                >
-                  Start Your Trading Journey <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Pricing */}
-        <section id="pricing" className="relative py-24 overflow-hidden">
-          {/* Background elements */}
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_10%,transparent_100%)] opacity-20"></div>
-            <div className="absolute top-0 -left-40 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-70"></div>
-            <div className="absolute bottom-0 -right-40 w-96 h-96 bg-secondary/10 rounded-full blur-3xl opacity-70"></div>
-          </div>
-          
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div className="text-center mb-12">
-              <div className="inline-flex mb-3 bg-muted/50 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium border border-border">
-                Challenge Accounts
-              </div>
-              <h2 className="text-4xl font-extrabold tracking-tight">
-                <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Pricing</span> Plans
-              </h2>
-              <p className="mt-4 text-xl text-foreground/70 max-w-3xl mx-auto">
-                Choose the challenge account size that best fits your trading style and experience.
-              </p>
-            </div>
-            
-            <div className="mt-12">
-              <Tabs defaultValue="standard" className="w-full">
-                <div className="flex justify-center mb-8">
-                  <TabsList className="grid w-[400px] grid-cols-2">
-                    <TabsTrigger value="standard">Standard Challenge</TabsTrigger>
-                    <TabsTrigger value="aggressive">Aggressive Challenge</TabsTrigger>
-                  </TabsList>
-                </div>
-                
-                <TabsContent value="standard" className="space-y-8">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {challengePlans.map((plan) => (
-                      <div key={plan.id} className={`bg-card/50 backdrop-blur-sm rounded-lg border ${plan.featured ? 'border-primary' : 'border-border'} overflow-hidden group transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1`}>
-                        {plan.featured && (
-                          <div className="bg-gradient-to-r from-primary to-accent text-white text-center py-1 text-xs font-medium">
-                            Most Popular
-                          </div>
-                        )}
-                        <div className="p-6">
-                          <h3 className="text-lg font-bold">${(plan.accountSize/1000).toFixed(0)}K Account</h3>
-                          <div className="mt-4 flex items-end">
-                            <span className="text-3xl font-extrabold">${plan.price}</span>
-                            <span className="text-foreground/60 ml-2 text-sm">one-time</span>
-                          </div>
-                          <ul className="mt-6 space-y-4">
-                            <li className="flex items-start">
-                              <CheckCircle2 className="h-5 w-5 text-success mr-2 flex-shrink-0 mt-0.5" />
-                              <span>{plan.profitTarget}% Profit Target</span>
-                            </li>
-                            <li className="flex items-start">
-                              <CheckCircle2 className="h-5 w-5 text-success mr-2 flex-shrink-0 mt-0.5" />
-                              <span>{plan.maxDrawdown}% Max Drawdown</span>
-                            </li>
-                            <li className="flex items-start">
-                              <CheckCircle2 className="h-5 w-5 text-success mr-2 flex-shrink-0 mt-0.5" />
-                              <span>{plan.profitSplit}% Profit Split</span>
-                            </li>
-                            <li className="flex items-start">
-                              <CheckCircle2 className="h-5 w-5 text-success mr-2 flex-shrink-0 mt-0.5" />
-                              <span>Bi-weekly Payouts</span>
-                            </li>
-                          </ul>
-                          <Button
-                            onClick={handleGetStartedClick}
-                            className={`mt-6 w-full ${plan.featured ? 'bg-gradient-to-r from-primary to-accent text-white hover:opacity-90' : 'bg-primary/10 text-primary hover:bg-primary/20'} transition-colors`}
-                          >
-                            Get Started
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </TabsContent>
-                
-                <TabsContent value="aggressive" className="space-y-8">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {challengePlans.map((plan) => (
-                      <div key={plan.id} className={`bg-card/50 backdrop-blur-sm rounded-lg border ${plan.id === 3 ? 'border-primary' : 'border-border'} overflow-hidden group transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1`}>
-                        {plan.id === 3 && (
-                          <div className="bg-gradient-to-r from-primary to-accent text-white text-center py-1 text-xs font-medium">
-                            Most Popular
-                          </div>
-                        )}
-                        <div className="p-6">
-                          <h3 className="text-lg font-bold">${(plan.accountSize/1000).toFixed(0)}K Account</h3>
-                          <div className="mt-4 flex items-end">
-                            <span className="text-3xl font-extrabold">${Math.round(plan.price * 1.4)}</span>
-                            <span className="text-foreground/60 ml-2 text-sm">one-time</span>
-                          </div>
-                          <ul className="mt-6 space-y-4">
-                            <li className="flex items-start">
-                              <CheckCircle2 className="h-5 w-5 text-success mr-2 flex-shrink-0 mt-0.5" />
-                              <span>12% Profit Target</span>
-                            </li>
-                            <li className="flex items-start">
-                              <CheckCircle2 className="h-5 w-5 text-success mr-2 flex-shrink-0 mt-0.5" />
-                              <span>8% Max Drawdown</span>
-                            </li>
-                            <li className="flex items-start">
-                              <CheckCircle2 className="h-5 w-5 text-success mr-2 flex-shrink-0 mt-0.5" />
-                              <span>90% Profit Split</span>
-                            </li>
-                            <li className="flex items-start">
-                              <CheckCircle2 className="h-5 w-5 text-success mr-2 flex-shrink-0 mt-0.5" />
-                              <span>Weekly Payouts</span>
-                            </li>
-                          </ul>
-                          <Button
-                            onClick={handleGetStartedClick}
-                            className={`mt-6 w-full ${plan.id === 3 ? 'bg-gradient-to-r from-primary to-accent text-white hover:opacity-90' : 'bg-primary/10 text-primary hover:bg-primary/20'} transition-colors`}
-                          >
-                            Get Started
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </TabsContent>
-              </Tabs>
-            </div>
-          </div>
-        </section>
-
-        {/* Testimonials */}
-        <section className="relative py-24 overflow-hidden">
-          {/* Background elements */}
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_10%,transparent_100%)] opacity-20"></div>
-            <div className="absolute -bottom-40 right-1/4 w-80 h-80 bg-secondary/10 rounded-full blur-3xl opacity-70"></div>
-            <div className="absolute top-40 left-1/4 w-60 h-60 bg-primary/10 rounded-full blur-3xl opacity-70"></div>
-          </div>
-          
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div className="text-center mb-12">
-              <div className="inline-flex mb-3 bg-muted/50 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium border border-border">
-                Trader Success Stories
-              </div>
-              <h2 className="text-4xl font-extrabold tracking-tight">
-                What Our <span className="bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">Traders</span> Say
-              </h2>
-              <p className="mt-4 text-xl text-foreground/70 max-w-3xl mx-auto">
-                Don't just take our word for it. Hear from traders who have successfully passed our challenge.
-              </p>
-            </div>
-            
-            <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Testimonial 1 */}
-              <div className="bg-gradient-to-br from-primary/5 to-secondary/5 backdrop-blur-sm rounded-xl p-1 group hover:from-primary/10 hover:to-secondary/10 transition-colors">
-                <div className="bg-card/50 backdrop-blur-sm rounded-lg p-6 h-full flex flex-col">
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center text-white font-bold text-lg">
-                      JD
-                    </div>
-                    <div className="ml-4">
-                      <h4 className="font-semibold">John D.</h4>
-                      <p className="text-sm text-foreground/60">Forex Trader</p>
-                    </div>
-                  </div>
-                  <p className="text-foreground/80 italic flex-grow">
-                    "I was skeptical at first, but after passing the challenge I received my funded account within 24 hours. The platform is excellent and the bi-weekly payouts are always on time."
-                  </p>
-                  <div className="mt-4 flex items-center">
-                    <div className="flex">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <svg key={star} className="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                      ))}
-                    </div>
-                    <span className="ml-2 text-foreground/60 text-sm">Funded for 8 months</span>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Testimonial 2 */}
-              <div className="bg-gradient-to-br from-secondary/5 to-accent/5 backdrop-blur-sm rounded-xl p-1 group hover:from-secondary/10 hover:to-accent/10 transition-colors">
-                <div className="bg-card/50 backdrop-blur-sm rounded-lg p-6 h-full flex flex-col">
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-r from-secondary to-accent flex items-center justify-center text-white font-bold text-lg">
-                      SM
-                    </div>
-                    <div className="ml-4">
-                      <h4 className="font-semibold">Sarah M.</h4>
-                      <p className="text-sm text-foreground/60">Crypto Trader</p>
-                    </div>
-                  </div>
-                  <p className="text-foreground/80 italic flex-grow">
-                    "TradeFunded has the fairest rules I've seen across all prop firms. I've been trading a $100K account for over 6 months now and the support team is always responsive when I need them."
-                  </p>
-                  <div className="mt-4 flex items-center">
-                    <div className="flex">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <svg key={star} className="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                      ))}
-                    </div>
-                    <span className="ml-2 text-foreground/60 text-sm">Funded for 6 months</span>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Testimonial 3 */}
-              <div className="bg-gradient-to-br from-accent/5 to-primary/5 backdrop-blur-sm rounded-xl p-1 group hover:from-accent/10 hover:to-primary/10 transition-colors">
-                <div className="bg-card/50 backdrop-blur-sm rounded-lg p-6 h-full flex flex-col">
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-r from-accent to-primary flex items-center justify-center text-white font-bold text-lg">
-                      RK
-                    </div>
-                    <div className="ml-4">
-                      <h4 className="font-semibold">Robert K.</h4>
-                      <p className="text-sm text-foreground/60">Futures Trader</p>
-                    </div>
-                  </div>
-                  <p className="text-foreground/80 italic flex-grow">
-                    "I've tried several prop firms, and TradeFunded offers the best combination of challenge rules and profit splits. I passed my $50K challenge in just 2 weeks and was trading a funded account 2 days later."
-                  </p>
-                  <div className="mt-4 flex items-center">
-                    <div className="flex">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <svg key={star} className="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                      ))}
-                    </div>
-                    <span className="ml-2 text-foreground/60 text-sm">Funded for 12 months</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        
-        {/* FAQ */}
-        <section id="faq" className="relative py-24 overflow-hidden">
-          {/* Background elements */}
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_10%,transparent_100%)] opacity-20"></div>
-            <div className="absolute -top-40 right-1/4 w-80 h-80 bg-primary/10 rounded-full blur-3xl opacity-70"></div>
-            <div className="absolute -bottom-40 left-1/4 w-80 h-80 bg-secondary/10 rounded-full blur-3xl opacity-70"></div>
-          </div>
-          
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div className="text-center mb-12">
-              <div className="inline-flex mb-3 bg-muted/50 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium border border-border">
-                Frequently Asked Questions
-              </div>
-              <h2 className="text-4xl font-extrabold tracking-tight">
-                <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">Common</span> Questions
-              </h2>
-              <p className="mt-4 text-xl text-foreground/70 max-w-3xl mx-auto">
-                Find answers to the most frequently asked questions about our funded trader program.
-              </p>
-            </div>
-            
-            <div className="mt-12 space-y-6">
-              {/* FAQ items */}
-              <div className="rounded-lg overflow-hidden">
-                <div className="bg-card/50 backdrop-blur-sm rounded-lg border border-border divide-y divide-border">
-                  {/* FAQ Item 1 */}
-                  <div className="p-6">
-                    <h3 className="text-lg font-semibold">How long does it take to get funded?</h3>
-                    <p className="mt-3 text-foreground/70">
-                      The time to get funded depends on your trading performance. Some traders complete our two-phase challenge in as little as a few days, while others may take several weeks. Once you pass both phases, your funded account is typically set up within 24-48 hours.
-                    </p>
-                  </div>
-                  
-                  {/* FAQ Item 2 */}
-                  <div className="p-6">
-                    <h3 className="text-lg font-semibold">What markets can I trade?</h3>
-                    <p className="mt-3 text-foreground/70">
-                      You can trade a wide range of markets including Forex, Futures, Stocks, Indices, Commodities, and Cryptocurrencies. Our platform provides access to global markets with competitive spreads and low commissions.
-                    </p>
-                  </div>
-                  
-                  {/* FAQ Item 3 */}
-                  <div className="p-6">
-                    <h3 className="text-lg font-semibold">How do payouts work?</h3>
-                    <p className="mt-3 text-foreground/70">
-                      We offer bi-weekly profit splits on all funded accounts. Once your trading period ends, you'll receive your share of the profits (up to 80%) directly to your preferred payment method. We support bank transfers, PayPal, and crypto transfers for maximum flexibility.
-                    </p>
-                  </div>
-                  
-                  {/* FAQ Item 4 */}
-                  <div className="p-6">
-                    <h3 className="text-lg font-semibold">What happens if I breach account rules?</h3>
-                    <p className="mt-3 text-foreground/70">
-                      If you breach the maximum drawdown limit or any other trading rules, your challenge or funded account will be automatically closed. For challenge accounts, you can purchase a new challenge to try again. For funded accounts, we may offer a reset option depending on your trading history.
-                    </p>
-                  </div>
-                  
-                  {/* FAQ Item 5 */}
-                  <div className="p-6">
-                    <h3 className="text-lg font-semibold">Can I scale my account size?</h3>
-                    <p className="mt-3 text-foreground/70">
-                      Yes! We offer account scaling opportunities for consistently profitable traders. After demonstrating success with your initial funded account, you can qualify for larger accounts up to $1M+ with maintained or improved profit split percentages.
-                    </p>
-                  </div>
-                  
-                  {/* FAQ Item 6 */}
-                  <div className="p-6">
-                    <h3 className="text-lg font-semibold">Is there a time limit to complete the challenge?</h3>
-                    <p className="mt-3 text-foreground/70">
-                      Our standard challenges have a minimum trading period of 5 days and a maximum of 30 days for each phase. This balanced approach ensures you have sufficient time to demonstrate your trading skills without unreasonable time pressure.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="mt-10 text-center">
-              <p className="text-foreground/70">
-                Still have questions? Contact our support team for assistance.
-              </p>
-              <Button 
-                variant="outline" 
-                onClick={() => navigate("/contact")}
-                className="mt-6 border-primary text-primary hover:bg-primary/10 transition-colors"
-              >
-                Contact Support
-              </Button>
-            </div>
-          </div>
-        </section>
-        
-        {/* CTA Section */}
-        <section className="relative py-24 overflow-hidden">
-          {/* Background elements */}
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-background to-secondary/20 backdrop-blur-sm"></div>
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_20%,transparent_100%)] opacity-20"></div>
-          </div>
-          
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div className="bg-card/30 backdrop-blur-sm border border-border rounded-2xl p-8 md:p-12">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <div>
-                  <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
-                    Ready to Start Your <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Trading Career?</span>
-                  </h2>
-                  <p className="mt-4 text-lg text-foreground/70">
-                    Join thousands of traders who are already trading with our capital. Start your challenge today and get funded in as little as one week.
-                  </p>
-                  <ul className="mt-6 space-y-3">
-                    <li className="flex items-start">
-                      <CheckCircle2 className="h-5 w-5 text-success mr-2 flex-shrink-0 mt-1" />
-                      <span>No risk of your own capital</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle2 className="h-5 w-5 text-success mr-2 flex-shrink-0 mt-1" />
-                      <span>Trade accounts up to $200,000</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle2 className="h-5 w-5 text-success mr-2 flex-shrink-0 mt-1" />
-                      <span>Keep up to 80% of your profits</span>
-                    </li>
-                  </ul>
-                </div>
-                <div className="flex flex-col items-center md:items-end">
-                  <div className="bg-card p-8 rounded-xl border border-border max-w-md w-full">
-                    <h3 className="text-2xl font-bold mb-6">
-                      Start Trading Today
-                    </h3>
-                    <div className="space-y-4">
-                      <div>
-                        <label className="text-sm font-medium block mb-1.5">Select Account Size</label>
-                        <select className="w-full px-3 py-2 bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50">
-                          <option value="25000">$25,000 Standard Account - $99</option>
-                          <option value="50000" selected>$50,000 Standard Account - $199</option>
-                          <option value="100000">$100,000 Standard Account - $349</option>
-                          <option value="200000">$200,000 Standard Account - $599</option>
-                        </select>
-                      </div>
-                      
-                      <Button 
-                        className="w-full bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 transition-opacity"
-                        size="lg"
-                        onClick={handleGetStartedClick}
-                      >
-                        Get Started Now
-                      </Button>
-                      
-                      <p className="text-xs text-center text-foreground/60 mt-2">
-                        By signing up, you agree to our Terms of Service and Privacy Policy
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
+      </section>
       
       {/* Footer */}
-      <footer className="bg-muted/30 backdrop-blur-sm border-t border-border mt-auto">
-        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="col-span-1">
-              <div className="flex items-center">
-                <LineChart className="h-8 w-8 text-primary" />
-                <span className="ml-2 text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">TradeFunded</span>
+      <footer className="bg-muted/30 backdrop-blur-sm border-t border-border py-12">
+        <div className="container">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <Activity className="h-6 w-6 text-primary" />
+                <span className="text-xl font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">TradeFunded</span>
               </div>
-              <p className="mt-4 text-foreground/70 text-sm">
-                TradeFunded provides access to trading capital for skilled traders worldwide. Complete our challenge and get funded.
+              <p className="text-sm text-muted-foreground">
+                Empowering traders with funded accounts and supportive growth opportunities.
               </p>
-              <div className="mt-6 flex space-x-4">
-                <a href="#" className="text-foreground/60 hover:text-primary transition-colors">
-                  <Twitter className="h-5 w-5" />
-                </a>
-                <a href="#" className="text-foreground/60 hover:text-primary transition-colors">
-                  <Facebook className="h-5 w-5" />
-                </a>
-                <a href="#" className="text-foreground/60 hover:text-primary transition-colors">
-                  <Instagram className="h-5 w-5" />
-                </a>
-                <a href="#" className="text-foreground/60 hover:text-primary transition-colors">
-                  <Linkedin className="h-5 w-5" />
-                </a>
-              </div>
             </div>
             
             <div>
-              <h3 className="text-sm font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent uppercase tracking-wider">Company</h3>
-              <ul className="mt-4 space-y-2">
-                <li><a href="#" className="text-foreground/70 hover:text-primary transition-colors text-sm">About Us</a></li>
-                <li><a href="#" className="text-foreground/70 hover:text-primary transition-colors text-sm">Careers</a></li>
-                <li><a href="#" className="text-foreground/70 hover:text-primary transition-colors text-sm">Blog</a></li>
-                <li><a href="#" className="text-foreground/70 hover:text-primary transition-colors text-sm">News</a></li>
-                <li><a href="#" className="text-foreground/70 hover:text-primary transition-colors text-sm">Partners</a></li>
+              <h3 className="font-semibold mb-4">Quick Links</h3>
+              <ul className="space-y-2">
+                <li>
+                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    Home
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    Challenges
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    How It Works
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    Pricing
+                  </a>
+                </li>
               </ul>
             </div>
             
             <div>
-              <h3 className="text-sm font-semibold bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent uppercase tracking-wider">Resources</h3>
-              <ul className="mt-4 space-y-2">
-                <li><a href="#" className="text-foreground/70 hover:text-primary transition-colors text-sm">Trading Guide</a></li>
-                <li><a href="#" className="text-foreground/70 hover:text-primary transition-colors text-sm">FAQ</a></li>
-                <li><a href="#" className="text-foreground/70 hover:text-primary transition-colors text-sm">Trading Rules</a></li>
-                <li><a href="#" className="text-foreground/70 hover:text-primary transition-colors text-sm">Support Center</a></li>
-                <li><a href="#" className="text-foreground/70 hover:text-primary transition-colors text-sm">Contact Us</a></li>
+              <h3 className="font-semibold mb-4">Resources</h3>
+              <ul className="space-y-2">
+                <li>
+                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    Blog
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    Trading Rules
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    FAQ
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    Support
+                  </a>
+                </li>
               </ul>
             </div>
             
             <div>
-              <h3 className="text-sm font-semibold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent uppercase tracking-wider">Legal</h3>
-              <ul className="mt-4 space-y-2">
-                <li><a href="#" className="text-foreground/70 hover:text-primary transition-colors text-sm">Terms of Service</a></li>
-                <li><a href="#" className="text-foreground/70 hover:text-primary transition-colors text-sm">Privacy Policy</a></li>
-                <li><a href="#" className="text-foreground/70 hover:text-primary transition-colors text-sm">Risk Disclosure</a></li>
-                <li><a href="#" className="text-foreground/70 hover:text-primary transition-colors text-sm">Cookie Policy</a></li>
+              <h3 className="font-semibold mb-4">Legal</h3>
+              <ul className="space-y-2">
+                <li>
+                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    Terms of Service
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    Privacy Policy
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    Risk Disclosure
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    Refund Policy
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
           
-          <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center">
-            <p className="text-foreground/60 text-sm">
+          <div className="pt-8 border-t border-border/40 flex flex-col md:flex-row justify-between items-center">
+            <p className="text-sm text-muted-foreground mb-4 md:mb-0">
               © {new Date().getFullYear()} TradeFunded. All rights reserved.
             </p>
-            <div className="mt-4 md:mt-0 flex items-center space-x-3 text-foreground/60 text-sm">
-              <a href="#" className="hover:text-primary transition-colors">English</a> / 
-              <a href="#" className="hover:text-primary transition-colors ml-1">USD</a>
+            <div className="flex items-center gap-4">
+              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+                </svg>
+              </a>
+              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
+                </svg>
+              </a>
+              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+                </svg>
+              </a>
+              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
+                </svg>
+              </a>
             </div>
           </div>
         </div>
