@@ -30,30 +30,36 @@ export default function FAQPage() {
           <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="flex flex-col items-center justify-center p-6 bg-card border border-border/50 rounded-md">
-                <a href="#challenges" className="no-underline">
-                  <h3 className="text-lg font-medium mb-2">Trading Challenges</h3>
-                  <p className="text-sm text-muted-foreground text-center truncate w-full">
-                    Questions about our challenge programs and requirements
+                <div className="text-center w-full">
+                  <a href="#challenges" className="no-underline">
+                    <h3 className="text-lg font-medium mb-2">Trading Challenges</h3>
+                  </a>
+                  <p className="text-sm text-muted-foreground px-2">
+                    Questions about our challenge programs
                   </p>
-                </a>
+                </div>
               </div>
               
               <div className="flex flex-col items-center justify-center p-6 bg-card border border-border/50 rounded-md">
-                <a href="#funding" className="no-underline">
-                  <h3 className="text-lg font-medium mb-2">Funding & Payouts</h3>
-                  <p className="text-sm text-muted-foreground text-center truncate w-full">
-                    Questions about our funding process and profit payouts
+                <div className="text-center w-full">
+                  <a href="#funding" className="no-underline">
+                    <h3 className="text-lg font-medium mb-2">Funding & Payouts</h3>
+                  </a>
+                  <p className="text-sm text-muted-foreground px-2">
+                    Questions about funding and profit payouts
                   </p>
-                </a>
+                </div>
               </div>
               
               <div className="flex flex-col items-center justify-center p-6 bg-card border border-border/50 rounded-md">
-                <a href="#rules" className="no-underline">
-                  <h3 className="text-lg font-medium mb-2">Trading Rules</h3>
-                  <p className="text-sm text-muted-foreground text-center truncate w-full">
+                <div className="text-center w-full">
+                  <a href="#rules" className="no-underline">
+                    <h3 className="text-lg font-medium mb-2">Trading Rules</h3>
+                  </a>
+                  <p className="text-sm text-muted-foreground px-2">
                     Questions about trading rules and restrictions
                   </p>
-                </a>
+                </div>
               </div>
             </div>
           </div>

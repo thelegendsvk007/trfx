@@ -43,6 +43,90 @@ export default function TradingDashboardPage() {
         </div>
       </section>
       
+      {/* Live Trading Chart */}
+      <section className="py-10 bg-background border-b border-border/40">
+        <div className="container px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex flex-col">
+              <h2 className="text-2xl font-bold tracking-tight mb-4">Trading Chart</h2>
+              <div className="bg-card border border-border/50 rounded-lg overflow-hidden shadow-md">
+                <div className="p-4 bg-muted/30 border-b border-border/50 flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center h-7 px-3 bg-primary/10 text-primary rounded-full text-sm font-medium">
+                      Gold Spot / U.S. Dollar
+                    </div>
+                    <div className="h-2 w-2 rounded-full bg-green-500"></div>
+                    <span className="text-sm text-green-500 font-medium">Live</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <select className="h-9 rounded-md border border-border bg-background px-3 py-1 text-sm">
+                      <option>1 Day</option>
+                      <option>1 Week</option>
+                      <option>1 Month</option>
+                      <option>1 Year</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="h-[400px] p-2 bg-[#131722] text-white overflow-hidden">
+                  {/* Trading View Chart would be rendered here */}
+                  <div className="relative h-full w-full bg-[#131722] overflow-hidden rounded-md">
+                    <div className="absolute top-2 left-2 flex items-center gap-1.5 z-10">
+                      <div className="flex items-center gap-1 bg-[#2A2E39] rounded px-1.5 py-1 text-xs">
+                        <span>XAUUSD</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+                      </div>
+                      <div className="flex gap-1">
+                        <div className="w-6 h-6 flex items-center justify-center bg-[#2A2E39] rounded text-xs">1m</div>
+                        <div className="w-6 h-6 flex items-center justify-center bg-[#2A2E39] rounded text-xs">5m</div>
+                        <div className="w-6 h-6 flex items-center justify-center bg-[#2A2E39] rounded text-xs">15m</div>
+                        <div className="w-6 h-6 flex items-center justify-center bg-[#2A2E39] rounded text-xs">1h</div>
+                        <div className="w-6 h-6 flex items-center justify-center bg-[#2A2E39] rounded text-xs">1D</div>
+                      </div>
+                    </div>
+                    <div className="absolute top-2 right-2 flex items-center gap-1.5 z-10">
+                      <div className="w-6 h-6 flex items-center justify-center bg-[#2A2E39] rounded text-xs">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 17V7"/><path d="M15 7v10"/></svg>
+                      </div>
+                      <div className="w-6 h-6 flex items-center justify-center bg-[#2A2E39] rounded text-xs">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+                      </div>
+                    </div>
+                    <img 
+                      src="https://placehold.co/1200x400/131722/e5e7eb?text=Real-time+Gold+Chart+with+Price+Action" 
+                      alt="Gold Trading Chart" 
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 bg-[#131722] text-xs p-1.5 flex items-center justify-between">
+                      <div className="flex items-center gap-3 text-[#d1d4dc]">
+                        <div>O: <span className="text-white">3,241.785</span></div>
+                        <div>H: <span className="text-white">3,252.255</span></div>
+                        <div>L: <span className="text-white">3,154.300</span></div>
+                        <div>C: <span className="text-white">3,204.450</span></div>
+                        <div className="text-red-400">-35.520 (-1.10%)</div>
+                      </div>
+                      <div className="text-[#d1d4dc]">
+                        Vol: <span className="text-white">519.67K</span>
+                      </div>
+                    </div>
+                    <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-3 text-xs">
+                      <div className="px-2 py-1 bg-[#2A2E39] rounded-sm">1D</div>
+                      <div className="px-2 py-1 bg-[#2A2E39] rounded-sm">5D</div>
+                      <div className="px-2 py-1 bg-[#2A2E39] rounded-sm">1M</div>
+                      <div className="px-2 py-1 bg-[#2A2E39] rounded-sm">3M</div>
+                      <div className="px-2 py-1 bg-[#2A2E39] rounded-sm">6M</div>
+                      <div className="px-2 py-1 bg-[#2A2E39] rounded-sm">YTD</div>
+                      <div className="px-2 py-1 bg-[#2A2E39] rounded-sm">1Y</div>
+                      <div className="px-2 py-1 bg-[#2A2E39] rounded-sm">5Y</div>
+                      <div className="px-2 py-1 bg-[#2A2E39] rounded-sm">All</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
       {/* Dashboard Overview */}
       <section className="py-16 bg-background">
         <div className="container px-4">
