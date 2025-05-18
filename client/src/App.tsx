@@ -21,6 +21,20 @@ import AggressiveChallengePage from "@/pages/challenges/aggressive";
 import EvaluationProgramPage from "@/pages/challenges/evaluation";
 import ComparePlansPage from "@/pages/challenges/compare";
 
+// Import How It Works pages
+import EvaluationPhasePage from "@/pages/how-it-works/evaluation-phase";
+import FundingRequirementsPage from "@/pages/how-it-works/funding-requirements";
+import PayoutStructurePage from "@/pages/how-it-works/payout-structure";
+import TradingRulesPage from "@/pages/how-it-works/trading-rules";
+
+// Import Trading pages
+import TradingDashboardPage from "@/pages/trading/dashboard";
+import SpreadsLeveragePage from "@/pages/trading/spreads-leverage";
+
+// Import About pages
+import CompanyPage from "@/pages/about/company";
+import ContactPage from "@/pages/about/contact";
+
 // Placeholder component for pages we haven't created yet
 const PlaceholderPage = ({ title, description }: { title: string, description?: string }) => (
   <div className="container py-12">
@@ -45,9 +59,7 @@ function Router() {
         <Route path="/signup" component={SignupPage} />
         
         {/* Main section routes */}
-        <Route path="/dashboard">
-          <PlaceholderPage title="Dashboard" description="Monitor your trading performance and account statistics." />
-        </Route>
+        <Route path="/dashboard" component={TradingDashboardPage} />
         <Route path="/trading">
           <PlaceholderPage title="Trading" description="Access your trading platforms and real-time market data." />
         </Route>
@@ -61,18 +73,10 @@ function Router() {
         <Route path="/how-it-works/challenge-process">
           <PlaceholderPage title="Challenge Process" description="Understand the steps to complete our trading challenge and get funded." />
         </Route>
-        <Route path="/how-it-works/evaluation-phase">
-          <PlaceholderPage title="Evaluation Phase" description="Learn about the evaluation phases and their requirements." />
-        </Route>
-        <Route path="/how-it-works/funding-requirements">
-          <PlaceholderPage title="Funding Requirements" description="Understand what you need to achieve to receive a funded account." />
-        </Route>
-        <Route path="/how-it-works/payout-structure">
-          <PlaceholderPage title="Payout Structure" description="Learn about our profit-sharing model for funded traders." />
-        </Route>
-        <Route path="/how-it-works/trading-rules">
-          <PlaceholderPage title="Trading Rules" description="Understand the rules and guidelines for our trading challenges." />
-        </Route>
+        <Route path="/how-it-works/evaluation-phase" component={EvaluationPhasePage} />
+        <Route path="/how-it-works/funding-requirements" component={FundingRequirementsPage} />
+        <Route path="/how-it-works/payout-structure" component={PayoutStructurePage} />
+        <Route path="/how-it-works/trading-rules" component={TradingRulesPage} />
         
         {/* Trading routes */}
         <Route path="/trading/metatrader4" component={MetaTrader4Page} />
@@ -80,9 +84,7 @@ function Router() {
         <Route path="/trading/products">
           <PlaceholderPage title="Trading Products" description="Explore the range of markets and instruments available for trading." />
         </Route>
-        <Route path="/trading/spreads-leverage">
-          <PlaceholderPage title="Spreads & Leverage" description="Learn about our competitive spreads and leverage options." />
-        </Route>
+        <Route path="/trading/spreads-leverage" component={SpreadsLeveragePage} />
         
         {/* Challenge routes */}
         <Route path="/challenges/standard" component={StandardChallengePage} />
@@ -91,16 +93,12 @@ function Router() {
         <Route path="/challenges/compare" component={ComparePlansPage} />
         
         {/* About routes */}
-        <Route path="/about/company">
-          <PlaceholderPage title="Our Company" description="Learn about TRFX and our mission to support traders worldwide." />
-        </Route>
+        <Route path="/about/company" component={CompanyPage} />
         <Route path="/about/team" component={TeamPage} />
         <Route path="/about/testimonials">
           <PlaceholderPage title="Testimonials" description="See what our funded traders say about their experience with TRFX." />
         </Route>
-        <Route path="/about/contact">
-          <PlaceholderPage title="Contact Us" description="Get in touch with our support team for any questions or assistance." />
-        </Route>
+        <Route path="/about/contact" component={ContactPage} />
         
         {/* Payment and Withdrawal routes */}
         <Route path="/payment">
