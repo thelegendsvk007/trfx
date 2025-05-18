@@ -107,8 +107,19 @@ export function MainNav({ className }: { className?: string }) {
         <div className="flex items-center">
           <Link href="/">
             <div className="flex items-center space-x-2">
-              <div className="text-2xl font-bold tracking-tighter bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                TRFX
+              <div className="animate-pulse flex items-center">
+                <div className="text-2xl font-bold tracking-tighter bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                  TRFX
+                </div>
+                <div className="ml-1 relative h-6 w-6 overflow-hidden">
+                  <div className="absolute inset-0 animate-spin-slow">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
+                      <path d="M3 3v18h18"></path>
+                      <path d="M13 17V7h4"></path>
+                      <path d="M13 7l-6 5"></path>
+                    </svg>
+                  </div>
+                </div>
               </div>
             </div>
           </Link>
