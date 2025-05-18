@@ -184,12 +184,8 @@ export default function TradingPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Header */}
-      <header className="sticky top-0 z-40 w-full border-b bg-background/70 backdrop-blur-md">
-        <div className="container flex h-16 items-center">
-          <MainNav />
-        </div>
-      </header>
+      {/* Using the Layout component through PageTemplate */}
+      <PageTemplate title="Trading" description="Access a wide range of markets with professional trading conditions and state-of-the-art platforms">
 
       {/* Hero Section */}
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-background via-background to-secondary/10">

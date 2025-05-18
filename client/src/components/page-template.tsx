@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { Layout } from './layout';
 
 interface PageTemplateProps {
   title: string;
@@ -17,13 +18,13 @@ export default function PageTemplate({ title, description, children }: PageTempl
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
       </Helmet>
-      <div className="min-h-screen">
+      <Layout>
         <div className="py-12 md:py-16 lg:py-20">
           <div className="container px-4 md:px-6">
             {children}
           </div>
         </div>
-      </div>
+      </Layout>
     </>
   );
 }
