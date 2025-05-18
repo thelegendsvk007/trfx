@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Moon, Sun, LineChart, ArrowRight, Users, ChevronRight } from "lucide-react";
+import { Moon, Sun, LineChart, ArrowRight, Users, ChevronRight, Menu, X, BarChart, CreditCard } from "lucide-react";
 
 export default function SimpleApp() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
+  };
+  
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
   };
   
   return (
@@ -21,16 +26,22 @@ export default function SimpleApp() {
                 <div className="flex">
                   <div className="flex-shrink-0 flex items-center">
                     <LineChart className="h-8 w-8 text-primary" />
-                    <span className="ml-2 text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">TradeFunded</span>
+                    <span className="ml-2 text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">TRFX</span>
                   </div>
                   <nav className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                    <a href="#features" className="border-transparent text-foreground/70 hover:text-foreground hover:border-border inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
-                      Features
+                    <a href="/how-it-works" className="border-transparent text-foreground/70 hover:text-foreground hover:border-border inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
+                      How It Works
                     </a>
-                    <a href="#pricing" className="border-transparent text-foreground/70 hover:text-foreground hover:border-border inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
-                      Pricing
+                    <a href="/trading" className="border-transparent text-foreground/70 hover:text-foreground hover:border-border inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
+                      Trading
                     </a>
-                    <a href="#faq" className="border-transparent text-foreground/70 hover:text-foreground hover:border-border inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
+                    <a href="/about" className="border-transparent text-foreground/70 hover:text-foreground hover:border-border inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
+                      About
+                    </a>
+                    <a href="/contact" className="border-transparent text-foreground/70 hover:text-foreground hover:border-border inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
+                      Contact Us
+                    </a>
+                    <a href="/faq" className="border-transparent text-foreground/70 hover:text-foreground hover:border-border inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
                       FAQ
                     </a>
                   </nav>
@@ -47,19 +58,63 @@ export default function SimpleApp() {
                   
                   <Button 
                     variant="outline" 
-                    className="border-primary text-primary hover:bg-primary/10 transition-colors"
+                    className="hidden sm:inline-flex border-primary text-primary hover:bg-primary/10 transition-colors"
                   >
                     Log in
                   </Button>
                   <Button 
-                    className="bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity"
+                    className="hidden sm:inline-flex bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity"
                   >
                     Sign up
+                  </Button>
+                  
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={toggleMobileMenu}
+                    className="sm:hidden hover:bg-muted transition-colors"
+                  >
+                    {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
                   </Button>
                 </div>
               </div>
             </div>
           </header>
+
+          {/* Mobile navigation menu */}
+          {mobileMenuOpen && (
+            <div className="sm:hidden fixed inset-x-0 top-16 z-50 bg-background/95 backdrop-blur-sm border-b border-border shadow-lg">
+              <div className="px-4 py-3 space-y-1">
+                <a href="/how-it-works" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-primary/10 hover:text-primary transition-colors">
+                  How It Works
+                </a>
+                <a href="/trading" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-primary/10 hover:text-primary transition-colors">
+                  Trading
+                </a>
+                <a href="/about" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-primary/10 hover:text-primary transition-colors">
+                  About
+                </a>
+                <a href="/contact" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-primary/10 hover:text-primary transition-colors">
+                  Contact Us
+                </a>
+                <a href="/faq" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-primary/10 hover:text-primary transition-colors">
+                  FAQ
+                </a>
+                <div className="mt-4 pt-4 border-t border-border space-y-2">
+                  <a href="/login" className="block w-full">
+                    <Button variant="outline" className="w-full border-primary text-primary">
+                      Log in
+                    </Button>
+                  </a>
+                  <a href="/register" className="block w-full">
+                    <Button className="w-full bg-gradient-to-r from-primary to-accent">
+                      Sign up
+                    </Button>
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
 
           <main>
             {/* Hero Section */}
@@ -146,7 +201,7 @@ export default function SimpleApp() {
 
           <footer className="bg-muted/30 backdrop-blur-sm border-t border-border mt-auto py-4">
             <div className="max-w-7xl mx-auto px-4 text-center text-sm text-muted-foreground">
-              © {new Date().getFullYear()} TradeFunded. All rights reserved.
+              © {new Date().getFullYear()} TRFX. All rights reserved.
             </div>
           </footer>
         </div>
