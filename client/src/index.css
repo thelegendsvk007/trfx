@@ -2,7 +2,168 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}
+
 @layer utilities {
+  /* Animations for the step glow effects */
+  @keyframes pulse-slow {
+    0%, 100% {
+      opacity: 0.2;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+
+  @keyframes tilt {
+    0%, 100% {
+      transform: rotate(-1deg);
+    }
+    50% {
+      transform: rotate(1deg);
+    }
+  }
+
+  @keyframes step-glow {
+    0%, 100% {
+      box-shadow: 0 0 5px rgba(168, 85, 247, 0.2);
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0) scale(1);
+      opacity: 0.3;
+    }
+    50% {
+      transform: translateY(-20px) scale(1.1);
+      opacity: 0.5;
+    }
+  }
+  
+  @keyframes floatingAnimation {
+    0%, 100% {
+      transform: translate(0, 0);
+    }
+    25% {
+      transform: translate(calc(var(--translate-x, 10px)), calc(var(--translate-y, 10px)));
+    }
+    50% {
+      transform: translate(calc(var(--translate-x, 10px) * -0.5), calc(var(--translate-y, 10px) * -1));
+    }
+    75% {
+      transform: translate(calc(var(--translate-x, 10px) * -1), calc(var(--translate-y, 10px) * 0.5));
+    }
+  }
+
+  .animate-pulse-slow {
+    animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .animate-tilt {
+    animation: tilt 10s infinite linear;
+  }
+
+  .animate-float {
+    animation: float var(--float-duration, 20s) ease-in-out var(--float-delay, 0s) infinite;
+  }
+  
+  .floating-card {
+    animation: floatingAnimation var(--anim-duration, 30s) ease-in-out var(--anim-delay, 0s) infinite;
+  }
+  
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+  }
+
+  .step-number {
+    transition: all 0.3s ease;
+    animation: step-glow 5s infinite alternate;
+  }
+
+  .step-card:nth-child(1) .step-number {
+    background: radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.1), transparent 80%);
+  }
+
+  .step-card:nth-child(2) .step-number {
+    background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1), transparent 80%);
+    animation-delay: 5s;
+  }
+
+  .step-card:nth-child(3) .step-number {
+    background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.1), transparent 80%);
+    animation-delay: 10s;
+  }
+
+  .step-card:hover .step-number {
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  }
+  
+  /* Very fast, strictly one-by-one sequential glowing animation for step cards */
+  @keyframes card-glow-1 {
+    0%, 33.33%, 40%, 100% { 
+      box-shadow: 0 0 5px rgba(168, 85, 247, 0.2);
+      border-color: rgba(168, 85, 247, 0.3);
+    }
+    10%, 25% { 
+      box-shadow: 0 0 40px rgba(168, 85, 247, 0.9);
+      border-color: rgba(168, 85, 247, 1);
+    }
+  }
+  
+  @keyframes card-glow-2 {
+    0%, 10%, 50%, 100% { 
+      box-shadow: 0 0 5px rgba(59, 130, 246, 0.2);
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+    33.33%, 41.66% { 
+      box-shadow: 0 0 40px rgba(59, 130, 246, 0.9);
+      border-color: rgba(59, 130, 246, 1);
+    }
+  }
+  
+  @keyframes card-glow-3 {
+    0%, 41.66%, 75%, 100% { 
+      box-shadow: 0 0 5px rgba(16, 185, 129, 0.2);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+    50%, 65% { 
+      box-shadow: 0 0 40px rgba(16, 185, 129, 0.9);
+      border-color: rgba(16, 185, 129, 1);
+    }
+  }
+  
+  .step-card:nth-child(1) {
+    animation: card-glow-1 4s infinite;
+  }
+  
+  .step-card:nth-child(2) {
+    animation: card-glow-2 4s infinite;
+  }
+  
+  .step-card:nth-child(3) {
+    animation: card-glow-3 4s infinite;
+  }
   .animate-spin-slow {
     animation: spin 4s linear infinite;
   }
@@ -15,31 +176,130 @@
       transform: rotate(360deg);
     }
   }
+  
+  /* Floating animation for dashboard cards */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  @keyframes float-delayed {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+  
+  @keyframes float-slow {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-15px);
+    }
+  }
+  
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+  
+  .animate-float-delayed {
+    animation: float-delayed 5s ease-in-out infinite;
+    animation-delay: 1s;
+  }
+  
+  .animate-float-slow {
+    animation: float-slow 6s ease-in-out infinite;
+    animation-delay: 0.5s;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-purple-500 to-green-400 bg-clip-text text-transparent;
+  }
+  
+  .circle-pattern {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+  
+  /* Floating bubble effect */
+  .bg-bubble {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1), transparent);
+    z-index: 0;
+    pointer-events: none;
+  }
+  
+  /* Custom cursor styles */
+  .cursor-dot-outline {
+    pointer-events: none;
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 2px solid rgba(138, 43, 226, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.2s ease-in-out, height 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    z-index: 9999;
+    opacity: 0;
+  }
+  
+  .cursor-dot {
+    pointer-events: none;
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(138, 43, 226, 0.75);
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    transition: width 0.2s ease-in-out, height 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.8), 0 0 20px rgba(138, 43, 226, 0.4), 0 0 30px rgba(138, 43, 226, 0.2);
+    opacity: 0;
+  }
+  
+  /* Add more ambient glow effects */
+  .ambient-light {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.15;
+    filter: blur(60px);
+    z-index: -1;
+    pointer-events: none;
+  }
 }
 
 :root {
-  /* Modern Light Theme - Soft whites and subtle grays */
-  --background: 210 40% 98%;
-  --foreground: 222 47% 11%;
-  --muted: 210 40% 93%;
-  --muted-foreground: 215 25% 40%;
-  --popover: 210 40% 98%;
-  --popover-foreground: 222 47% 11%;
+ 
+  --background: 220 20% 97%;
+  --foreground: 220 20% 10%;
+  --muted: 220 20% 92%;
+  --muted-foreground: 220 10% 40%;
+  --popover: 220 20% 97%;
+  --popover-foreground: 220 20% 10%;
   --card: 0 0% 100%;
-  --card-foreground: 222 47% 11%;
-  --border: 214 32% 91%;
-  --input: 214 32% 91%;
+  --card-foreground: 220 20% 10%;
+  --border: 220 13% 90%;
+  --input: 220 13% 90%;
   
-  /* Vibrant Primary - Electric Blue */
-  --primary: 210 100% 56%;
+  /* Primary - Purple */
+  --primary: 270 100% 65%;
   --primary-foreground: 0 0% 100%;
   
-  /* Secondary - Soft Violet */
-  --secondary: 250 95% 76%;
+  /* Secondary - Teal/Green */
+  --secondary: 160 85% 45%;
   --secondary-foreground: 0 0% 100%;
   
-  /* Accent - Energetic Teal */
-  --accent: 174 75% 46%;
+  /* Accent - Neon Green */
+  --accent: 140 90% 50%;
   --accent-foreground: 0 0% 100%;
   
   /* Alert Colors */
@@ -53,33 +313,33 @@
   --info-foreground: 210 40% 98%;
   
   /* UI Elements */
-  --ring: 210 100% 56%;
+  --ring: 270 100% 65%;
   --radius: 0.5rem;
 }
 
 .dark {
-  /* Futuristic Dark Theme - Deep blues and sleek grays */
-  --background: 222 47% 11%;
-  --foreground: 210 40% 98%;
-  --muted: 217 33% 17%;
-  --muted-foreground: 215 20% 65%;
-  --popover: 222 47% 11%;
-  --popover-foreground: 210 40% 98%;
-  --card: 222 47% 11%;
-  --card-foreground: 210 40% 98%;
-  --border: 217 33% 17%;
-  --input: 217 33% 17%;
+
+  --background: 0 0% 7%;
+  --foreground: 0 0% 98%;
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 65%;
+  --popover: 0 0% 9%;
+  --popover-foreground: 0 0% 98%;
+  --card: 0 0% 9%;
+  --card-foreground: 0 0% 98%;
+  --border: 0 0% 20%;
+  --input: 0 0% 20%;
   
-  /* Vibrant Primary - Neon Blue */
-  --primary: 210 100% 56%;
+  /* Primary - Purple */
+  --primary: 270 100% 65%;
   --primary-foreground: 0 0% 100%;
   
-  /* Secondary - Vibrant Purple */
-  --secondary: 250 95% 76%;
+  /* Secondary - Teal/Green */
+  --secondary: 160 85% 45%;
   --secondary-foreground: 0 0% 100%;
   
-  /* Accent - Bright Teal */
-  --accent: 174 75% 46%;
+  /* Accent - Neon Green */
+  --accent: 140 90% 50%;
   --accent-foreground: 0 0% 100%;
   
   /* Alert Colors */
@@ -93,7 +353,7 @@
   --info-foreground: 210 40% 98%;
   
   /* UI Elements */
-  --ring: 210 100% 56%;
+  --ring: 270 100% 65%;
   --radius: 0.5rem;
 }
 

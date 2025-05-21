@@ -1,218 +1,151 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useAuth } from "@/hooks/use-auth";
+import React, { useState } from "react";
+import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useToast } from "@/hooks/use-toast";
-import { Loader2, LogIn } from "lucide-react";
-import { Link } from "wouter";
-import { FaGoogle, FaMicrosoft, FaApple, FaGithub } from "react-icons/fa";
-import PageTemplate from "@/components/page-template";
-
-// Validation schema
-const loginSchema = z.object({
-  username: z.string().min(1, "Username is required"),
-  password: z.string().min(1, "Password is required"),
-  rememberMe: z.boolean().optional(),
-});
-
-type LoginFormValues = z.infer<typeof loginSchema>;
+import { useAuth } from "@/hooks/use-auth";
+import { LogIn } from "lucide-react";
 
 export default function LoginPage() {
-  const { login, error: authError } = useAuth();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { toast } = useToast();
-  
-  // Initialize form
-  const form = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      username: "",
-      password: "",
-      rememberMe: false
-    }
-  });
-  
-  // Form submission handler
-  const onSubmit = async (values: LoginFormValues) => {
+  const { login } = useAuth();
+  const [, setLocation] = useLocation();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
     setIsLoading(true);
-    
+
     try {
-      await login(values.username, values.password);
-      
-      // Successful login is handled by the auth provider which redirects to the dashboard
-    } catch (error) {
-      console.error("Login error:", error);
-      toast({
-        title: "Login failed",
-        description: authError || "Invalid username or password",
-        variant: "destructive"
-      });
+      await login(username, password);
+      setLocation("/dashboard");
+    } catch (err) {
+      setError("Invalid username or password");
     } finally {
       setIsLoading(false);
     }
   };
-  
-  // Provider login handlers
-  const handleProviderLogin = (provider: string) => {
-    toast({
-      title: `${provider} Login`,
-      description: `${provider} authentication is not yet implemented.`,
-    });
-  };
-  
+
   return (
-    <PageTemplate
-      title="TRFX - Sign In"
-      description="Sign in to your TRFX account to access your trading dashboard and account details."
-    >
-      <div className="bg-background min-h-screen flex flex-col items-center justify-center p-4">
-        <div className="w-full max-w-md space-y-6">
-          {/* Logo and Heading */}
-          <div className="text-center space-y-2">
-            <div className="flex justify-center mb-6">
-              <div className="text-2xl font-bold tracking-tighter bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                TRFX
-              </div>
+    <div className="min-h-screen flex flex-col bg-black relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-purple-500/10 blur-3xl"></div>
+        <div className="absolute top-1/3 -left-40 w-96 h-96 rounded-full bg-green-500/10 blur-3xl"></div>
+        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full h-1/2 bg-gradient-to-t from-black/50 to-transparent"></div>
+        <div className="absolute left-1/4 top-1/2 w-2 h-2 rounded-full bg-blue-500/40"></div>
+        <div className="absolute right-1/4 top-1/3 w-3 h-3 rounded-full bg-purple-500/40"></div>
+        <div className="absolute left-2/3 top-1/4 w-2 h-2 rounded-full bg-green-500/40"></div>
+        <div className="absolute right-1/5 bottom-1/3 w-4 h-4 rounded-full bg-pink-500/30"></div>
+      </div>
+
+      <div className="flex-1 flex flex-col items-center justify-center relative z-10">
+        <div className="w-full max-w-md px-8">
+          <div className="text-center mb-6">
+            <h1 className="text-3xl font-bold text-white mb-2">Sign in to your account</h1>
+            <p className="text-gray-400">Or start your trading challenge</p>
+          </div>
+
+          {/* Gradient tagline box */}
+          <div className="mb-8 p-6 bg-black/30 backdrop-blur-sm border border-border/20 rounded-lg">
+            <h2 className="text-2xl font-bold mb-2">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-500">Trade</span> with Our Capital,
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-500"> Keep the Profits</span>
+            </h2>
+          </div>
+          
+          {/* Auth Tabs */}
+          <div className="flex justify-center mb-8">
+            <div className="bg-black/40 backdrop-blur-sm rounded-lg border border-border/20 p-1 flex">
+              <Link href="/login">
+                <div className="relative px-8 py-3 rounded-md transition-all text-white">
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-md"></div>
+                  <span className="relative z-10">Login</span>
+                </div>
+              </Link>
+              <Link href="/signup">
+                <div className="relative px-8 py-3 rounded-md transition-all text-white/60 hover:text-white/80">
+                  <span className="relative z-10">Sign Up</span>
+                </div>
+              </Link>
             </div>
-            <h1 className="text-3xl font-bold tracking-tight">Sign in to your account</h1>
-            <p className="text-muted-foreground">
-              Or start your trading challenge
-            </p>
           </div>
-          
-          {/* Chart Image */}
-          <div className="overflow-hidden rounded-lg border border-border/60 w-full">
-            <img 
-              src="/chart-background.png" 
-              alt="Trading Chart" 
-              className="w-full h-[120px] object-cover"
-              onError={(e) => {
-                // Fallback to a gradient if image fails to load
-                (e.target as HTMLImageElement).style.display = 'none';
-                (e.target as HTMLImageElement).parentElement!.style.background = 'linear-gradient(to right, #1f2937, #111827)';
-                (e.target as HTMLImageElement).parentElement!.style.height = '120px';
-              }}
-            />
-          </div>
-          
-          {/* Login Form */}
-          <div className="bg-card border rounded-lg shadow-sm p-6">
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                <FormField
-                  control={form.control}
-                  name="username"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Username</FormLabel>
-                      <FormControl>
-                        <Input placeholder="johndoe" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+
+          <div className="bg-gradient-to-br from-purple-900/30 to-blue-900/30 backdrop-blur-sm border border-purple-500/20 rounded-lg p-6 shadow-lg shadow-purple-500/5">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {error && (
+                <div className="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-2 rounded text-sm">
+                  {error}
+                </div>
+              )}
+
+              <div className="space-y-2">
+                <Label htmlFor="username" className="text-white">Username</Label>
+                <Input
+                  id="username"
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="bg-black/50 border-purple-500/30 text-white focus:border-purple-400/50 focus:ring-1 focus:ring-purple-400/20"
+                  required
                 />
-                
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Password</FormLabel>
-                      <FormControl>
-                        <Input type="password" placeholder="••••••••" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="password" className="text-white">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="bg-black/50 border-purple-500/30 text-white focus:border-purple-400/50 focus:ring-1 focus:ring-purple-400/20"
+                  required
                 />
-                
-                <div className="flex items-center justify-between">
-                  <FormField
-                    control={form.control}
-                    name="rememberMe"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-center space-x-2 space-y-0">
-                        <FormControl>
-                          <Checkbox
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                          />
-                        </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel>Remember me</FormLabel>
-                        </div>
-                      </FormItem>
-                    )}
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <Checkbox 
+                    id="remember-me" 
+                    checked={rememberMe} 
+                    onCheckedChange={(checked) => setRememberMe(checked as boolean)}
                   />
-                  <Link href="/forgot-password" className="text-sm text-primary hover:underline">
-                    Forgot your password?
-                  </Link>
+                  <label htmlFor="remember-me" className="text-sm text-white cursor-pointer">
+                    Remember me
+                  </label>
                 </div>
                 
-                <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Signing In...
-                    </>
-                  ) : (
-                    <>
-                      <LogIn className="mr-2 h-4 w-4" />
-                      Sign In
-                    </>
-                  )}
-                </Button>
-              </form>
-            </Form>
-            
-            {/* Social Logins Divider */}
-            <div className="relative mt-6">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t border-border"></span>
+                <Link href="/forgot-password" className="text-sm text-purple-400 hover:text-purple-300">
+                  Forgot your password?
+                </Link>
               </div>
-              <div className="relative flex justify-center text-xs">
-                <span className="bg-card px-2 text-muted-foreground">Or continue with</span>
-              </div>
+
+              <Button 
+                type="submit" 
+                disabled={isLoading} 
+                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:opacity-90 text-white"
+              >
+                <LogIn className="mr-2 h-4 w-4" />
+                Sign In
+              </Button>
+            </form>
+
+            <div className="mt-6 text-center">
+              <p className="text-sm text-gray-400">
+                Don't have an account?{' '}
+                <Link href="/signup" className="text-purple-400 hover:text-purple-300">
+                  Create an account
+                </Link>
+              </p>
             </div>
-            
-            {/* Social Login Buttons */}
-            <div className="mt-6 grid grid-cols-2 gap-3">
-              <Button variant="outline" type="button" onClick={() => handleProviderLogin("Google")}>
-                <FaGoogle className="mr-2 h-4 w-4" />
-                Google
-              </Button>
-              <Button variant="outline" type="button" onClick={() => handleProviderLogin("Microsoft")}>
-                <FaMicrosoft className="mr-2 h-4 w-4" />
-                Microsoft
-              </Button>
-              <Button variant="outline" type="button" onClick={() => handleProviderLogin("Apple")}>
-                <FaApple className="mr-2 h-4 w-4" />
-                Apple
-              </Button>
-              <Button variant="outline" type="button" onClick={() => handleProviderLogin("GitHub")}>
-                <FaGithub className="mr-2 h-4 w-4" />
-                GitHub
-              </Button>
-            </div>
-          </div>
-          
-          {/* Sign Up Link */}
-          <div className="text-center">
-            <p className="text-sm text-muted-foreground">
-              Don't have an account?{" "}
-              <Link href="/signup" className="text-primary hover:underline font-medium">
-                Sign up
-              </Link>
-            </p>
           </div>
         </div>
       </div>
-    </PageTemplate>
+    </div>
   );
 }

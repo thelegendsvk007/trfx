@@ -1,0 +1,108 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark background -->
+  <rect width="800" height="600" fill="#1a1a1a"/>
+  
+  <!-- Top toolbar -->
+  <rect x="0" y="0" width="800" height="40" fill="#2a2a2a"/>
+  
+  <!-- Left sidebar - Navigator -->
+  <rect x="0" y="40" width="200" height="560" fill="#232323"/>
+  <rect x="10" y="50" width="180" height="25" rx="3" fill="#2c2c2c"/>
+  <text x="20" y="68" font-family="Arial" font-size="14" fill="#e0e0e0">Navigator</text>
+  
+  <!-- Symbol tree -->
+  <rect x="20" y="85" width="160" height="20" fill="#232323"/>
+  <text x="25" y="100" font-family="Arial" font-size="12" fill="#cccccc">Currencies</text>
+  
+  <rect x="30" y="110" width="150" height="20" fill="#232323"/>
+  <text x="35" y="125" font-family="Arial" font-size="12" fill="#cccccc">EUR/USD</text>
+  
+  <rect x="30" y="135" width="150" height="20" fill="#232323"/>
+  <text x="35" y="150" font-family="Arial" font-size="12" fill="#cccccc">GBP/USD</text>
+  
+  <rect x="30" y="160" width="150" height="20" fill="#232323"/>
+  <text x="35" y="175" font-family="Arial" font-size="12" fill="#cccccc">USD/JPY</text>
+  
+  <!-- Main chart area -->
+  <rect x="200" y="40" width="600" height="300" fill="#111111"/>
+  
+  <!-- Price chart on main chart -->
+  <polyline points="220,240 250,230 280,250 310,200 340,190 370,220 400,180 430,195 460,170 490,190 520,160 550,150 580,180 610,150 640,160 670,130 700,140 730,120 760,110" stroke="#4d88ff" stroke-width="2" fill="none"/>
+  
+  <!-- Candlesticks -->
+  <rect x="250" y="230" width="6" height="15" fill="#ff4d4d"/>
+  <line x1="253" y1="228" x2="253" y2="223" stroke="#ff4d4d" stroke-width="2"/>
+  <line x1="253" y1="245" x2="253" y2="250" stroke="#ff4d4d" stroke-width="2"/>
+  
+  <rect x="310" y="190" width="6" height="20" fill="#4dff4d"/>
+  <line x1="313" y1="190" x2="313" y2="185" stroke="#4dff4d" stroke-width="2"/>
+  <line x1="313" y1="210" x2="313" y2="215" stroke="#4dff4d" stroke-width="2"/>
+  
+  <rect x="370" y="210" width="6" height="15" fill="#ff4d4d"/>
+  <line x1="373" y1="208" x2="373" y2="203" stroke="#ff4d4d" stroke-width="2"/>
+  <line x1="373" y1="225" x2="373" y2="230" stroke="#ff4d4d" stroke-width="2"/>
+  
+  <rect x="430" y="180" width="6" height="25" fill="#4dff4d"/>
+  <line x1="433" y1="180" x2="433" y2="175" stroke="#4dff4d" stroke-width="2"/>
+  <line x1="433" y1="205" x2="433" y2="210" stroke="#4dff4d" stroke-width="2"/>
+  
+  <!-- Second chart below -->
+  <rect x="200" y="340" width="600" height="260" fill="#111111"/>
+  <polyline points="220,440 250,460 280,430 310,450 340,420 370,440 400,400 430,420 460,390 490,410 520,380 550,400 580,370 610,390 640,360 670,380 700,350 730,370 760,340" stroke="#ff9900" stroke-width="2" fill="none"/>
+  
+  <!-- Indicator below chart -->
+  <polyline points="220,500 250,510 280,490 310,520 340,510 370,530 400,520 430,540 460,530 490,550 520,530 550,560 580,550 610,570 640,560 670,580 700,570 730,590 760,580" stroke="#9966ff" stroke-width="2" fill="none"/>
+  
+  <!-- Grid lines -->
+  <line x1="200" y1="90" x2="800" y2="90" stroke="#333333" stroke-width="1"/>
+  <line x1="200" y1="140" x2="800" y2="140" stroke="#333333" stroke-width="1"/>
+  <line x1="200" y1="190" x2="800" y2="190" stroke="#333333" stroke-width="1"/>
+  <line x1="200" y1="240" x2="800" y2="240" stroke="#333333" stroke-width="1"/>
+  <line x1="200" y1="290" x2="800" y2="290" stroke="#333333" stroke-width="1"/>
+  
+  <line x1="200" y1="390" x2="800" y2="390" stroke="#333333" stroke-width="1"/>
+  <line x1="200" y1="440" x2="800" y2="440" stroke="#333333" stroke-width="1"/>
+  <line x1="200" y1="490" x2="800" y2="490" stroke="#333333" stroke-width="1"/>
+  <line x1="200" y1="540" x2="800" y2="540" stroke="#333333" stroke-width="1"/>
+  
+  <line x1="250" y1="40" x2="250" y2="600" stroke="#333333" stroke-width="1"/>
+  <line x1="300" y1="40" x2="300" y2="600" stroke="#333333" stroke-width="1"/>
+  <line x1="350" y1="40" x2="350" y2="600" stroke="#333333" stroke-width="1"/>
+  <line x1="400" y1="40" x2="400" y2="600" stroke="#333333" stroke-width="1"/>
+  <line x1="450" y1="40" x2="450" y2="600" stroke="#333333" stroke-width="1"/>
+  <line x1="500" y1="40" x2="500" y2="600" stroke="#333333" stroke-width="1"/>
+  <line x1="550" y1="40" x2="550" y2="600" stroke="#333333" stroke-width="1"/>
+  <line x1="600" y1="40" x2="600" y2="600" stroke="#333333" stroke-width="1"/>
+  <line x1="650" y1="40" x2="650" y2="600" stroke="#333333" stroke-width="1"/>
+  <line x1="700" y1="40" x2="700" y2="600" stroke="#333333" stroke-width="1"/>
+  <line x1="750" y1="40" x2="750" y2="600" stroke="#333333" stroke-width="1"/>
+  
+  <!-- Price labels -->
+  <text x="760" y="90" font-family="Arial" font-size="10" fill="#cccccc">1.2100</text>
+  <text x="760" y="140" font-family="Arial" font-size="10" fill="#cccccc">1.2080</text>
+  <text x="760" y="190" font-family="Arial" font-size="10" fill="#cccccc">1.2060</text>
+  <text x="760" y="240" font-family="Arial" font-size="10" fill="#cccccc">1.2040</text>
+  <text x="760" y="290" font-family="Arial" font-size="10" fill="#cccccc">1.2020</text>
+  
+  <!-- Date labels -->
+  <text x="250" y="320" font-family="Arial" font-size="8" fill="#cccccc" transform="rotate(45, 250, 320)">09:30</text>
+  <text x="300" y="320" font-family="Arial" font-size="8" fill="#cccccc" transform="rotate(45, 300, 320)">10:00</text>
+  <text x="350" y="320" font-family="Arial" font-size="8" fill="#cccccc" transform="rotate(45, 350, 320)">10:30</text>
+  <text x="400" y="320" font-family="Arial" font-size="8" fill="#cccccc" transform="rotate(45, 400, 320)">11:00</text>
+  <text x="450" y="320" font-family="Arial" font-size="8" fill="#cccccc" transform="rotate(45, 450, 320)">11:30</text>
+  <text x="500" y="320" font-family="Arial" font-size="8" fill="#cccccc" transform="rotate(45, 500, 320)">12:00</text>
+  <text x="550" y="320" font-family="Arial" font-size="8" fill="#cccccc" transform="rotate(45, 550, 320)">12:30</text>
+  <text x="600" y="320" font-family="Arial" font-size="8" fill="#cccccc" transform="rotate(45, 600, 320)">13:00</text>
+  
+  <!-- Trading panel -->
+  <rect x="20" y="480" width="160" height="120" rx="5" fill="#2a2a2a"/>
+  <text x="65" y="500" font-family="Arial" font-size="12" fill="#e0e0e0">Trade</text>
+  
+  <rect x="30" y="510" width="140" height="25" rx="3" fill="#333333"/>
+  <text x="35" y="527" font-family="Arial" font-size="12" fill="#cccccc">Buy</text>
+  <text x="120" y="527" font-family="Arial" font-size="12" fill="#4dff4d">1.2045</text>
+  
+  <rect x="30" y="540" width="140" height="25" rx="3" fill="#333333"/>
+  <text x="35" y="557" font-family="Arial" font-size="12" fill="#cccccc">Sell</text>
+  <text x="120" y="557" font-family="Arial" font-size="12" fill="#ff4d4d">1.2043</text>
+</svg>

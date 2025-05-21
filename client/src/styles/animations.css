@@ -1,0 +1,93 @@
+/* Animations for the step glow effects */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes tilt {
+  0%, 100% {
+    transform: rotate(-1deg);
+  }
+  50% {
+    transform: rotate(1deg);
+  }
+}
+
+@keyframes step-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(168, 85, 247, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.1);
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-tilt {
+  animation: tilt 10s infinite linear;
+}
+
+.animate-float {
+  animation: float var(--float-duration, 20s) ease-in-out var(--float-delay, 0s) infinite;
+}
+
+.step-number {
+  transition: all 0.3s ease;
+  animation: step-glow 5s infinite alternate;
+}
+
+.step-card:nth-child(1) .step-number {
+  background: radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.1), transparent 80%);
+}
+
+.step-card:nth-child(2) .step-number {
+  background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1), transparent 80%);
+  animation-delay: 5s;
+}
+
+.step-card:nth-child(3) .step-number {
+  background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.1), transparent 80%);
+  animation-delay: 10s;
+}
+
+.step-card:hover .step-number {
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.floating-card {
+  animation: floatingAnimation var(--anim-duration, 30s) ease-in-out var(--anim-delay, 0s) infinite;
+}
+
+@keyframes floatingAnimation {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(calc(var(--translate-x, 10px)), calc(var(--translate-y, 10px)));
+  }
+  50% {
+    transform: translate(calc(var(--translate-x, 10px) * -0.5), calc(var(--translate-y, 10px) * -1));
+  }
+  75% {
+    transform: translate(calc(var(--translate-x, 10px) * -1), calc(var(--translate-y, 10px) * 0.5));
+  }
+}

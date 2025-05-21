@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "wouter";
 import PageTemplate from "@/components/page-template";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { MarketDataCard } from "@/components/market-data-card";
 import { 
   Card, 
   CardContent, 
@@ -423,69 +424,102 @@ export default function TradingDashboardPage() {
           
           {/* Market Data Tab */}
           <TabsContent value="marketData" className="space-y-6">
-            <MarketDataFeed className="w-full" showChart={true} />
+            <div className="grid grid-cols-1" style={{ height: "700px" }}>
+              <MarketDataCard />
+            </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Trading Signals</CardTitle>
-                  <CardDescription>Recent market signals based on technical analysis</CardDescription>
+                  <CardTitle>Trade Ideas</CardTitle>
+                  <CardDescription>Recent trading opportunities based on market analysis</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    <div className="flex items-center justify-between py-3 border-b">
-                      <div className="flex items-center">
-                        <Badge className="mr-2 bg-green-500">Buy</Badge>
-                        <div>
-                          <h4 className="font-medium">EUR/USD</h4>
-                          <p className="text-sm text-muted-foreground">RSI Divergence</p>
+                    <div className="p-3 border border-border/50 rounded-md">
+                      <div className="flex justify-between mb-2">
+                        <div className="flex items-center">
+                          <Badge variant="outline" className="mr-2 bg-green-500/10 text-green-500 hover:bg-green-500/20 hover:text-green-600">LONG</Badge>
+                          <h4 className="font-medium">EUR/USD Bullish Breakout</h4>
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          15 min ago
                         </div>
                       </div>
-                      <div className="text-right">
-                        <div className="font-medium">1.0945</div>
-                        <div className="text-sm text-muted-foreground">10 mins ago</div>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        EUR/USD has formed a bullish ascending triangle pattern on the 4-hour chart, suggesting potential upside momentum. The pair has maintained support at the 1.0880 level with three consecutive tests.
+                      </p>
+                      <div className="flex items-center justify-between text-xs">
+                        <div className="flex items-center gap-3">
+                          <div>
+                            <span className="text-muted-foreground">Entry:</span> 1.0945
+                          </div>
+                          <div>
+                            <span className="text-muted-foreground">Target:</span> 1.1020
+                          </div>
+                          <div>
+                            <span className="text-muted-foreground">Stop:</span> 1.0905
+                          </div>
+                        </div>
+                        <div className="text-muted-foreground">Timeframe: 4H</div>
                       </div>
                     </div>
                     
-                    <div className="flex items-center justify-between py-3 border-b">
-                      <div className="flex items-center">
-                        <Badge className="mr-2 bg-green-500">Buy</Badge>
-                        <div>
-                          <h4 className="font-medium">XAU/USD</h4>
-                          <p className="text-sm text-muted-foreground">Support Bounce</p>
+                    <div className="p-3 border border-border/50 rounded-md">
+                      <div className="flex justify-between mb-2">
+                        <div className="flex items-center">
+                          <Badge variant="outline" className="mr-2 bg-red-500/10 text-red-500 hover:bg-red-500/20 hover:text-red-600">SHORT</Badge>
+                          <h4 className="font-medium">GBP/USD Double Top</h4>
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          2 hours ago
                         </div>
                       </div>
-                      <div className="text-right">
-                        <div className="font-medium">2374.80</div>
-                        <div className="text-sm text-muted-foreground">35 mins ago</div>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        GBP/USD has formed a double top pattern on the daily chart near the 1.2750 resistance level. The pattern was confirmed with a neckline break at 1.2680, suggesting potential downside.
+                      </p>
+                      <div className="flex items-center justify-between text-xs">
+                        <div className="flex items-center gap-3">
+                          <div>
+                            <span className="text-muted-foreground">Entry:</span> 1.2675
+                          </div>
+                          <div>
+                            <span className="text-muted-foreground">Target:</span> 1.2580
+                          </div>
+                          <div>
+                            <span className="text-muted-foreground">Stop:</span> 1.2720
+                          </div>
+                        </div>
+                        <div className="text-muted-foreground">Timeframe: Daily</div>
                       </div>
                     </div>
                     
-                    <div className="flex items-center justify-between py-3 border-b">
-                      <div className="flex items-center">
-                        <Badge className="mr-2 bg-red-500">Sell</Badge>
-                        <div>
-                          <h4 className="font-medium">USD/JPY</h4>
-                          <p className="text-sm text-muted-foreground">Resistance Hit</p>
+                    <div className="p-3 border border-border/50 rounded-md">
+                      <div className="flex justify-between mb-2">
+                        <div className="flex items-center">
+                          <Badge variant="outline" className="mr-2 bg-yellow-500/10 text-yellow-500 hover:bg-yellow-500/20 hover:text-yellow-600">WATCH</Badge>
+                          <div>
+                            <h4 className="font-medium">USD/JPY</h4>
+                            <p className="text-sm text-muted-foreground">Range Breakout</p>
+                          </div>
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          3 hours ago
                         </div>
                       </div>
-                      <div className="text-right">
-                        <div className="font-medium">156.75</div>
-                        <div className="text-sm text-muted-foreground">1 hour ago</div>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center justify-between py-3">
-                      <div className="flex items-center">
-                        <Badge className="mr-2 bg-red-500">Sell</Badge>
-                        <div>
-                          <h4 className="font-medium">GBP/USD</h4>
-                          <p className="text-sm text-muted-foreground">Double Top</p>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        USD/JPY approaching key resistance at 154.50. Watch for a potential breakout if US Treasury yields continue to rise. Market sentiment remains dollar-bullish.
+                      </p>
+                      <div className="flex items-center justify-between text-xs">
+                        <div className="flex items-center gap-3">
+                          <div>
+                            <span className="text-muted-foreground">Level:</span> 154.20
+                          </div>
+                          <div>
+                            <span className="text-muted-foreground">Break target:</span> 155.00
+                          </div>
                         </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="font-medium">1.2650</div>
-                        <div className="text-sm text-muted-foreground">3 hours ago</div>
+                        <div className="text-muted-foreground">Timeframe: 1H</div>
                       </div>
                     </div>
                   </div>
@@ -599,7 +633,7 @@ export default function TradingDashboardPage() {
                           ))}
                         </Pie>
                         <Tooltip 
-                          formatter={(value) => [`$${Math.abs(value)}`, "P&L"]}
+                          formatter={(value) => [`$${Math.abs(Number(value))}`, "P&L"]}
                         />
                       </PieChart>
                     </ResponsiveContainer>

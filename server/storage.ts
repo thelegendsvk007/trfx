@@ -12,7 +12,7 @@ import { eq, and, gte, desc, like, sql, lt, lte, not, or, between, isNull, isNot
 import { hash, compare } from "bcrypt";
 
 export interface IStorage {
-  // User operations for Replit Auth
+
   getUser(id: string): Promise<User | undefined>;
   upsertUser(userData: { id: string, email: string | null, firstName: string | null, lastName: string | null, profileImageUrl: string | null }): Promise<User>;
   

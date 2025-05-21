@@ -2,7 +2,7 @@ import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 // Import commented out for now to simplify demo
-// import { setupAuth, isAuthenticated } from "./replitAuth";
+
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware commented out for demo

@@ -6,13 +6,13 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import PageTemplate from "@/components/page-template";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTheme } from "@/components/theme-provider";
-import { TradingDashboard } from "@/components/trading-dashboard-updated";
+import { TradingDashboard } from "@/components/trading-dashboard";
 
 export default function HomePage() {
   const [tab, setTab] = useState("standard");
   const { setTheme } = useTheme();
   
- 
+
   useEffect(() => {
     setTheme("dark");
   }, [setTheme]);
@@ -115,7 +115,7 @@ export default function HomePage() {
       
       {/* Trading Platform Section with floating cards */}
       <section className="py-24 relative">
-        <div className="w-full px-0 relative z-10">
+        <div className="container relative z-10">
           <div className="text-center mb-16 max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
               Advanced <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">Trading Platform</span>
@@ -125,7 +125,7 @@ export default function HomePage() {
             </p>
           </div>
           
-          <div className="w-full relative px-0 mx-0">
+          <div className="max-w-5xl mx-auto relative">
             <TradingDashboard />
             
             {/* Decorative lights */}
@@ -159,112 +159,115 @@ export default function HomePage() {
             </p>
           </div>
           
-          <div className="mt-12">
-            {/* Step cards with animated numbered indicators */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-              {/* Step 1 */}
-              <div className="step-card relative">
-                <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 z-20">
-                  <div className="relative">
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 blur-lg opacity-70 animate-pulse-slow"></div>
-                    <div className="relative h-20 w-20 rounded-full bg-purple-800 border-2 border-purple-400 flex items-center justify-center text-3xl font-bold text-white">1</div>
-                  </div>
+          <div className="mt-10">
+            <Tabs defaultValue="standard" value={tab} onValueChange={setTab} className="w-full">
+              <div className="flex justify-center mb-16">
+                <div className="inline-flex items-center h-12 p-1 bg-background/50 border border-border/40 rounded-full">
+                  <button 
+                    onClick={() => setTab("standard")}
+                    className={`relative h-10 px-6 rounded-full transition-all duration-200 ${tab === "standard" ? 'bg-background text-white' : 'text-white/60 hover:text-white/80'}`}
+                  >
+                    <span className="relative z-10">Standard</span>
+                  </button>
+                  <button 
+                    onClick={() => setTab("aggressive")}
+                    className={`relative h-10 px-6 rounded-full transition-all duration-200 ${tab === "aggressive" ? 'bg-background text-white' : 'text-white/60 hover:text-white/80'}`}
+                  >
+                    <span className="relative z-10">Aggressive</span>
+                  </button>
+                  <button 
+                    onClick={() => setTab("evaluation")}
+                    className={`relative h-10 px-6 rounded-full transition-all duration-200 ${tab === "evaluation" ? 'bg-background text-white' : 'text-white/60 hover:text-white/80'}`}
+                  >
+                    <span className="relative z-10">Evaluation</span>
+                  </button>
                 </div>
-                
-                <div className="relative flex flex-col bg-black/70 border border-border/30 rounded-lg p-6 pt-14">
-                  <div className="text-center">
-                    <h3 className="text-2xl font-semibold mb-3">Choose Your Level</h3>
-                    <p className="text-white/70 mb-4">
-                      Pick an evaluation account to trade in a simulated environment and build your skills before handling live funds.
-                    </p>
-                    
-                    {/* Account sizes */}
-                    <div className="grid grid-cols-3 gap-4 mt-4">
-                      <div className="text-center">
-                        <div className="text-lg font-semibold text-white">$10k</div>
-                        <div className="text-xs text-white/50">Starter</div>
-                      </div>
-                      <div className="text-center bg-purple-900/20 py-1 px-2 rounded">
-                        <div className="text-lg font-semibold text-white">$25k</div>
-                        <div className="text-xs text-white/80">Popular</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-lg font-semibold text-white">$50k</div>
-                        <div className="text-xs text-white/50">Advanced</div>
-                      </div>
-                    </div>
+              </div>
+              
+              {/* Visual timeline of accounts */}
+              <div className="flex justify-center mb-8">
+                <div className="inline-flex items-center">
+                  <div className="w-16 text-center">
+                    <div className={`h-7 w-7 rounded-full flex items-center justify-center mx-auto mb-1 border transition-all duration-300 ${tab === "standard" ? 'bg-green-500/20 border-green-500/60 text-white' : 'bg-background/50 border-border/60 text-white/60'}`}>1</div>
+                    <div className="text-xs text-white/60">$10k</div>
+                  </div>
+                  <div className="w-14 h-0.5 bg-border/30"></div>
+                  <div className="w-16 text-center">
+                    <div className={`h-7 w-7 rounded-full flex items-center justify-center mx-auto mb-1 border transition-all duration-300 ${tab === "standard" ? 'bg-background/50 border-border/60 text-white/60' : 'bg-green-500/20 border-green-500/60 text-white'}`}>2</div>
+                    <div className="text-xs text-white/60">$25k</div>
+                  </div>
+                  <div className="w-14 h-0.5 bg-border/30"></div>
+                  <div className="w-16 text-center">
+                    <div className="h-7 w-7 rounded-full flex items-center justify-center mx-auto mb-1 border bg-background/50 border-border/60 text-white/60">3</div>
+                    <div className="text-xs text-white/60">$50k</div>
+                  </div>
+                  <div className="w-14 h-0.5 bg-border/30"></div>
+                  <div className="w-16 text-center">
+                    <div className="h-7 w-7 rounded-full flex items-center justify-center mx-auto mb-1 border bg-background/50 border-border/60 text-white/60">4</div>
+                    <div className="text-xs text-white/60">$100k</div>
+                  </div>
+                  <div className="w-14 h-0.5 bg-border/30"></div>
+                  <div className="w-16 text-center">
+                    <div className="h-7 w-7 rounded-full flex items-center justify-center mx-auto mb-1 border bg-background/50 border-border/60 text-white/60">5</div>
+                    <div className="text-xs text-white/60">$200k</div>
                   </div>
                 </div>
               </div>
               
-              {/* Step 2 */}
-              <div className="step-card relative mt-8 md:mt-0">
-                <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 z-20">
-                  <div className="relative">
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 blur-lg opacity-70 animate-pulse-slow"></div>
-                    <div className="relative h-20 w-20 rounded-full bg-blue-800 border-2 border-blue-400 flex items-center justify-center text-3xl font-bold text-white">2</div>
-                  </div>
+              {/* Step cards with phase indicators */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12 mt-8">
+                {/* Step 1 */}
+                <div 
+                  className={`relative transition-all duration-500 ${tab === "standard" ? "opacity-100" : "opacity-50"}`}
+                >
+                  <h3 className="text-xl md:text-2xl font-semibold mb-3">Choose Your Level</h3>
+                  <p className="text-white/70">
+                    Pick an evaluation account to trade in a simulated environment and build your skills before handling live funds.
+                  </p>
                 </div>
                 
-                <div className="relative flex flex-col bg-black/70 border border-border/30 rounded-lg p-6 pt-14">
-                  <div className="text-center">
-                    <h3 className="text-2xl font-semibold mb-3">Pass the Challenge</h3>
-                    <p className="text-white/70 mb-4">
-                      Meet the profit target and follow our risk management rules to prove your trading skills and expertise.
-                    </p>
-                    
-                    {/* Challenge phases */}
-                    <div className="mt-4 space-y-4">
-                      <div className="flex items-center justify-between py-2 px-4 rounded bg-black/80 border border-blue-500/20">
-                        <span className="text-sm font-medium">Phase 1</span>
-                        <span className="text-sm text-white/80">8% profit target</span>
-                      </div>
-                      <div className="flex items-center justify-between py-2 px-4 rounded bg-black/80 border border-blue-500/20">
-                        <span className="text-sm font-medium">Phase 2</span>
-                        <span className="text-sm text-white/80">5% profit target</span>
+                {/* Step 2 */}
+                <div 
+                  className={`relative transition-all duration-500 ${tab === "aggressive" ? "opacity-100" : "opacity-50"}`}
+                >
+                  <div className="absolute right-4 top-0">
+                    <div className="flex items-center">
+                      <div className="text-xs text-white/70 mr-2">PHASE</div>
+                      <div className="flex">
+                        <div className="w-8 h-8 bg-black border border-green-500/70 font-semibold text-white flex items-center justify-center text-sm rounded-l-sm">1</div>
+                        <div className="w-8 h-8 bg-black/80 border-t border-r border-b border-border/40 font-semibold text-white/60 flex items-center justify-center text-sm rounded-r-sm">2</div>
                       </div>
                     </div>
                   </div>
+                  <h3 className="text-xl md:text-2xl font-semibold mb-3">Pass the evaluation</h3>
+                  <p className="text-white/70">
+                    Hit your profit targets while adhering to trading rules for risk management and consistency.
+                  </p>
+                </div>
+                
+                {/* Step 3 */}
+                <div 
+                  className={`relative transition-all duration-500 ${tab === "evaluation" ? "opacity-100" : "opacity-50"}`}
+                >
+                  <div className="absolute right-4 top-0">
+                    <div className="flex h-8 items-center bg-green-500/10 border border-green-500/30 rounded px-2">
+                      <div className="h-3 w-3 rounded-full bg-green-500 mr-1"></div>
+                      <span className="text-xs font-medium text-green-400">FUNDED</span>
+                    </div>
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-semibold mb-3">Become a Pro Trader</h3>
+                  <p className="text-white/70">
+                    Once funded, you trade with our capital and split the profits while we handle the risk.
+                  </p>
                 </div>
               </div>
               
-              {/* Step 3 */}
-              <div className="step-card relative mt-8 md:mt-0">
-                <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 z-20">
-                  <div className="relative">
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-green-500 to-lime-500 blur-lg opacity-70 animate-pulse-slow"></div>
-                    <div className="relative h-20 w-20 rounded-full bg-green-800 border-2 border-green-400 flex items-center justify-center text-3xl font-bold text-white">3</div>
-                  </div>
-                </div>
-                
-                <div className="relative flex flex-col bg-black/70 border border-border/30 rounded-lg p-6 pt-14">
-                  <div className="text-center">
-                    <h3 className="text-2xl font-semibold mb-3">Get Funded</h3>
-                    <p className="text-white/70 mb-4">
-                      Once you pass the challenge, you'll receive a funded account. Trade with our capital and earn profits.
-                    </p>
-                    
-                    {/* Profit splits */}
-                    <div className="mt-4 space-y-4">
-                      <div className="py-2 px-4 rounded bg-green-900/30 border border-green-500/30">
-                        <div className="text-lg font-semibold">Up to 80%</div>
-                        <div className="text-sm text-white/80">Profit Split</div>
-                      </div>
-                      <div className="py-2 px-4 rounded bg-black/80 border border-green-500/20">
-                        <div className="text-lg font-semibold">Bi-weekly Payouts</div>
-                        <div className="text-sm text-white/80">Fast & Reliable</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div className="flex justify-center mt-12">
+                <Button className="bg-gradient-to-r from-purple-600 to-blue-600 hover:opacity-90" size="lg" asChild>
+                  <Link href="/pricing">Start Your Challenge</Link>
+                </Button>
               </div>
-            </div>
-            
-            <div className="flex justify-center mt-12">
-              <Button className="bg-gradient-to-r from-purple-600 to-blue-600 hover:opacity-90" size="lg" asChild>
-                <Link href="/pricing">Start Your Challenge</Link>
-              </Button>
-            </div>
+            </Tabs>
           </div>
         </div>
       </section>

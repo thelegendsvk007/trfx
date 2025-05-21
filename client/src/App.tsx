@@ -20,6 +20,8 @@ import SignupPage from "@/pages/signup";
 import HowItWorksPage from "@/pages/how-it-works";
 import FAQPage from "@/pages/faq";
 import ChallengesPage from "@/pages/challenges";
+import PricingPage from "@/pages/pricing";
+import TradingBotsPage from "@/pages/pricing/trading-bots";
 
 // Import challenge pages 
 import StandardChallengePage from "@/pages/challenges/standard";
@@ -47,6 +49,15 @@ import PaymentConfirmationPage from "@/pages/payment-confirmation";
 // Import About pages
 import CompanyPage from "@/pages/about/company";
 import ContactPage from "@/pages/about/contact";
+
+// Import Insights pages
+import BlogPage from "@/pages/insights/blog";
+import MarketAnalysisPage from "@/pages/insights/market-analysis";
+import TradingTipsPage from "@/pages/insights/trading-tips";
+
+// Import Affiliates pages
+import AffiliatesPage from "@/pages/affiliates";
+import CommissionCalculatorPage from "@/pages/affiliates/commission-calculator";
 
 // Placeholder component for pages we haven't created yet
 const PlaceholderPage = ({ title, description }: { title: string, description?: string }) => (
@@ -311,6 +322,8 @@ function Router() {
           </Route>
         </Route>
         <Route path="/faq" component={FAQPage} />
+        <Route path="/pricing" component={PricingPage} />
+        <Route path="/pricing/trading-bots" component={TradingBotsPage} />
         
         {/* How it works routes */}
         <Route path="/how-it-works" component={HowItWorksPage} />
@@ -341,6 +354,33 @@ function Router() {
         <Route path="/about/team" component={TeamPage} />
 
         <Route path="/about/contact" component={ContactPage} />
+        
+        {/* Insights routes */}
+        <Route path="/insights/blog" component={BlogPage} />
+        <Route path="/insights/market-analysis" component={MarketAnalysisPage} />
+        <Route path="/insights/trading-tips" component={TradingTipsPage} />
+        
+        {/* Affiliates route */}
+        <Route path="/affiliates" component={AffiliatesPage} />
+        <Route path="/affiliates/signup">
+          <PlaceholderPage title="Affiliate Sign Up" description="Join the TRFX affiliate program and start earning commissions." />
+        </Route>
+        <Route path="/affiliates/resources">
+          <PlaceholderPage title="Affiliate Resources" description="Access your affiliate marketing materials and resources." />
+        </Route>
+        <Route path="/affiliates/promotion-tips">
+          <PlaceholderPage title="Promotion Tips" description="Learn how to effectively promote TRFX and maximize your affiliate earnings." />
+        </Route>
+        <Route path="/affiliates/payment-options">
+          <PlaceholderPage title="Payment Options" description="Learn about our affiliate payment methods and schedules." />
+        </Route>
+        <Route path="/affiliates/case-studies">
+          <PlaceholderPage title="Success Stories" description="Read case studies of successful TRFX affiliates." />
+        </Route>
+        <Route path="/affiliates/faq">
+          <PlaceholderPage title="Affiliate FAQ" description="Find answers to frequently asked questions about the TRFX affiliate program." />
+        </Route>
+        <Route path="/affiliates/commission-calculator" component={CommissionCalculatorPage} />
         
         {/* Payment and Withdrawal routes */}
         <Route path="/payment">

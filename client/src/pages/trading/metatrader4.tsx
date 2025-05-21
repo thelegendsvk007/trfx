@@ -40,11 +40,37 @@ export default function MetaTrader4Page() {
             <p className="text-xl text-muted-foreground mb-8">
               The industry-standard trading platform for forex and CFD traders
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity">
-                <Download className="mr-2 h-5 w-5" />
-                Download MT4
-              </Button>
+            <div className="flex flex-col items-center">
+              <div className="flex flex-col sm:flex-row gap-4 mb-4">
+                <Button size="lg" className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity" asChild>
+                  <a href="https://apps.apple.com/us/app/metatrader-4/id496212596" target="_blank" rel="noopener noreferrer">
+                    <Download className="mr-2 h-5 w-5" />
+                    Download for iOS
+                  </a>
+                </Button>
+                <Button size="lg" className="bg-gradient-to-r from-secondary to-primary hover:opacity-90 transition-opacity" asChild>
+                  <a href="https://play.google.com/store/apps/details?id=net.metaquotes.metatrader4" target="_blank" rel="noopener noreferrer">
+                    <Download className="mr-2 h-5 w-5" />
+                    Download for Android
+                  </a>
+                </Button>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-4 mb-4">
+                <Button size="lg" variant="default" asChild>
+                  <a href="https://download.mql5.com/cdn/web/metaquotes.software.corp/mt4/mt4setup.exe" target="_blank" rel="noopener noreferrer">
+                    <Download className="mr-2 h-5 w-5" />
+                    Download for Windows
+                  </a>
+                </Button>
+                <Button size="lg" variant="default" asChild>
+                  <a href="https://download.mql5.com/cdn/web/metaquotes.software.corp/mt4/MetaTrader4.dmg" target="_blank" rel="noopener noreferrer">
+                    <Download className="mr-2 h-5 w-5" />
+                    Download for Mac
+                  </a>
+                </Button>
+              </div>
+              
               <Button size="lg" variant="outline" asChild>
                 <Link href="/trading/metatrader5">
                   Learn About MT5
@@ -111,7 +137,7 @@ export default function MetaTrader4Page() {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg"></div>
                 <div className="relative">
                   <img 
-                    src="https://placehold.co/800x600/1f2937/e5e7eb?text=MT4+Platform+Screenshot" 
+                    src="/src/assets/mt4-platform.svg" 
                     alt="MetaTrader 4 Platform" 
                     className="rounded shadow-lg border border-border/30"
                   />
